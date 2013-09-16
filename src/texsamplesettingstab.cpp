@@ -72,12 +72,12 @@ TexsampleSettingsTab::TexsampleSettingsTab() :
 
 QString TexsampleSettingsTab::title() const
 {
-    return tr("TeXSample", "title");
+    return tr("CloudLab", "title");
 }
 
 QIcon TexsampleSettingsTab::icon() const
 {
-    return Application::icon("tex");
+    return Application::icon("clab-client");
 }
 
 bool TexsampleSettingsTab::restoreDefault()

@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     tInit();
     QApplication app(argc, argv);
     QApplication::setApplicationName("CloudLab Client");
-    QApplication::setApplicationVersion("0.1.0-a3");
+    QApplication::setApplicationVersion("0.1.0-a4");
     QApplication::setOrganizationName("TeXSample Team");
     QApplication::setOrganizationDomain("https://github.com/TeXSample-Team/CloudLab-Client");
     QFont fnt = QApplication::font();

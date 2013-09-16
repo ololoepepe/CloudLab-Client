@@ -1,2 +1,2 @@
-=== CLab Client 0.1.0 (xx September 2013) ===
+=== CloudLab Client 0.1.0 (xx September 2013) ===
     * First release
