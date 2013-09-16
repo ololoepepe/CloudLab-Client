@@ -164,6 +164,7 @@ void MainWindow::retranslateUi()
     //menus
     mmnuFile->setTitle(tr("File", "mnu title"));
     mactQuit->setText(tr("Quit", "act text"));
+    mmnuEdit->setTitle(tr("Edit", "mnu title"));
     mmnuClab->setTitle(tr("CloudLab", "mnuTitle"));
     mmnuHelp->setTitle(tr("Help", "mnuTitle"));
 }

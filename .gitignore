@@ -58,5 +58,5 @@ Makefile
 
 # Other #
 #########
-clab-client
-clab-client.exe
+cloudlab-client
+cloudlab-client.exe

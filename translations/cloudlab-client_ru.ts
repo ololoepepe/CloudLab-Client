@@ -704,12 +704,18 @@ Would you like to do it now?</source>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="167"/>
+        <source>Edit</source>
+        <comment>mnu title</comment>
+        <translation>Правка</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="168"/>
         <source>CloudLab</source>
         <comment>mnuTitle</comment>
         <translation>CloudLab</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="168"/>
+        <location filename="../src/mainwindow.cpp" line="169"/>
         <source>Help</source>
         <comment>mnuTitle</comment>
         <translation>Справка</translation>
@@ -797,9 +803,9 @@ Would you like to do it now?</source>
     </message>
     <message>
         <location filename="../src/texsamplesettingstab.cpp" line="75"/>
-        <source>TeXSample</source>
+        <source>CloudLab</source>
         <comment>title</comment>
-        <translation>TeXSample</translation>
+        <translation>CloudLab</translation>
     </message>
     <message>
         <location filename="../src/texsamplesettingstab.cpp" line="120"/>

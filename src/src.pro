@@ -79,6 +79,7 @@ contains(CCLT_CONFIG, builtin_resources) {
     DEFINES += BUILTIN_RESOURCES
     RESOURCES += \
         clab_client.qrc \
+        clab_client_doc.qrc \
         ../translations/clab_client_translations.qrc
 }
 
