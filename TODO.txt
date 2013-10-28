@@ -1,3 +1,1 @@
-=== PATCH ===
-
-
+* Fix Help: rename "зеленый крестик" to "зеленый флажок" in some places

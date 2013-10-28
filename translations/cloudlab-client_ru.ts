@@ -94,343 +94,343 @@ Would you like to do it now?</source>
 <context>
     <name>ClabWidget</name>
     <message>
-        <location filename="../src/clabwidget.cpp" line="494"/>
+        <location filename="../src/clabwidget.cpp" line="496"/>
         <source>Connection</source>
         <comment>act text</comment>
         <translation>Соединение</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="495"/>
+        <location filename="../src/clabwidget.cpp" line="497"/>
         <source>This action shows current connection state. Use it to connect or disconnect from the server</source>
         <comment>act whatsThis</comment>
         <translation>Это действие показывает текущее состояние соединения. Используйте его чтобы подключиться или отключиться от сервера</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="498"/>
+        <location filename="../src/clabwidget.cpp" line="500"/>
         <source>Connect</source>
         <comment>act text</comment>
         <translation>Подключиться</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="499"/>
+        <location filename="../src/clabwidget.cpp" line="501"/>
         <source>Disconnect</source>
         <comment>act text</comment>
         <translation>Отключиться</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="500"/>
+        <location filename="../src/clabwidget.cpp" line="502"/>
         <source>Update</source>
         <comment>act text</comment>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="501"/>
+        <location filename="../src/clabwidget.cpp" line="503"/>
         <source>Update labs list</source>
         <comment>act toolTip</comment>
         <translation>Обновить список лаб. работ</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="502"/>
+        <location filename="../src/clabwidget.cpp" line="504"/>
         <source>Send lab...</source>
         <comment>act text</comment>
         <translation>Отправить лаб. работу...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="503"/>
+        <location filename="../src/clabwidget.cpp" line="505"/>
         <source>Tools</source>
         <comment>act text</comment>
         <translation>Инструменты</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="504"/>
+        <location filename="../src/clabwidget.cpp" line="506"/>
         <source>Tools</source>
         <comment>act toolTip</comment>
         <translation>Инструменты</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="508"/>
+        <location filename="../src/clabwidget.cpp" line="510"/>
         <source>Account management...</source>
         <comment>act text</comment>
         <translation>Управление аккаунтом...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="509"/>
-        <source>Administration...</source>
-        <comment>act text</comment>
-        <translation>Администрирование...</translation>
-    </message>
-    <message>
-        <location filename="../src/clabwidget.cpp" line="510"/>
+        <location filename="../src/clabwidget.cpp" line="512"/>
         <source>Add user...</source>
         <comment>act text</comment>
         <translation>Добавить пользователя...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="511"/>
+        <location filename="../src/clabwidget.cpp" line="513"/>
         <source>Edit user...</source>
         <comment>act text</comment>
         <translation>Изменить данные пользователя...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="545"/>
+        <location filename="../src/clabwidget.cpp" line="547"/>
         <source>Adding user</source>
         <comment>dlg windowTitle</comment>
         <translation>Добавление пользователя</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="564"/>
+        <location filename="../src/clabwidget.cpp" line="566"/>
         <source>User was successfully added</source>
         <comment>message</comment>
         <translation>Пользователь был успешно добавлен</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="570"/>
+        <location filename="../src/clabwidget.cpp" line="572"/>
         <source>Adding user error</source>
         <comment>msgbox windowTitle</comment>
         <translation>Ошибка добавления пользователя</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="572"/>
+        <location filename="../src/clabwidget.cpp" line="574"/>
         <source>Failed to add user due to the following error:</source>
         <comment>msgbox text</comment>
         <translation>Не удалось добавить пользователя по следующей причине:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="612"/>
+        <location filename="../src/clabwidget.cpp" line="614"/>
         <source>Editing user</source>
         <comment>dlg windowTitle</comment>
         <translation>Изменение данных пользователя</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="639"/>
+        <location filename="../src/clabwidget.cpp" line="641"/>
         <source>Editing user error</source>
         <comment>msgbox windowTitle</comment>
         <translation>Ошибка изменения данных пользователя</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="641"/>
+        <location filename="../src/clabwidget.cpp" line="643"/>
         <source>Failed to edit user due to the following error:</source>
         <comment>msgbox text</comment>
         <translation>Не удалось измененить данные пользователя по причине следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="483"/>
+        <location filename="../src/clabwidget.cpp" line="485"/>
         <source>Failed to edit lab due to the following error:</source>
         <comment>msgbox text</comment>
         <translation>Не удалось отредактировать лаб. работу из-за следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="738"/>
+        <location filename="../src/clabwidget.cpp" line="740"/>
         <source>Deleting lab</source>
         <comment>idlg title</comment>
         <translation>Удаление лаб. работы</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="739"/>
+        <location filename="../src/clabwidget.cpp" line="741"/>
         <source>You are going to delete a lab. Please, enter the reason:</source>
         <comment>idlg lblText</comment>
         <translation>Вы собираетесь удалить лаб. работу. Пожалуйста, укажите причину:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="786"/>
+        <location filename="../src/clabwidget.cpp" line="788"/>
         <source>Lab:</source>
         <comment>windowTitle</comment>
         <translation>Лаб. работа:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="811"/>
+        <location filename="../src/clabwidget.cpp" line="813"/>
         <source>Getting lab failed</source>
         <comment>msgbox windowTitle</comment>
         <translation>Получение лаб. работы не удалось</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="469"/>
+        <location filename="../src/clabwidget.cpp" line="471"/>
         <source>Sending lab error</source>
         <comment>msgbox windowTitle</comment>
         <translation>Ошибка отправки лаб. работы</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="471"/>
+        <location filename="../src/clabwidget.cpp" line="473"/>
         <source>Failed to send lab due to the following error:</source>
         <comment>msgbox text</comment>
         <translation>Не удалось отправить лаб. работу из-за следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="481"/>
+        <location filename="../src/clabwidget.cpp" line="483"/>
         <source>Editing lab error</source>
         <comment>msgbox windowTitle</comment>
         <translation>Ошибка редактирования лаб. работы</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="505"/>
+        <location filename="../src/clabwidget.cpp" line="507"/>
         <source>Register...</source>
         <comment>act tooTip</comment>
         <translation>Зарегистрироваться...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="506"/>
+        <location filename="../src/clabwidget.cpp" line="508"/>
         <source>Recover account...</source>
         <comment>act text</comment>
         <translation>Восстановить аккаунт...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="507"/>
+        <location filename="../src/clabwidget.cpp" line="509"/>
         <source>CloudLab settings...</source>
         <comment>act text</comment>
         <translation>Настройки CloudLab...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="512"/>
+        <location filename="../src/clabwidget.cpp" line="511"/>
+        <source>Administration</source>
+        <comment>act text</comment>
+        <translation>Администрирование</translation>
+    </message>
+    <message>
+        <location filename="../src/clabwidget.cpp" line="514"/>
         <source>Manage invites...</source>
         <comment>act text</comment>
         <translation>Управление инвайтами...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="513"/>
+        <location filename="../src/clabwidget.cpp" line="515"/>
         <source>Manage groups...</source>
         <comment>act text</comment>
         <translation>Управление группами...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="515"/>
+        <location filename="../src/clabwidget.cpp" line="517"/>
         <source>Selection</source>
         <comment>gbox title</comment>
         <translation>Выбор</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="517"/>
+        <location filename="../src/clabwidget.cpp" line="519"/>
         <source>Search:</source>
         <comment>lbl text</comment>
         <translation>Поиск:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="524"/>
+        <location filename="../src/clabwidget.cpp" line="526"/>
         <source>You have successfully registered</source>
         <comment>message</comment>
         <translation>Вы успешно зарегистрировались</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="590"/>
+        <location filename="../src/clabwidget.cpp" line="592"/>
         <source>Editing own account</source>
         <comment>msgbox windowTitle</comment>
         <translation>Редактирование собственного аккаунта</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="592"/>
+        <location filename="../src/clabwidget.cpp" line="594"/>
         <source>You are not allowed to edit your own account. Use &quot;Account management&quot; instead</source>
         <comment>msgbox text</comment>
         <translation>Вы не можете редактировать свой собственный аккаунт. Вместо этого воспользуйтесь &quot;Управлением аккаунтом&quot;</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="633"/>
+        <location filename="../src/clabwidget.cpp" line="635"/>
         <source>User info was successfully edited</source>
         <comment>message</comment>
         <translation>Информация пользователя была успешно отредактирована</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="695"/>
+        <location filename="../src/clabwidget.cpp" line="697"/>
         <source>Groups have been successfully edited</source>
         <comment>message</comment>
         <translation>Группы были успешно отредактированы</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="748"/>
+        <location filename="../src/clabwidget.cpp" line="750"/>
         <source>Deleting lab error</source>
         <comment>msgbox windowTitle</comment>
         <translation>Ошибка удаления лаб. работы</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="750"/>
+        <location filename="../src/clabwidget.cpp" line="752"/>
         <source>Failed to delete lab due to the following error:</source>
         <comment>msgbox text</comment>
         <translation>Не удалось удалить лаб. работу из-за следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="757"/>
+        <location filename="../src/clabwidget.cpp" line="759"/>
         <source>Lab was successfully deleted</source>
         <comment>message</comment>
         <translation>Лаб. работа была успешно удалена</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="813"/>
+        <location filename="../src/clabwidget.cpp" line="815"/>
         <source>Failed to get lad due to the following error:</source>
         <comment>msgbox text</comment>
         <translation>Не удалось получить лаб. работу из-за следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="820"/>
+        <location filename="../src/clabwidget.cpp" line="822"/>
         <source>Lab was successfully downloaded</source>
         <comment>message</comment>
         <translation>Лаб. работа была успешно загружена</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="837"/>
+        <location filename="../src/clabwidget.cpp" line="839"/>
         <source>CloudLab state:</source>
         <comment>act toolTip</comment>
         <translation>Состояние CloudLab:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="841"/>
+        <location filename="../src/clabwidget.cpp" line="843"/>
         <source>disconnected</source>
         <comment>act toolTip</comment>
         <translation>отключен</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="844"/>
+        <location filename="../src/clabwidget.cpp" line="846"/>
         <source>connecting</source>
         <comment>act toolTip</comment>
         <translation>подключение</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="847"/>
+        <location filename="../src/clabwidget.cpp" line="849"/>
         <source>connected</source>
         <comment>act toolTip</comment>
         <translation>соединен</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="850"/>
+        <location filename="../src/clabwidget.cpp" line="852"/>
         <source>authorized</source>
         <comment>act toolTip</comment>
         <translation>авторизован</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="853"/>
+        <location filename="../src/clabwidget.cpp" line="855"/>
         <source>disconnecting</source>
         <comment>act toolTip</comment>
         <translation>отключение</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="882"/>
+        <location filename="../src/clabwidget.cpp" line="884"/>
         <source>Get</source>
         <comment>act text</comment>
         <translation>Получить</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="887"/>
+        <location filename="../src/clabwidget.cpp" line="889"/>
         <source>Information...</source>
         <comment>act text</comment>
         <translation>Информация...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="891"/>
+        <location filename="../src/clabwidget.cpp" line="893"/>
         <source>Edit...</source>
         <comment>act text</comment>
         <translation>Редактировать...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="895"/>
+        <location filename="../src/clabwidget.cpp" line="897"/>
         <source>Delete...</source>
         <comment>act text</comment>
         <translation>Удалить...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="937"/>
+        <location filename="../src/clabwidget.cpp" line="939"/>
         <source>Lab was successfully sent</source>
         <comment>message</comment>
         <translation>Лаб. работа была успешно отправлена</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="969"/>
+        <location filename="../src/clabwidget.cpp" line="971"/>
         <source>Lab was successfully edited</source>
         <comment>message</comment>
         <translation>Лаб. работа была успешно отредактирована</translation>
