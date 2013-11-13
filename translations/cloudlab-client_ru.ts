@@ -439,71 +439,71 @@ Would you like to do it now?</source>
 <context>
     <name>Client</name>
     <message>
-        <location filename="../src/client.cpp" line="65"/>
+        <location filename="../src/client.cpp" line="66"/>
         <source>Replying to connection test...</source>
         <comment>log</comment>
         <translation>Ответ на проверку соединения...</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="68"/>
+        <location filename="../src/client.cpp" line="69"/>
         <source>Operation error</source>
         <comment>log</comment>
         <translation>Ошибка операции</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="101"/>
-        <location filename="../src/client.cpp" line="141"/>
-        <location filename="../src/client.cpp" line="182"/>
+        <location filename="../src/client.cpp" line="102"/>
+        <location filename="../src/client.cpp" line="142"/>
+        <location filename="../src/client.cpp" line="183"/>
         <source>Connecting to server</source>
         <comment>pdlg windowTitle</comment>
         <translation>Подключение к серверу</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="102"/>
-        <location filename="../src/client.cpp" line="142"/>
-        <location filename="../src/client.cpp" line="183"/>
+        <location filename="../src/client.cpp" line="103"/>
+        <location filename="../src/client.cpp" line="143"/>
+        <location filename="../src/client.cpp" line="184"/>
         <source>Connecting to server, please, wait...</source>
         <comment>pdlg labelText</comment>
         <translation>Подключаемся к серверу, пожалуйста, ждите...</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="705"/>
+        <location filename="../src/client.cpp" line="706"/>
         <source>Lab</source>
         <comment>wgt windowTitle</comment>
         <translation>Лаб. работа</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="730"/>
+        <location filename="../src/client.cpp" line="731"/>
         <source>No password</source>
         <comment>msgbox windowTitle</comment>
         <translation>Отсутствует пароль</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="732"/>
+        <location filename="../src/client.cpp" line="733"/>
         <source>You have not specified your password</source>
         <comment>msgbox text</comment>
         <translation>Вы не указали пароль</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="733"/>
+        <location filename="../src/client.cpp" line="734"/>
         <source>You can&apos;t connect without password</source>
         <comment>msgbox informativeText</comment>
         <translation>Вы не можете подключиться без пароля</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="777"/>
+        <location filename="../src/client.cpp" line="778"/>
         <source>Executing request...</source>
         <comment>opdlg windowTitle</comment>
         <translation>Выполняется запрос...</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="790"/>
+        <location filename="../src/client.cpp" line="791"/>
         <source>TeXSample connection error</source>
         <comment>msgbox windowTitle</comment>
         <translation>Ошибка соединения TeXSample</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="792"/>
+        <location filename="../src/client.cpp" line="793"/>
         <source>The following connection error occured:</source>
         <comment>msgbox text</comment>
         <translation>Произошла следующая ошибка соединения:</translation>
