@@ -12,6 +12,8 @@
 namespace Global
 {
 
+QByteArray pwdState;
+
 //General
 
 void setMultipleWindowsEnabled(bool enabled)
@@ -46,14 +48,14 @@ void setPasswordWidgetSate(const QByteArray &state)
     bSettings->setValue("TeXSample/Client/password_widget_state", state);
 }
 
-void setPasswordSate(const QByteArray &state)
+void setPasswordState(const QByteArray &state)
 {
-    bSettings->setValue("TeXSample/Client/password_state", state);
+    pwdState = state;
 }
 
 void setPassword(const BPassword &pwd)
 {
-    setPasswordSate(pwd.save(BPassword::AlwaysEncryptedMode));
+    setPasswordState(pwd.save(BPassword::AlwaysEncryptedMode));
 }
 
 void setPassword(const QByteArray &pwd, int charCountHint)
@@ -108,7 +110,7 @@ QByteArray passwordWidgetState()
 
 QByteArray passwordState()
 {
-    return bSettings->value("TeXSample/Client/password_state").toByteArray();
+    return pwdState;
 }
 
 BPassword password()
@@ -121,6 +123,19 @@ BPassword password()
 QByteArray encryptedPassword(int *charCountHint)
 {
     return password().encryptedPassword(charCountHint);
+}
+
+void savePasswordState()
+{
+    BPasswordWidget *pwdwgt = new BPasswordWidget;
+    pwdwgt->restoreWidgetState(passwordWidgetState());
+    bSettings->setValue("TeXSample/Client/password_state", pwdwgt->savePassword() ? pwdState : QByteArray());
+    delete pwdwgt;
+}
+
+void loadPasswordState()
+{
+    pwdState = bSettings->value("TeXSample/Client/password_state").toByteArray();
 }
 
 }

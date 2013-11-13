@@ -181,11 +181,12 @@ Application::Application() :
     BApplication()
 {
     minitialWindowCreated = false;
+    Global::loadPasswordState();
 }
 
 Application::~Application()
 {
-    //
+    Global::savePasswordState();
 }
 
 /*============================== Static public methods =====================*/
@@ -276,7 +277,7 @@ bool Application::showPasswordDialog(QWidget *parent)
     PasswordDialog pd(parent ? parent : mostSuitableWindow());
     if (pd.exec() != QDialog::Accepted)
         return false;
-    Global::setPasswordSate(pd.passwordState());
+    Global::setPasswordState(pd.passwordState());
     sClient->updateSettings();
     return true;
 }

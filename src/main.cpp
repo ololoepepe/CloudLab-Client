@@ -30,12 +30,14 @@ static QString resource(const QString &subpath)
     return BDirTools::findResource(subpath, BDirTools::GlobalOnly);
 }
 
+#include <TUserInfo>
+
 int main(int argc, char *argv[])
 {
     tInit();
     QApplication app(argc, argv);
     QApplication::setApplicationName("CloudLab Client");
-    QApplication::setApplicationVersion("0.1.0-a4");
+    QApplication::setApplicationVersion("0.1.0-beta");
     QApplication::setOrganizationName("TeXSample Team");
     QApplication::setOrganizationDomain("https://github.com/TeXSample-Team/CloudLab-Client");
     QFont fnt = QApplication::font();
@@ -56,7 +58,6 @@ int main(int argc, char *argv[])
 #endif
         Application bapp;
         Q_UNUSED(bapp)
-        bSettings->setValue("Global/version", BVersion(QCoreApplication::applicationVersion()));
         Application::setThemedIconsEnabled(false);
         Application::setPreferredIconFormats(QStringList() << "png");
         QApplication::setWindowIcon(Application::icon("clab-client"));

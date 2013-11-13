@@ -321,7 +321,7 @@ Client::State Client::state() const
 
 bool Client::canConnect() const
 {
-    return (DisconnectedState == mstate && !mhost.isEmpty() && !mlogin.isEmpty() && !mpassword.isEmpty());
+    return (DisconnectedState == mstate && !mhost.isEmpty() && !mlogin.isEmpty());
 }
 
 bool Client::canDisconnect() const
