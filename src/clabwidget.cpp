@@ -377,24 +377,25 @@ ClabWidget::ClabWidget(MainWindow *window) :
               connect(mactAccountSettings, SIGNAL(triggered()), this, SLOT(showAccountSettings()));
               connect(sClient, SIGNAL(authorizedChanged(bool)), mactAccountSettings, SLOT(setEnabled(bool)));
             mnu->addAction(mactAccountSettings);
-            mnu->addSeparator();
-            mactAdministration = new QAction(this);
-              mactAdministration->setEnabled(sClient->accessLevel() >= TAccessLevel::ModeratorLevel);
-              mactAdministration->setIcon(Application::icon("gear"));
-              QMenu *submnu = new QMenu;
-                mactAddUser = submnu->addAction(Application::icon("add_user"), "", this, SLOT(addUser()));
-                  mactAddUser->setEnabled(sClient->accessLevel() >= TAccessLevel::AdminLevel);
-                mactEditUser = submnu->addAction(Application::icon("edit_user"), "", this, SLOT(editUser()));
-                  mactEditUser->setEnabled(sClient->accessLevel() >= TAccessLevel::AdminLevel);
-                mactInvites = submnu->addAction(Application::icon("mail_send"), "", this, SLOT(actInvitesTriggered()));
-                  mactInvites->setEnabled(sClient->accessLevel() >= TAccessLevel::ModeratorLevel);
-                mactGroups = submnu->addAction(Application::icon("users"), "", this, SLOT(editGroups()));
-                  mactGroups->setEnabled(sClient->accessLevel() >= TAccessLevel::AdminLevel);
-            mactAdministration->setMenu(submnu);
-            mnu->addAction(mactAdministration);
           mactTools->setMenu(mnu);
         mtbar->addAction(mactTools);
         static_cast<QToolButton *>(mtbar->widgetForAction(mactTools))->setPopupMode(QToolButton::InstantPopup);
+        mactAdministration = new QAction(this);
+          mactAdministration->setEnabled(sClient->accessLevel() >= TAccessLevel::ModeratorLevel);
+          mactAdministration->setIcon(Application::icon("gear"));
+          mnu = new QMenu;
+            mactAddUser = mnu->addAction(Application::icon("add_user"), "", this, SLOT(addUser()));
+              mactAddUser->setEnabled(sClient->accessLevel() >= TAccessLevel::AdminLevel);
+            mactEditUser = mnu->addAction(Application::icon("edit_user"), "", this, SLOT(editUser()));
+              mactEditUser->setEnabled(sClient->accessLevel() >= TAccessLevel::AdminLevel);
+            mactInvites = mnu->addAction(Application::icon("mail_send"), "", this, SLOT(actInvitesTriggered()));
+              mactInvites->setEnabled(sClient->accessLevel() >= TAccessLevel::ModeratorLevel);
+            mactGroups = mnu->addAction(Application::icon("users"), "", this, SLOT(editGroups()));
+              mactGroups->setEnabled(sClient->accessLevel() >= TAccessLevel::AdminLevel);
+          mactAdministration->setMenu(mnu);
+        mtbar->addAction(mactAdministration);
+        static_cast<QToolButton *>(mtbar->widgetForAction(mactAdministration))->setPopupMode(
+                    QToolButton::InstantPopup);
       vlt->addWidget(mtbar);
       //
       mgboxSelect = new QGroupBox(this);
@@ -446,6 +447,7 @@ QList<QAction *> ClabWidget::toolBarActions() const
     list << mactUpdate;
     list << mactSend;
     list << mactTools;
+    list << mactAdministration;
     return list;
 }
 
@@ -506,7 +508,7 @@ void ClabWidget::retranslateUi()
     mactRecover->setText(tr("Recover account...", "act text"));
     mactSettings->setText(tr("CloudLab settings...", "act text"));
     mactAccountSettings->setText(tr("Account management...", "act text"));
-    mactAdministration->setText(tr("Administration...", "act text"));
+    mactAdministration->setText(tr("Administration", "act text"));
     mactAddUser->setText(tr("Add user...", "act text"));
     mactEditUser->setText(tr("Edit user...", "act text"));
     mactInvites->setText(tr("Manage invites...", "act text"));

@@ -4,7 +4,7 @@ TARGET = cloudlab-client
 CONFIG += release
 
 QT = core concurrent network gui widgets webkit webkitwidgets
-BEQT = core network widgets codeeditor networkwidgets
+BEQT = core network widgets networkwidgets
 TSMP = core widgets
 
 isEmpty(BEQT_PREFIX) {
