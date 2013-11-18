@@ -70,9 +70,12 @@ class PasswordDialog : public QDialog
 public:
     explicit PasswordDialog(QWidget *parent = 0);
 public:
+    void setLogin(const QString &login);
     void setPasswordState(const QByteArray &state);
+    QString login() const;
     QByteArray passwordState() const;
 private:
+    QLineEdit *ledt;
     BPasswordWidget *mpwdwgt;
 };
 
@@ -144,11 +147,18 @@ bool GeneralSettingsTab::saveSettings()
 PasswordDialog::PasswordDialog(QWidget *parent) :
     QDialog(parent)
 {
-    setWindowTitle(tr("TeXSample password", "windowTitle"));
+    setWindowTitle(tr("Login and password", "windowTitle"));
     QVBoxLayout *vlt = new QVBoxLayout(this);
-      mpwdwgt = new BPasswordWidget(this);
-        mpwdwgt->restoreWidgetState(Global::passwordWidgetState());
-      Application::addRow(vlt, tr("Password:", "lbl text"), mpwdwgt);
+      QFormLayout *flt = new QFormLayout;
+        ledt = new QLineEdit;
+          ledt->setText(Global::login());
+          ledt->selectAll();
+          ledt->setFocus();
+        flt->addRow(tr("Login:", "lbl text"), ledt);
+        mpwdwgt = new BPasswordWidget;
+          mpwdwgt->restoreWidgetState(Global::passwordWidgetState());
+        flt->addRow(tr("Password:", "lbl text"), mpwdwgt);
+      vlt->addLayout(flt);
       QDialogButtonBox *dlgbbox = new QDialogButtonBox(this);
         QPushButton *btnOk = dlgbbox->addButton(QDialogButtonBox::Ok);
         btnOk->setDefault(true);
@@ -161,9 +171,21 @@ PasswordDialog::PasswordDialog(QWidget *parent) :
 
 /*============================== Public methods ============================*/
 
+void PasswordDialog::setLogin(const QString &login)
+{
+    ledt->setText(login);
+    ledt->selectAll();
+    ledt->setFocus();
+}
+
 void PasswordDialog::setPasswordState(const QByteArray &state)
 {
     mpwdwgt->restorePasswordState(state);
+}
+
+QString PasswordDialog::login() const
+{
+    return ledt->text();
 }
 
 QByteArray PasswordDialog::passwordState() const
@@ -277,6 +299,7 @@ bool Application::showPasswordDialog(QWidget *parent)
     PasswordDialog pd(parent ? parent : mostSuitableWindow());
     if (pd.exec() != QDialog::Accepted)
         return false;
+    Global::setLogin(pd.login());
     Global::setPasswordState(pd.passwordState());
     sClient->updateSettings();
     return true;

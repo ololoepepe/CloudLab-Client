@@ -24,6 +24,7 @@
 #include <BDirTools>
 #include <BSignalDelayProxy>
 #include <BOperationProgressDialog>
+#include <BTextTools>
 
 #include <QObject>
 #include <QString>
@@ -807,7 +808,7 @@ void Client::runExecutable(const QString &url, const QString &path)
 {
     if (path.isEmpty() || url.isEmpty())
         return;
-    BeQt::execProcess(url, QStringList(), 5 * BeQt::Second, -1);
+    BeQt::execProcess(BTextTools::wrapped(url), QStringList(), 5 * BeQt::Second, -1);
     BDirTools::rmdir(path);
 }
 
