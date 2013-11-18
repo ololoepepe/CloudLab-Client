@@ -118,11 +118,14 @@ LabWidget::LabWidget(Mode m, QWidget *parent) :
         gbox = new QGroupBox(tr("Groups", "gbox title"));
           hltw = new QHBoxLayout(gbox);
             mlstwgtGroups = new TListWidget;
-              QStringList groups;
-              sClient->getClabGroupsList(groups, parent);
               mlstwgtGroups->setReadOnly(ShowMode == mmode);
               mlstwgtGroups->setButtonsVisible(ShowMode != mmode);
-              mlstwgtGroups->setAvailableItems(groups);
+              if (ShowMode != mmode)
+              {
+                  QStringList groups;
+                  sClient->getClabGroupsList(groups, parent);
+                  mlstwgtGroups->setAvailableItems(groups);
+              }
             hltw->addWidget(mlstwgtGroups);
         hlt->addWidget(gbox);
       vlt->addLayout(hlt);
