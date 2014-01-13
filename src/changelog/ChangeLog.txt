@@ -1,3 +1,13 @@
+=== CloudLab Client 0.2.0-beta (13 January 2013) ===
+    * Fix password saving in login/password dialog
+    * Update copyright years
+    * Update README
+    * Implement new version check
+    * Use BeQt 3.1.0
+    * Use TeXSample 1.1.0
+    * Reimplement login dialog using BLoginWidget class
+    * Add ability to attach extra files to labs
+
 === CloudLab Client 0.1.1-beta (18 November 2013) ===
     * Fix running executable files
     * Fix attempting to access CloudLab groups when not enough rights

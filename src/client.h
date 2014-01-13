@@ -6,6 +6,7 @@ class TLabInfo;
 class TService;
 class TIdList;
 class TInviteInfoList;
+class TProjectFileList;
 
 class BNetworkConnection;
 class BNetworkOperation;
@@ -55,6 +56,8 @@ public:
     static TOperationResult getRecoveryCode(const QString &email, QWidget *parent = 0);
     static TOperationResult recoverAccount(const QString &email, const QString &code, const QByteArray &password,
                                            QWidget *parent = 0);
+    static TOperationResult checkForNewVersions(QWidget *parent = 0);
+    static TOperationResult checkForNewVersions(bool persistent, QWidget *parent = 0);
     static TOperationResult generateInvites(TInviteInfoList &invites, const QDateTime &expiresDT, quint8 count,
                                             const TServiceList &services, const QStringList &clabGroups,
                                             QWidget *parent = 0);
@@ -81,17 +84,23 @@ public:
     TOperationResult editClabGroups(const QStringList newGroups, const QStringList &deletedGroups,
                                     QWidget *parent = 0);
     TOperationResult getClabGroupsList(QStringList &list, QWidget *parent = 0);
-    TOperationResult addLab(const TLabInfo &info, const TLabProject &webProject, QWidget *parent = 0);
+    TOperationResult addLab(const TLabInfo &info, const TLabProject &webProject, const TProjectFileList &extraFiles,
+                            QWidget *parent = 0);
     TOperationResult addLab(const TLabInfo &info, const TLabProject &linuxProject, const TLabProject &macProject,
-                            const TLabProject &winProject, QWidget *parent = 0);
-    TOperationResult addLab(const TLabInfo &info, const QString &url, QWidget *parent = 0);
-    TOperationResult editLab(const TLabInfo &info, const TLabProject &webProject, QWidget *parent = 0);
+                            const TLabProject &winProject, const TProjectFileList &extraFiles, QWidget *parent = 0);
+    TOperationResult addLab(const TLabInfo &info, const QString &url, const TProjectFileList &extraFiles,
+                            QWidget *parent = 0);
+    TOperationResult editLab(const TLabInfo &info, const TLabProject &webProject, const QStringList &deletedExtraFiles,
+                             const TProjectFileList &newExtraFiles, QWidget *parent = 0);
     TOperationResult editLab(const TLabInfo &info, const TLabProject &linuxProject, const TLabProject &macProject,
-                             const TLabProject &winProject, QWidget *parent = 0);
-    TOperationResult editLab(const TLabInfo &info, const QString &url, QWidget *parent = 0);
+                             const TLabProject &winProject, const QStringList &deletedExtraFiles,
+                             const TProjectFileList &newExtraFiles, QWidget *parent = 0);
+    TOperationResult editLab(const TLabInfo &info, const QString &url, const QStringList &deletedExtraFiles,
+                             const TProjectFileList &newExtraFiles, QWidget *parent = 0);
     TOperationResult deleteLab(quint64 id, const QString &reason, QWidget *parent = 0);
     TOperationResult updateLabsList(bool full = false, QWidget *parent = 0);
     TOperationResult showLab(quint64 id, QWidget *parent = 0);
+    TOperationResult getExtraAttachedFile(quint64 labId, const QString &fileName, QWidget *parent = 0);
 public slots:
     void connectToServer();
     void reconnect();

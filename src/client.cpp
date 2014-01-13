@@ -14,6 +14,8 @@
 #include <TeXSample>
 #include <TInviteInfoList>
 #include <TIdList>
+#include <TProjectFile>
+#include <TProjectFileList>
 
 #include <BNetworkConnection>
 #include <BGenericSocket>
@@ -25,6 +27,7 @@
 #include <BSignalDelayProxy>
 #include <BOperationProgressDialog>
 #include <BTextTools>
+#include <BVersion>
 
 #include <QObject>
 #include <QString>
@@ -208,6 +211,68 @@ TOperationResult Client::recoverAccount(const QString &email, const QString &cod
     op->deleteLater();
     if (op->isError())
         return TOperationResult(TMessage::ClientOperationError);
+    return in.value("operation_result").value<TOperationResult>();
+}
+
+TOperationResult Client::checkForNewVersions(QWidget *parent)
+{
+    return checkForNewVersions(false, parent);
+}
+
+TOperationResult Client::checkForNewVersions(bool persistent, QWidget *parent)
+{
+    BNetworkConnection c(BGenericSocket::TcpSocket);
+    QString host = Global::host();
+    c.connectToHost(host.compare("auto_select") ? host : QString("texsample-server.no-ip.org"), Texsample::MainPort);
+    parent = chooseParent(parent);
+    if (!c.isConnected() && !c.waitForConnected(BeQt::Second / 2))
+    {
+        QProgressDialog pd(parent);
+        pd.setWindowTitle(tr("Connecting to server", "pdlg windowTitle"));
+        pd.setLabelText(tr("Connecting to server, please, wait...", "pdlg labelText"));
+        pd.setMinimum(0);
+        pd.setMaximum(0);
+        QTimer::singleShot(10 * BeQt::Second, &pd, SLOT(close()));
+        if (pd.exec() == QProgressDialog::Rejected)
+        {
+            c.close();
+            return TOperationResult(TMessage::ClientOperationCanceledError);
+        }
+    }
+    if (!c.isConnected())
+    {
+        c.close();
+        return TOperationResult(TMessage::ClientConnectionTimeoutError);
+    }
+    QVariantMap out;
+    out.insert("client_info", TClientInfo::createInfo());
+    BNetworkOperation *op = c.sendRequest(Texsample::GetLatestAppVersionRequest, out);
+    showProgressDialog(op, parent);
+    c.close();
+    QVariantMap in = op->variantData().toMap();
+    op->deleteLater();
+    if (op->isError())
+        return TOperationResult(TMessage::ClientOperationError);
+    BVersion ver = in.value("version").value<BVersion>();
+    QString url = in.value("url").toString();
+    QMessageBox msg(parent);
+    msg.setWindowTitle(tr("New version", "msgbox windowTitle"));
+    msg.setIcon(QMessageBox::Information);
+    msg.setStandardButtons(QMessageBox::Ok);
+    msg.setDefaultButton(QMessageBox::Ok);
+    if (ver.isValid() && ver > BVersion(QApplication::applicationVersion()))
+    {
+        msg.setText(tr("A new version of the application is available", "msgbox text")
+                    + " (v" + ver.toString(BVersion::Full) + "). " +
+                    tr("Click the following link to go to the download page:", "msgbox text")
+                    + " <a href=\"" + url + "\">" + tr("download", "msgbox text") + "</a>");
+        msg.exec();
+    }
+    else if (persistent)
+    {
+        msg.setText(tr("You are using the latest version.", "msgbox text"));
+        msg.exec();
+    }
     return in.value("operation_result").value<TOperationResult>();
 }
 
@@ -482,7 +547,8 @@ TOperationResult Client::getClabGroupsList(QStringList &list, QWidget *parent)
     return in.value("operation_result").value<TOperationResult>();
 }
 
-TOperationResult Client::addLab(const TLabInfo &info, const TLabProject &webProject, QWidget *parent)
+TOperationResult Client::addLab(const TLabInfo &info, const TLabProject &webProject,
+                                const TProjectFileList &extraFiles, QWidget *parent)
 {
     if (!isAuthorized())
         return TOperationResult(TMessage::NotAuthorizedError);
@@ -491,6 +557,7 @@ TOperationResult Client::addLab(const TLabInfo &info, const TLabProject &webProj
     QVariantMap out;
     out.insert("web_project", webProject);
     out.insert("lab_info", info);
+    out.insert("extra_files", extraFiles);
     BNetworkOperation *op = mconnection->sendRequest(Texsample::AddLabRequest, out);
     showProgressDialog(op, parent);
     QVariantMap in = op->variantData().toMap();
@@ -504,7 +571,7 @@ TOperationResult Client::addLab(const TLabInfo &info, const TLabProject &webProj
 }
 
 TOperationResult Client::addLab(const TLabInfo &info, const TLabProject &linuxProject, const TLabProject &macProject,
-                                const TLabProject &winProject, QWidget *parent)
+                                const TLabProject &winProject, const TProjectFileList &extraFiles, QWidget *parent)
 {
     if (!isAuthorized())
         return TOperationResult(TMessage::NotAuthorizedError);
@@ -519,6 +586,7 @@ TOperationResult Client::addLab(const TLabInfo &info, const TLabProject &linuxPr
     if (winProject.isValid())
         out.insert("win_project", winProject);
     out.insert("lab_info", info);
+    out.insert("extra_files", extraFiles);
     BNetworkOperation *op = mconnection->sendRequest(Texsample::AddLabRequest, out);
     showProgressDialog(op, parent);
     QVariantMap in = op->variantData().toMap();
@@ -531,7 +599,8 @@ TOperationResult Client::addLab(const TLabInfo &info, const TLabProject &linuxPr
     return r;
 }
 
-TOperationResult Client::addLab(const TLabInfo &info, const QString &url, QWidget *parent)
+TOperationResult Client::addLab(const TLabInfo &info, const QString &url, const TProjectFileList &extraFiles,
+                                QWidget *parent)
 {
     if (!isAuthorized())
         return TOperationResult(TMessage::NotAuthorizedError);
@@ -540,6 +609,7 @@ TOperationResult Client::addLab(const TLabInfo &info, const QString &url, QWidge
     QVariantMap out;
     out.insert("lab_url", url);
     out.insert("lab_info", info);
+    out.insert("extra_files", extraFiles);
     BNetworkOperation *op = mconnection->sendRequest(Texsample::AddLabRequest, out);
     showProgressDialog(op, parent);
     QVariantMap in = op->variantData().toMap();
@@ -552,7 +622,9 @@ TOperationResult Client::addLab(const TLabInfo &info, const QString &url, QWidge
     return r;
 }
 
-TOperationResult Client::editLab(const TLabInfo &info, const TLabProject &webProject, QWidget *parent)
+TOperationResult Client::editLab(const TLabInfo &info, const TLabProject &webProject,
+                                 const QStringList &deletedExtraFiles, const TProjectFileList &newExtraFiles,
+                                 QWidget *parent)
 {
     if (!isAuthorized())
         return TOperationResult(TMessage::NotAuthorizedError);
@@ -562,6 +634,8 @@ TOperationResult Client::editLab(const TLabInfo &info, const TLabProject &webPro
     if (webProject.isValid())
         out.insert("web_project", webProject);
     out.insert("lab_info", info);
+    out.insert("new_extra_files", newExtraFiles);
+    out.insert("deleted_extra_files", deletedExtraFiles);
     BNetworkOperation *op = mconnection->sendRequest(Texsample::EditLabRequest, out);
     showProgressDialog(op, parent);
     QVariantMap in = op->variantData().toMap();
@@ -575,7 +649,8 @@ TOperationResult Client::editLab(const TLabInfo &info, const TLabProject &webPro
 }
 
 TOperationResult Client::editLab(const TLabInfo &info, const TLabProject &linuxProject, const TLabProject &macProject,
-                                 const TLabProject &winProject, QWidget *parent)
+                                 const TLabProject &winProject, const QStringList &deletedExtraFiles,
+                                 const TProjectFileList &newExtraFiles, QWidget *parent)
 {
     if (!isAuthorized())
         return TOperationResult(TMessage::NotAuthorizedError);
@@ -589,6 +664,8 @@ TOperationResult Client::editLab(const TLabInfo &info, const TLabProject &linuxP
     if (winProject.isValid())
         out.insert("win_project", winProject);
     out.insert("lab_info", info);
+    out.insert("new_extra_files", newExtraFiles);
+    out.insert("deleted_extra_files", deletedExtraFiles);
     BNetworkOperation *op = mconnection->sendRequest(Texsample::EditLabRequest, out);
     showProgressDialog(op, parent);
     QVariantMap in = op->variantData().toMap();
@@ -601,7 +678,8 @@ TOperationResult Client::editLab(const TLabInfo &info, const TLabProject &linuxP
     return r;
 }
 
-TOperationResult Client::editLab(const TLabInfo &info, const QString &url, QWidget *parent)
+TOperationResult Client::editLab(const TLabInfo &info, const QString &url, const QStringList &deletedExtraFiles,
+                                 const TProjectFileList &newExtraFiles, QWidget *parent)
 {
     if (!isAuthorized())
         return TOperationResult(TMessage::NotAuthorizedError);
@@ -611,6 +689,8 @@ TOperationResult Client::editLab(const TLabInfo &info, const QString &url, QWidg
     if (!url.isEmpty())
         out.insert("lab_url", url);
     out.insert("lab_info", info);
+    out.insert("new_extra_files", newExtraFiles);
+    out.insert("deleted_extra_files", deletedExtraFiles);
     BNetworkOperation *op = mconnection->sendRequest(Texsample::EditLabRequest, out);
     showProgressDialog(op, parent);
     QVariantMap in = op->variantData().toMap();
@@ -719,11 +799,39 @@ TOperationResult Client::showLab(quint64 id, QWidget *)
     return TOperationResult(true);
 }
 
+TOperationResult Client::getExtraAttachedFile(quint64 labId, const QString &fileName, QWidget *)
+{
+    if (!isAuthorized())
+        return TOperationResult(TMessage::NotAuthorizedError);
+    if (!labId)
+        return TOperationResult(TMessage::InvalidLabIdError);
+    if (fileName.isEmpty())
+        return TOperationResult(TMessage::InvalidDataError);
+    QVariantMap out;
+    out.insert("lab_id", labId);
+    out.insert("file_name", fileName);
+    BNetworkOperation *op = mconnection->sendRequest(Texsample::GetLabExtraAttachedFileRequest, out);
+    showProgressDialog(op);
+    QVariantMap in = op->variantData().toMap();
+    op->deleteLater();
+    if (op->isError())
+        return TOperationResult(TMessage::ClientOperationError);
+    TOperationResult r = in.value("operation_result").value<TOperationResult>();
+    if (!r)
+        return r;
+    TProjectFile pf = in.value("file").value<TProjectFile>();
+    QString path = QDir::tempPath() + "/clab-client/files/" + BeQt::pureUuidText(QUuid::createUuid());
+    if (!pf.save(path))
+        return TOperationResult(TMessage::ClientFileSystemError);
+    QDesktopServices::openUrl(QUrl::fromLocalFile(path + "/" + pf.fileName()));
+    return TOperationResult(true);
+}
+
 /*============================== Public slots ==============================*/
 
 void Client::connectToServer()
 {
-    if (!canConnect() || (Global::encryptedPassword().isEmpty() && !Application::showPasswordDialog()))
+    if (!canConnect() || (Global::encryptedPassword().isEmpty() && !Application::showLoginDialog()))
         return;
     if (Global::encryptedPassword().isEmpty())
     {

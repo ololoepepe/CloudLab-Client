@@ -17,6 +17,8 @@
 #include <TRecoveryDialog>
 #include <TInvitesDialog>
 #include <TListWidget>
+#include <TProjectFile>
+#include <TProjectFileList>
 
 #include <BApplication>
 #include <BSettingsDialog>
@@ -136,6 +138,7 @@ EditLabDialog::EditLabDialog(quint64 id, QWidget *parent) :
     const TLabInfo *info = sModel->lab(id);
     if (!info)
         return;
+    initialFiles = info->extraAttachedFileNames();
     mlabwgt = new LabWidget(LabWidget::EditMode);
     setWindowTitle(tr("Editing lab:") + " " + info->title());
     mlabwgt->restoreState(bSettings->value("ClabWidget/lab_widget_state").toByteArray());
@@ -155,6 +158,11 @@ EditLabDialog::EditLabDialog(quint64 id, QWidget *parent) :
 LabWidget *EditLabDialog::labWidget() const
 {
     return mlabwgt;
+}
+
+QStringList EditLabDialog::initialExtraFiles() const
+{
+    return initialFiles;
 }
 
 /*============================== Protected methods =========================*/
@@ -919,17 +927,25 @@ void ClabWidget::addDialogFinished()
     {
         LabWidget *labwgt = maddDialog->labWidget();
         TLabInfo info = labwgt->info();
+        TProjectFileList extra;
+        foreach (const QString &fn, labwgt->extraAttachedFiles())
+        {
+            TProjectFile pf(fn, TProjectFile::Binary);
+            if (!pf.isValid())
+                return showAddingLabFailedMessage(tr("Failed to load file:") + " " + fn);
+            extra << pf;
+        }
         TOperationResult r;
         switch (info.type())
         {
         case TLabInfo::DesktopType:
-            r = sClient->addLab(info, labwgt->linuxProject(), labwgt->macProject(), labwgt->winProject(), this);
+            r = sClient->addLab(info, labwgt->linuxProject(), labwgt->macProject(), labwgt->winProject(), extra, this);
             break;
         case TLabInfo::WebType:
-            r = sClient->addLab(info, labwgt->webProject(), this);
+            r = sClient->addLab(info, labwgt->webProject(), extra, this);
             break;
         case TLabInfo::UrlType:
-            r = sClient->addLab(info, labwgt->url(), this);
+            r = sClient->addLab(info, labwgt->url(), extra, this);
             break;
         default:
             break;
@@ -951,17 +967,38 @@ void ClabWidget::editDialogFinished()
     {
         TLabInfo info = dlg->labWidget()->info();
         LabWidget *labwgt = dlg->labWidget();
+        QStringList initialFiles = dlg->initialExtraFiles();
+        QStringList extraFiles = labwgt->extraAttachedFiles();
+        QStringList deletedFiles;
+        foreach (int i, bRangeR(extraFiles.size() - 1, 0))
+        {
+            const QString &fn = extraFiles.at(i);
+            if (initialFiles.contains(fn))
+                extraFiles.removeAll(fn);
+        }
+        foreach (const QString &fn, initialFiles)
+            if (!extraFiles.contains(fn))
+                deletedFiles << fn;
+        TProjectFileList extra;
+        foreach (const QString &fn, extraFiles)
+        {
+            TProjectFile pf(fn, TProjectFile::Binary);
+            if (!pf.isValid())
+                return showEditingLabFailedMessage(tr("Failed to load file:") + " " + fn);
+            extra << pf;
+        }
         TOperationResult r;
         switch (info.type())
         {
         case TLabInfo::DesktopType:
-            r = sClient->editLab(info, labwgt->linuxProject(), labwgt->macProject(), labwgt->winProject(), this);
+            r = sClient->editLab(info, labwgt->linuxProject(), labwgt->macProject(), labwgt->winProject(),
+                                 deletedFiles, extra, this);
             break;
         case TLabInfo::WebType:
-            r = sClient->editLab(info, labwgt->webProject(), this);
+            r = sClient->editLab(info, labwgt->webProject(), deletedFiles, extra, this);
             break;
         case TLabInfo::UrlType:
-            r = sClient->editLab(info, labwgt->url(), this);
+            r = sClient->editLab(info, labwgt->url(), deletedFiles, extra, this);
             break;
         default:
             break;

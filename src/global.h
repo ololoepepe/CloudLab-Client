@@ -13,6 +13,7 @@ namespace Global
 
 //General
 void setMultipleWindowsEnabled(bool enabled);
+void setCheckForNewVersions(bool b);
 //TeXSample
 void setAutoconnection(bool enabled);
 void setHost(const QString &host);
@@ -25,6 +26,7 @@ void setPassword(const QByteArray &pwd, int charCountHint = 0);
 void setPassword(const QString &pwd);
 //General
 bool multipleWindowsEnabled();
+bool checkForNewVersions();
 //TeXSample
 bool hasTexsample();
 bool autoconnection();

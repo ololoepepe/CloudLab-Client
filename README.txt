@@ -2,9 +2,9 @@
  CloudLab Client
 ===============================================================================
 
-Homepage: https://github.com/the-dark-angel/CloudLab-Client
+Homepage: https://github.com/TeXSample-Team/CloudLab-Client
 
-Author: Andrey Bogdanov
+Author: TeXSample Team
 
 License: GNU LGPL (see COPYING.txt)
 
@@ -34,8 +34,8 @@ the corresponding plugin.
 
 See: http://qt-project.org/doc/qt-5.0/plugins-howto.html for details.
 
-You will also need BeQt libraries version 2.0.0 or higher
-and TeXSample library version 1.0.0 or higher.
+You will also need BeQt libraries version 3.1.0 or higher
+and TeXSample library version 1.1.0 or higher.
 
 See: https://github.com/the-dark-angel/BeQt
 and https://github.com/the-dark-angel/TeXSample for details.

@@ -43,5 +43,7 @@
         <file>icons/reload.png</file>
         <file>icons/reload.svgz</file>
         <file>pixmaps/main_developer_photo.png</file>
+        <file>icons/edit_add.png</file>
+        <file>icons/edit_add.svgz</file>
     </qresource>
 </RCC>

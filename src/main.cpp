@@ -1,8 +1,11 @@
 #include "applicationserver.h"
 #include "mainwindow.h"
 #include "application.h"
+#include "global.h"
+#include "client.h"
 
 #include <TeXSampleGlobal>
+#include <TOperationResult>
 
 #include <BVersion>
 #include <BApplication>
@@ -37,7 +40,7 @@ int main(int argc, char *argv[])
     tInit();
     QApplication app(argc, argv);
     QApplication::setApplicationName("CloudLab Client");
-    QApplication::setApplicationVersion("0.1.0-beta");
+    QApplication::setApplicationVersion("0.2.0-beta");
     QApplication::setOrganizationName("TeXSample Team");
     QApplication::setOrganizationDomain("https://github.com/TeXSample-Team/CloudLab-Client");
     QFont fnt = QApplication::font();
@@ -66,7 +69,7 @@ int main(int argc, char *argv[])
         Application::installTranslator(new BTranslator("texsample"));
         Application::installTranslator(new BTranslator("cloudlab-client"));
         BAboutDialog::setDefaultMinimumSize(800, 400);
-        Application::setApplicationCopyrightPeriod("2012-2013");
+        Application::setApplicationCopyrightPeriod("2013-2014");
         Application::setApplicationDescriptionFile(resource("description") + "/DESCRIPTION.txt");
         Application::setApplicationChangeLogFile(resource("changelog") + "/ChangeLog.txt");
         Application::setApplicationLicenseFile(resource("copying") + "/COPYING.txt");
@@ -76,6 +79,8 @@ int main(int argc, char *argv[])
         Application::aboutDialogInstance()->setupWithApplicationData();
         Application::createInitialWindow(args);
         Application::loadSettings();
+        if (Global::checkForNewVersions())
+            Client::checkForNewVersions();
         ret = app.exec();
         Application::saveSettings();
 #if defined(BUILTIN_RESOURCES)

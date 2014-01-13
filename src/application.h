@@ -40,7 +40,7 @@ public:
     static QWidget *mostSuitableWindow();
     static bool mergeWindows();
     static void handleExternalRequest(const QStringList &args);
-    static bool showPasswordDialog(QWidget *parent = 0);
+    static bool showLoginDialog(QWidget *parent = 0);
     static bool showRegisterDialog(QWidget *parent = 0);
     static bool showSettings(QWidget *parent = 0);
 protected:
