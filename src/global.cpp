@@ -21,6 +21,11 @@ void setMultipleWindowsEnabled(bool enabled)
     bSettings->setValue("Core/multiple_windows_enabled", enabled);
 }
 
+void setCheckForNewVersions(bool b)
+{
+    bSettings->setValue("Core/check_for_new_versions", b);
+}
+
 //TeXSample
 
 void setAutoconnection(bool enabled)
@@ -73,6 +78,11 @@ void setPassword(const QString &pwd)
 bool multipleWindowsEnabled()
 {
     return bSettings->value("Core/multiple_windows_enabled", true).toBool();
+}
+
+bool checkForNewVersions()
+{
+    return bSettings->value("Core/check_for_new_versions", true).toBool();
 }
 
 //TeXSample

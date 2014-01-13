@@ -1,6 +1,8 @@
 #ifndef LABWIDGET_H
 #define LABWIDGET_H
 
+class FilesWidget;
+
 class TLabInfo;
 class TLabProject;
 class TTagsWidget;
@@ -9,18 +11,72 @@ class TListWidget;
 class BInputField;
 
 class QLineEdit;
-class QLabel;
 class QComboBox;
 class QSpinBox;
-class QString;
 class QPlainTextEdit;
 class QHBoxLayout;
 class QPushButton;
 class QButtonGroup;
+class QVBoxLayout;
+class QLabel;
+class QToolButton;
+class QSignalMapper;
+
+#include <BTranslation>
 
 #include <QDialog>
 #include <QVariantMap>
 #include <QMap>
+#include <QString>
+
+/*============================================================================
+================================ FilesWidget =================================
+============================================================================*/
+
+class FilesWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit FilesWidget(bool readOnly, QWidget *parent = 0);
+public:
+    void addFile(const QString &fn);
+    void addFiles(const QStringList &list);
+    QStringList files() const;
+    bool isReadOnly() const;
+signals:
+    void getFile(const QString &fileName);
+private:
+    void deleteLastDeleted();
+private slots:
+    void mapped(const QString &fn);
+    void addFile();
+private:
+    struct Line
+    {
+        QHBoxLayout *hlt;
+        QLabel *lbl;
+        QToolButton *tbtn;
+        bool deleted;
+    public:
+        Line();
+    };
+private:
+    static const BTranslation deleteToolTip;
+    static const BTranslation undeleteToolTip;
+private:
+    static QString labelText(const QString &fileName);
+private:
+    const bool ReadOnly;
+private:
+    QSignalMapper *mapper;
+    bool hasDeleted;
+    QVBoxLayout *vlt;
+    QMap<QString, Line> lines;
+    QToolButton *tbtn;
+    QString lastDir;
+private:
+    Q_DISABLE_COPY(FilesWidget)
+};
 
 /*============================================================================
 ================================ LabWidget ===================================
@@ -51,6 +107,7 @@ public:
     TLabProject macProject() const;
     TLabProject winProject() const;
     QString url() const;
+    QStringList extraAttachedFiles() const;
     QStringList clabGroups() const;
     QByteArray saveState() const;
     bool isValid() const;
@@ -62,6 +119,7 @@ private slots:
     void showSenderInfo();
     void cmboxTypeCurrentIndexChanged(int index);
     void selectFile(int id);
+    void getFile(const QString &fileName);
 signals:
     void validityChanged(bool valid);
 private:
@@ -88,6 +146,7 @@ private:
     QMap<int, QHBoxLayout *> mhltFile;
     QMap<int, QLineEdit *> mledtFile;
     QPushButton *mbtnSearch;
+    FilesWidget *flswgt;
 };
 
 #endif // LABWIDGET_H

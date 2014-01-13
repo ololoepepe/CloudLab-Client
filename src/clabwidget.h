@@ -59,10 +59,12 @@ public:
     explicit EditLabDialog(quint64 id, QWidget *parent = 0);
 public:
     LabWidget *labWidget() const;
+    QStringList initialExtraFiles() const;
 protected:
     void closeEvent(QCloseEvent *e);
 private:
     LabWidget *mlabwgt;
+    QStringList initialFiles;
 private:
     Q_DISABLE_COPY(EditLabDialog)
 };
