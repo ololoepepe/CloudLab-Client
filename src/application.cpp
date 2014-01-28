@@ -17,6 +17,7 @@
 #include <BTranslation>
 #include <BLoginWidget>
 #include <BDirTools>
+#include <BVersion>
 
 #include <QObject>
 #include <QVariantMap>
@@ -39,6 +40,9 @@
 #include <QCheckBox>
 #include <QSettings>
 #include <QDir>
+#include <QFuture>
+#include <QFutureWatcher>
+#include <QtConcurrentRun>
 
 #include <QDebug>
 
@@ -367,6 +371,18 @@ bool Application::showRegisterDialog(QWidget *parent)
     return false;
 }
 
+void Application::checkForNewVersions(bool persistent)
+{
+    typedef QFuture<Client::CheckForNewVersionsResult> Future;
+    typedef QFutureWatcher<Client::CheckForNewVersionsResult> Watcher;
+    if (!testAppInit())
+        return;
+    Future f = QtConcurrent::run(&Client::checkForNewVersions, persistent);
+    Watcher *w = new Watcher;
+    w->setFuture(f);
+    connect(w, SIGNAL(finished()), bApp, SLOT(checkingForNewVersionsFinished()));
+}
+
 /*============================== Protected methods =========================*/
 
 QList<BAbstractSettingsTab *> Application::createSettingsTabs() const
@@ -400,4 +416,35 @@ void Application::addMainWindow(const QStringList &)
 void Application::mainWindowDestroyed(QObject *obj)
 {
     mmainWindows.remove(obj);
+}
+
+void Application::checkingForNewVersionsFinished()
+{
+    typedef QFutureWatcher<Client::CheckForNewVersionsResult> Watcher;
+    Watcher *w = dynamic_cast<Watcher *>(sender());
+    if (!w)
+        return;
+    Client::CheckForNewVersionsResult r = w->result();
+    delete w;
+    QMessageBox msg(mostSuitableWindow());
+    msg.setWindowTitle(tr("New version", "msgbox windowTitle"));
+    msg.setIcon(QMessageBox::Information);
+    msg.setStandardButtons(QMessageBox::Ok);
+    msg.setDefaultButton(QMessageBox::Ok);
+    if (r.version.isValid() && r.version > BVersion(QApplication::applicationVersion()))
+    {
+        msg.setText(tr("A new version of the application is available", "msgbox text")
+                    + " (v" + r.version.toString(BVersion::Full) + "). " +
+                    tr("Click the following link to go to the download page:", "msgbox text")
+                    + " <a href=\"" + r.url + "\">" + tr("download", "msgbox text") + "</a>");
+        msg.setInformativeText(tr("You should always use the latest application version. "
+                                  "Bugs are fixed and new features are implemented in new versions.",
+                                  "msgbox informativeText"));
+        msg.exec();
+    }
+    else if (r.persistent)
+    {
+        msg.setText(tr("You are using the latest version.", "msgbox text"));
+        msg.exec();
+    }
 }

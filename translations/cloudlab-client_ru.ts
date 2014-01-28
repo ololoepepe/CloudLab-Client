@@ -18,85 +18,121 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../src/application.cpp" line="163"/>
+        <location filename="../src/application.cpp" line="167"/>
         <source>TeXSample configuration</source>
         <comment>msgbox windowTitle</comment>
         <translation>Настройка TeXSample</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="165"/>
+        <location filename="../src/application.cpp" line="169"/>
         <source>It seems that you have not configured TeXSample service yet.
 Would you like to do it now?</source>
         <comment>msgbox text</comment>
         <translation>Похоже, что вы ещё не настроили сервис TeXSample. Хотите сделать это сейчас?</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="167"/>
+        <location filename="../src/application.cpp" line="171"/>
         <source>To remove this notification, you have to configure the service</source>
         <comment>msgbox informativeText</comment>
         <translation>Чтобы убрать это уведомление, вам необходимо настроить сервис</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="169"/>
+        <location filename="../src/application.cpp" line="173"/>
         <source>Register</source>
         <comment>btn text</comment>
         <translation>Зарегистрироваться</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="170"/>
+        <location filename="../src/application.cpp" line="174"/>
         <source>I have an account</source>
         <comment>btn text</comment>
         <translation>У меня есть аккаунт</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="235"/>
+        <location filename="../src/application.cpp" line="239"/>
         <source>Auto select</source>
         <translation>Автоматический выбор</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="237"/>
+        <location filename="../src/application.cpp" line="241"/>
         <source>Logging in</source>
         <comment>windowTitle</comment>
         <translation>Вход в систему</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="279"/>
+        <location filename="../src/application.cpp" line="283"/>
         <source>Updating account</source>
         <comment>dlg windowTitle</comment>
         <translation>Обновление аккаунта</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="310"/>
+        <location filename="../src/application.cpp" line="314"/>
         <source>Changing account failed</source>
         <comment>msgbox windowTitle</comment>
         <translation>Изменение аккаунта не удалось</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="312"/>
+        <location filename="../src/application.cpp" line="316"/>
         <source>The following error occured:</source>
         <comment>msgbox text</comment>
         <translation>Произошла следующая ошибка:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="325"/>
+        <location filename="../src/application.cpp" line="329"/>
         <source>Registration</source>
         <comment>dlg windowTitle</comment>
         <translation>Регистрация</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="357"/>
+        <location filename="../src/application.cpp" line="361"/>
         <source>Registration error</source>
         <comment>msgbox windowTitle</comment>
         <translation>Ошибка регистрации</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="359"/>
+        <location filename="../src/application.cpp" line="363"/>
         <source>Failed to register due to the following error:</source>
         <comment>msgbox text</comment>
         <translation>Не удалось зарегистрироваться из-за следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="171"/>
+        <location filename="../src/application.cpp" line="430"/>
+        <source>New version</source>
+        <comment>msgbox windowTitle</comment>
+        <translation>Новая версия</translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="436"/>
+        <source>A new version of the application is available</source>
+        <comment>msgbox text</comment>
+        <translation>Доступна новая версия приложения</translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="438"/>
+        <source>Click the following link to go to the download page:</source>
+        <comment>msgbox text</comment>
+        <translation>Кликните по следующей ссылке чтобы перейти на страницу загрузки:</translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="439"/>
+        <source>download</source>
+        <comment>msgbox text</comment>
+        <translation>скачать</translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="440"/>
+        <source>You should always use the latest application version. Bugs are fixed and new features are implemented in new versions.</source>
+        <comment>msgbox informativeText</comment>
+        <translation>Вам следует всегда использовать самую новую версию приложения. В новых версиях исправляются ошибки и добавляются новые возможности.</translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="447"/>
+        <source>You are using the latest version.</source>
+        <comment>msgbox text</comment>
+        <translation>Вы используете самую новую версию.</translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="175"/>
         <source>Not right now</source>
         <comment>btn text</comment>
         <translation>Не сейчас</translation>
@@ -471,7 +507,6 @@ Would you like to do it now?</source>
         <location filename="../src/client.cpp" line="105"/>
         <location filename="../src/client.cpp" line="145"/>
         <location filename="../src/client.cpp" line="186"/>
-        <location filename="../src/client.cpp" line="231"/>
         <source>Connecting to server</source>
         <comment>pdlg windowTitle</comment>
         <translation>Подключение к серверу</translation>
@@ -480,79 +515,48 @@ Would you like to do it now?</source>
         <location filename="../src/client.cpp" line="106"/>
         <location filename="../src/client.cpp" line="146"/>
         <location filename="../src/client.cpp" line="187"/>
-        <location filename="../src/client.cpp" line="232"/>
         <source>Connecting to server, please, wait...</source>
         <comment>pdlg labelText</comment>
         <translation>Подключаемся к серверу, пожалуйста, ждите...</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="259"/>
-        <source>New version</source>
-        <comment>msgbox windowTitle</comment>
-        <translation>Новая версия</translation>
-    </message>
-    <message>
-        <location filename="../src/client.cpp" line="265"/>
-        <source>A new version of the application is available</source>
-        <comment>msgbox text</comment>
-        <translation>Доступна новая версия приложения</translation>
-    </message>
-    <message>
-        <location filename="../src/client.cpp" line="267"/>
-        <source>Click the following link to go to the download page:</source>
-        <comment>msgbox text</comment>
-        <translation>Кликните по следующей ссылке чтобы перейти на страницу загрузки:</translation>
-    </message>
-    <message>
-        <location filename="../src/client.cpp" line="268"/>
-        <source>download</source>
-        <comment>msgbox text</comment>
-        <translation>скачать</translation>
-    </message>
-    <message>
-        <location filename="../src/client.cpp" line="273"/>
-        <source>You are using the latest version.</source>
-        <comment>msgbox text</comment>
-        <translation>Вы используете самую новую версию.</translation>
-    </message>
-    <message>
-        <location filename="../src/client.cpp" line="786"/>
+        <location filename="../src/client.cpp" line="760"/>
         <source>Lab</source>
         <comment>wgt windowTitle</comment>
         <translation>Лаб. работа</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="839"/>
+        <location filename="../src/client.cpp" line="813"/>
         <source>No password</source>
         <comment>msgbox windowTitle</comment>
         <translation>Отсутствует пароль</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="841"/>
+        <location filename="../src/client.cpp" line="815"/>
         <source>You have not specified your password</source>
         <comment>msgbox text</comment>
         <translation>Вы не указали пароль</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="842"/>
+        <location filename="../src/client.cpp" line="816"/>
         <source>You can&apos;t connect without password</source>
         <comment>msgbox informativeText</comment>
         <translation>Вы не можете подключиться без пароля</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="886"/>
+        <location filename="../src/client.cpp" line="860"/>
         <source>Executing request...</source>
         <comment>opdlg windowTitle</comment>
         <translation>Выполняется запрос...</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="899"/>
+        <location filename="../src/client.cpp" line="873"/>
         <source>TeXSample connection error</source>
         <comment>msgbox windowTitle</comment>
         <translation>Ошибка соединения TeXSample</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="901"/>
+        <location filename="../src/client.cpp" line="875"/>
         <source>The following connection error occured:</source>
         <comment>msgbox text</comment>
         <translation>Произошла следующая ошибка соединения:</translation>
@@ -608,37 +612,37 @@ Would you like to do it now?</source>
 <context>
     <name>GeneralSettingsTab</name>
     <message>
-        <location filename="../src/application.cpp" line="80"/>
+        <location filename="../src/application.cpp" line="84"/>
         <source>language</source>
         <comment>lbl text</comment>
         <translation>язык</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="83"/>
+        <location filename="../src/application.cpp" line="87"/>
         <source>Enable multiple windows:</source>
         <comment>lbl text</comment>
         <translation>Разрешить несколько окон:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="86"/>
+        <location filename="../src/application.cpp" line="90"/>
         <source>Check for new versions:</source>
         <comment>lbl text</comment>
         <translation>Поверять наличие новых версий:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="93"/>
+        <location filename="../src/application.cpp" line="97"/>
         <source>General</source>
         <comment>title</comment>
         <translation>Основное</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="117"/>
+        <location filename="../src/application.cpp" line="121"/>
         <source>Failed to change settings</source>
         <comment>msgbox windowTitle</comment>
         <translation>Не удалось изменить настройки</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="119"/>
+        <location filename="../src/application.cpp" line="123"/>
         <source>Can&apos;t disable multiple windows: some error occured</source>
         <comment>msgbox text</comment>
         <translation>Невозможно запретить использование нескольких окон: произошла какая-то ошибка</translation>

@@ -43,6 +43,7 @@ public:
     static bool showLoginDialog(QWidget *parent = 0);
     static bool showRegisterDialog(QWidget *parent = 0);
     static bool showSettings(QWidget *parent = 0);
+    static void checkForNewVersions(bool persistent = false);
 protected:
     QList<BAbstractSettingsTab *> createSettingsTabs() const;
 private:
@@ -51,6 +52,7 @@ private:
     void addMainWindow(const QStringList &fileNames = QStringList());
 private slots:
     void mainWindowDestroyed(QObject *obj);
+    void checkingForNewVersionsFinished();
 private:
     bool minitialWindowCreated;
     QMap<QObject *, MainWindow *> mmainWindows;
