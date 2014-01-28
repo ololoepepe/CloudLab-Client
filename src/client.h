@@ -1,7 +1,6 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-class TOperationResult;
 class TLabInfo;
 class TService;
 class TIdList;
@@ -17,6 +16,9 @@ class BSignalDelayProxy;
 #include <TAccessLevel>
 #include <TLabInfoList>
 #include <TServiceList>
+#include <TOperationResult>
+
+#include <BVersion>
 
 #include <QObject>
 #include <QAbstractSocket>
@@ -50,14 +52,21 @@ public:
         DisconnectingState
     };
 public:
+    struct CheckForNewVersionsResult
+    {
+        bool persistent;
+        TOperationResult result;
+        BVersion version;
+        QString url;
+    };
+public:
     static Client *instance();
     static bool hasAccessToService(const TService &s);
     static TOperationResult registerUser(const TUserInfo &info, QWidget *parent = 0);
     static TOperationResult getRecoveryCode(const QString &email, QWidget *parent = 0);
     static TOperationResult recoverAccount(const QString &email, const QString &code, const QByteArray &password,
                                            QWidget *parent = 0);
-    static TOperationResult checkForNewVersions(QWidget *parent = 0);
-    static TOperationResult checkForNewVersions(bool persistent, QWidget *parent = 0);
+    static CheckForNewVersionsResult checkForNewVersions(bool persistent = false);
     static TOperationResult generateInvites(TInviteInfoList &invites, const QDateTime &expiresDT, quint8 count,
                                             const TServiceList &services, const QStringList &clabGroups,
                                             QWidget *parent = 0);

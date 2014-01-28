@@ -1,3 +1,7 @@
+=== CloudLab Client 0.2.1-beta (28 January 2013) ===
+    * Make application version check asynchronous
+    * Assign valid working directory to process when executing labs
+
 === CloudLab Client 0.2.0-beta (13 January 2013) ===
     * Fix password saving in login/password dialog
     * Update copyright years

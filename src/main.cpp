@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     tInit();
     QApplication app(argc, argv);
     QApplication::setApplicationName("CloudLab Client");
-    QApplication::setApplicationVersion("0.2.0-beta");
+    QApplication::setApplicationVersion("0.2.1-beta");
     QApplication::setOrganizationName("TeXSample Team");
     QApplication::setOrganizationDomain("https://github.com/TeXSample-Team/CloudLab-Client");
     QFont fnt = QApplication::font();
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
         Application::createInitialWindow(args);
         Application::loadSettings();
         if (Global::checkForNewVersions())
-            Client::checkForNewVersions();
+            Application::checkForNewVersions();
         ret = app.exec();
         Application::saveSettings();
 #if defined(BUILTIN_RESOURCES)
