@@ -885,7 +885,7 @@ void ClabWidget::tblvwDoubleClicked(const QModelIndex &index)
 
 void ClabWidget::tblvwCustomContextMenuRequested(const QPoint &pos)
 {
-    mlastId = sModel->indexAt(mtblvw->indexAt(pos).row());
+    mlastId = sModel->indexAt(mproxyModel->mapToSource(mtblvw->indexAt(pos)).row());
     if (!mlastId)
         return;
     QMenu mnu;

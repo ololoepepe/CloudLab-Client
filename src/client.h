@@ -62,6 +62,8 @@ public:
 public:
     static Client *instance();
     static bool hasAccessToService(const TService &s);
+    static TOperationResult checkEmail(const QString &email, bool &free, QWidget *parent = 0);
+    static TOperationResult checkLogin(const QString &login, bool &free, QWidget *parent = 0);
     static TOperationResult registerUser(const TUserInfo &info, QWidget *parent = 0);
     static TOperationResult getRecoveryCode(const QString &email, QWidget *parent = 0);
     static TOperationResult recoverAccount(const QString &email, const QString &code, const QByteArray &password,
