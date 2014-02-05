@@ -1,8 +1,13 @@
-=== CloudLab Client 0.2.1-beta (28 January 2013) ===
+=== CloudLab Client 0.3.0-beta (05 February 2014) ===
+    * Fix lab mapping when search filters are applied
+    * Use TeXSample 1.2.0
+    * Add ability to check e-mail and login when registering
+
+=== CloudLab Client 0.2.1-beta (28 January 2014) ===
     * Make application version check asynchronous
     * Assign valid working directory to process when executing labs
 
-=== CloudLab Client 0.2.0-beta (13 January 2013) ===
+=== CloudLab Client 0.2.0-beta (13 January 2014) ===
     * Fix password saving in login/password dialog
     * Update copyright years
     * Update README

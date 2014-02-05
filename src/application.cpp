@@ -328,7 +328,7 @@ bool Application::showRegisterDialog(QWidget *parent)
     QDialog dlg(parent ? parent : mostSuitableWindow());
     dlg.setWindowTitle(tr("Registration", "dlg windowTitle"));
     QVBoxLayout *vlt = new QVBoxLayout(&dlg);
-      TUserWidget *uwgt = new TUserWidget(TUserWidget::RegisterMode);
+      TUserWidget *uwgt = new TUserWidget(&Client::checkEmail, &Client::checkLogin);
         uwgt->restorePasswordWidgetState(Global::passwordWidgetState());
       vlt->addWidget(uwgt);
       vlt->addStretch();

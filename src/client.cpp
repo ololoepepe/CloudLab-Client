@@ -91,6 +91,82 @@ bool Client::hasAccessToService(const TService &s)
     return instance()->mservices.contains(s);
 }
 
+TOperationResult Client::checkEmail(const QString &email, bool &free, QWidget *parent)
+{
+    BNetworkConnection c(BGenericSocket::TcpSocket);
+    QString host = Global::host();
+    c.connectToHost(host.compare("auto_select") ? host : QString("texsample-server.no-ip.org"), Texsample::MainPort);
+    parent = chooseParent(parent);
+    if (!c.isConnected() && !c.waitForConnected(BeQt::Second / 2))
+    {
+        QProgressDialog pd(parent);
+        pd.setWindowTitle(tr("Connecting to server", "pdlg windowTitle"));
+        pd.setLabelText(tr("Connecting to server, please, wait...", "pdlg labelText"));
+        pd.setMinimum(0);
+        pd.setMaximum(0);
+        QTimer::singleShot(10 * BeQt::Second, &pd, SLOT(close()));
+        if (pd.exec() == QProgressDialog::Rejected)
+        {
+            c.close();
+            return TOperationResult(TMessage::ClientOperationCanceledError);
+        }
+    }
+    if (!c.isConnected())
+    {
+        c.close();
+        return TOperationResult(TMessage::ClientConnectionTimeoutError);
+    }
+    QVariantMap out;
+    out.insert("email", email);
+    BNetworkOperation *op = c.sendRequest(Texsample::CheckEmailRequest, out);
+    showProgressDialog(op, parent);
+    c.close();
+    QVariantMap in = op->variantData().toMap();
+    op->deleteLater();
+    if (op->isError())
+        return TOperationResult(TMessage::ClientOperationError);
+    free = in.value("free").toBool();
+    return in.value("operation_result").value<TOperationResult>();
+}
+
+TOperationResult Client::checkLogin(const QString &login, bool &free, QWidget *parent)
+{
+    BNetworkConnection c(BGenericSocket::TcpSocket);
+    QString host = Global::host();
+    c.connectToHost(host.compare("auto_select") ? host : QString("texsample-server.no-ip.org"), Texsample::MainPort);
+    parent = chooseParent(parent);
+    if (!c.isConnected() && !c.waitForConnected(BeQt::Second / 2))
+    {
+        QProgressDialog pd(parent);
+        pd.setWindowTitle(tr("Connecting to server", "pdlg windowTitle"));
+        pd.setLabelText(tr("Connecting to server, please, wait...", "pdlg labelText"));
+        pd.setMinimum(0);
+        pd.setMaximum(0);
+        QTimer::singleShot(10 * BeQt::Second, &pd, SLOT(close()));
+        if (pd.exec() == QProgressDialog::Rejected)
+        {
+            c.close();
+            return TOperationResult(TMessage::ClientOperationCanceledError);
+        }
+    }
+    if (!c.isConnected())
+    {
+        c.close();
+        return TOperationResult(TMessage::ClientConnectionTimeoutError);
+    }
+    QVariantMap out;
+    out.insert("login", login);
+    BNetworkOperation *op = c.sendRequest(Texsample::CheckLoginRequest, out);
+    showProgressDialog(op, parent);
+    c.close();
+    QVariantMap in = op->variantData().toMap();
+    op->deleteLater();
+    if (op->isError())
+        return TOperationResult(TMessage::ClientOperationError);
+    free = in.value("free").toBool();
+    return in.value("operation_result").value<TOperationResult>();
+}
+
 TOperationResult Client::registerUser(const TUserInfo &info, QWidget *parent)
 {
     if (!info.isValid(TUserInfo::RegisterContext))
@@ -230,7 +306,7 @@ Client::CheckForNewVersionsResult Client::checkForNewVersions(bool persistent)
     QVariantMap out;
     out.insert("client_info", TClientInfo::createInfo());
     BNetworkOperation *op = c.sendRequest(Texsample::GetLatestAppVersionRequest, out);
-    if (!op->isFinished() || !op->waitForFinished(10 * BeQt::Second))
+    if (!op->isFinished() && !op->waitForFinished(10 * BeQt::Second))
     {
         op->cancel();
         r.result = TOperationResult(TMessage::ClientOperationCanceledError);
