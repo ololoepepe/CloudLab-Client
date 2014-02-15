@@ -38,7 +38,8 @@ SOURCES += \
     labwidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    texsamplesettingstab.cpp
+    texsamplesettingstab.cpp \
+    networksettingstab.cpp
 
 HEADERS += \
     application.h \
@@ -50,7 +51,8 @@ HEADERS += \
     labsproxymodel.h \
     labwidget.h \
     mainwindow.h \
-    texsamplesettingstab.h
+    texsamplesettingstab.h \
+    networksettingstab.h
 
 TRANSLATIONS += \
     ../translations/cloudlab-client_ru.ts

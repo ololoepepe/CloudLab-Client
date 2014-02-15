@@ -3,13 +3,21 @@
 
 class BPassword;
 
-class QString;
 class QByteArray;
 
 #include <QStringList>
+#include <QMap>
+#include <QString>
 
 namespace Global
 {
+
+enum ProxyMode
+{
+    NoProxy = 0,
+    SystemProxy,
+    UserProxy
+};
 
 //General
 void setMultipleWindowsEnabled(bool enabled);
@@ -24,6 +32,12 @@ void setPasswordState(const QByteArray &state);
 void setPassword(const BPassword &pwd);
 void setPassword(const QByteArray &pwd, int charCountHint = 0);
 void setPassword(const QString &pwd);
+//Network
+void setProxyMode(ProxyMode m);
+void setProxyHost(const QString &host);
+void setProxyPort(int p);
+void setProxyLogin(const QString &login);
+void setProxyPassword(const QString &pwd);
 //General
 bool multipleWindowsEnabled();
 bool checkForNewVersions();
@@ -39,6 +53,12 @@ BPassword password();
 QByteArray encryptedPassword(int *charCountHint = 0);
 void savePasswordState();
 void loadPasswordState();
+//Network
+ProxyMode proxyMode();
+QString proxyHost();
+int proxyPort();
+QString proxyLogin();
+QString proxyPassword();
 
 }
 

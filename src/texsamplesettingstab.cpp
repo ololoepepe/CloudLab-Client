@@ -35,6 +35,7 @@
 TexsampleSettingsTab::TexsampleSettingsTab() :
     BAbstractSettingsTab()
 {
+    autoSelectText = tr("Auto select");
     QVBoxLayout *vlt = new QVBoxLayout(this);
       QGroupBox *gbox = new QGroupBox(tr("Connection", "gbox title"), this);
         QFormLayout *flt = new QFormLayout;
@@ -89,20 +90,8 @@ bool TexsampleSettingsTab::restoreDefault()
 bool TexsampleSettingsTab::saveSettings()
 {
     QString nhost = mcmboxHost->currentText();
-    if (autoSelectText() == nhost)
+    if (autoSelectText == nhost)
         nhost = "auto_select";
-    /*if (Global::hasTexsample() && Global::host() != nhost)
-    {
-        QMessageBox msg(this);
-        msg.setWindowTitle( tr("Confirmation", "msgbox windowTitle") );
-        msg.setIcon(QMessageBox::Question);
-        msg.setText(tr("You are going to change server address. All cached files will be removed.", "msgbox text"));
-        msg.setInformativeText( tr("Are you absolutely sure?", "msgbox informativeText") );
-        msg.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msg.setDefaultButton(QMessageBox::Yes);
-        if (msg.exec() != QMessageBox::Yes)
-            return false;
-    }*/
     Global::setAutoconnection(mcboxAutoconnection->isChecked());
     Global::setHost(nhost);
     Global::setHostHistory(updateHostHistory());
@@ -113,18 +102,11 @@ bool TexsampleSettingsTab::saveSettings()
     return true;
 }
 
-/*============================== Static private methods ====================*/
-
-QString TexsampleSettingsTab::autoSelectText()
-{
-    return tr("Auto select");
-}
-
 /*============================== Private methods ===========================*/
 
 QStringList TexsampleSettingsTab::updateHostHistory(const QStringList &history)
 {
-    QStringList list = QStringList() << autoSelectText();
+    QStringList list = QStringList() << autoSelectText;
     if (history.isEmpty())
     {
         list << mcmboxHost->currentText();

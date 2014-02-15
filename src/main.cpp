@@ -60,6 +60,7 @@ int main(int argc, char *argv[])
         Q_INIT_RESOURCE(clab_client_translations);
 #endif
         Application bapp;
+        Application::resetProxy();
         Q_UNUSED(bapp)
         Application::setThemedIconsEnabled(false);
         Application::setPreferredIconFormats(QStringList() << "png");

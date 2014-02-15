@@ -73,6 +73,37 @@ void setPassword(const QString &pwd)
     setPassword(BPassword(pwd));
 }
 
+//Network
+
+void setProxyMode(ProxyMode m)
+{
+    if (!bRangeD(NoProxy, UserProxy).contains(m))
+        return;
+    bSettings->setValue("Network/Proxy/mode", (int) m);
+}
+
+void setProxyHost(const QString &host)
+{
+    bSettings->setValue("Network/Proxy/host", host);
+}
+
+void setProxyPort(int p)
+{
+    if (p < 0)
+        return;
+    bSettings->setValue("Network/Proxy/port", p);
+}
+
+void setProxyLogin(const QString &login)
+{
+    bSettings->setValue("Network/Proxy/login", login);
+}
+
+void setProxyPassword(const QString &pwd)
+{
+    bSettings->setValue("Network/Proxy/password", pwd);
+}
+
 //General
 
 bool multipleWindowsEnabled()
@@ -146,6 +177,37 @@ void savePasswordState()
 void loadPasswordState()
 {
     pwdState = bSettings->value("TeXSample/Client/password_state").toByteArray();
+}
+
+//Network
+
+ProxyMode proxyMode()
+{
+    bool ok = false;
+    int m = bSettings->value("Network/Proxy/mode").toInt(&ok);
+    return (ok && bRangeD(NoProxy, UserProxy).contains(m)) ? static_cast<ProxyMode>(m) : NoProxy;
+}
+
+QString proxyHost()
+{
+    return bSettings->value("Network/Proxy/host").toString();
+}
+
+int proxyPort()
+{
+    bool ok = false;
+    int p = bSettings->value("Network/Proxy/port").toInt(&ok);
+    return (ok && p >= 0) ? p : 0;
+}
+
+QString proxyLogin()
+{
+    return bSettings->value("Network/Proxy/login").toString();
+}
+
+QString proxyPassword()
+{
+    return bSettings->value("Network/Proxy/password").toString();
 }
 
 }

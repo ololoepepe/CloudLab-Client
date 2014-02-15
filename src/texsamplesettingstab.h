@@ -3,7 +3,6 @@
 
 class BPasswordWidget;
 
-class QString;
 class QIcon;
 class QCheckBox;
 class QLineEdit;
@@ -17,6 +16,7 @@ class QToolButton;
 #include <QObject>
 #include <QVariantMap>
 #include <QStringList>
+#include <QString>
 
 /*============================================================================
 ================================ TexsampleSettingsTab ========================
@@ -33,13 +33,12 @@ public:
     bool restoreDefault();
     bool saveSettings();
 private:
-    static QString autoSelectText();
-private:
     QStringList updateHostHistory(const QStringList &history = QStringList());
 private slots:
     void removeCurrentHostFromHistory();
     void cmboxHostCurrentIndexChanged(int index);
 private:
+    QString autoSelectText;
     QHBoxLayout *mhltHost;
       QComboBox *mcmboxHost;
       QToolButton *mtbtnRemoveFromHistory;
