@@ -18,121 +18,121 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../src/application.cpp" line="167"/>
+        <location filename="../src/application.cpp" line="186"/>
         <source>TeXSample configuration</source>
         <comment>msgbox windowTitle</comment>
         <translation>Настройка TeXSample</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="169"/>
+        <location filename="../src/application.cpp" line="188"/>
         <source>It seems that you have not configured TeXSample service yet.
 Would you like to do it now?</source>
         <comment>msgbox text</comment>
         <translation>Похоже, что вы ещё не настроили сервис TeXSample. Хотите сделать это сейчас?</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="171"/>
+        <location filename="../src/application.cpp" line="190"/>
         <source>To remove this notification, you have to configure the service</source>
         <comment>msgbox informativeText</comment>
         <translation>Чтобы убрать это уведомление, вам необходимо настроить сервис</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="173"/>
+        <location filename="../src/application.cpp" line="192"/>
         <source>Register</source>
         <comment>btn text</comment>
         <translation>Зарегистрироваться</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="174"/>
+        <location filename="../src/application.cpp" line="193"/>
         <source>I have an account</source>
         <comment>btn text</comment>
         <translation>У меня есть аккаунт</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="239"/>
+        <location filename="../src/application.cpp" line="258"/>
         <source>Auto select</source>
         <translation>Автоматический выбор</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="241"/>
+        <location filename="../src/application.cpp" line="260"/>
         <source>Logging in</source>
         <comment>windowTitle</comment>
         <translation>Вход в систему</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="283"/>
+        <location filename="../src/application.cpp" line="302"/>
         <source>Updating account</source>
         <comment>dlg windowTitle</comment>
         <translation>Обновление аккаунта</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="314"/>
+        <location filename="../src/application.cpp" line="333"/>
         <source>Changing account failed</source>
         <comment>msgbox windowTitle</comment>
         <translation>Изменение аккаунта не удалось</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="316"/>
+        <location filename="../src/application.cpp" line="335"/>
         <source>The following error occured:</source>
         <comment>msgbox text</comment>
         <translation>Произошла следующая ошибка:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="329"/>
+        <location filename="../src/application.cpp" line="348"/>
         <source>Registration</source>
         <comment>dlg windowTitle</comment>
         <translation>Регистрация</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="361"/>
+        <location filename="../src/application.cpp" line="380"/>
         <source>Registration error</source>
         <comment>msgbox windowTitle</comment>
         <translation>Ошибка регистрации</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="363"/>
+        <location filename="../src/application.cpp" line="382"/>
         <source>Failed to register due to the following error:</source>
         <comment>msgbox text</comment>
         <translation>Не удалось зарегистрироваться из-за следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="430"/>
+        <location filename="../src/application.cpp" line="486"/>
         <source>New version</source>
         <comment>msgbox windowTitle</comment>
         <translation>Новая версия</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="436"/>
+        <location filename="../src/application.cpp" line="492"/>
         <source>A new version of the application is available</source>
         <comment>msgbox text</comment>
         <translation>Доступна новая версия приложения</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="438"/>
+        <location filename="../src/application.cpp" line="494"/>
         <source>Click the following link to go to the download page:</source>
         <comment>msgbox text</comment>
         <translation>Кликните по следующей ссылке чтобы перейти на страницу загрузки:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="439"/>
+        <location filename="../src/application.cpp" line="495"/>
         <source>download</source>
         <comment>msgbox text</comment>
         <translation>скачать</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="440"/>
+        <location filename="../src/application.cpp" line="496"/>
         <source>You should always use the latest application version. Bugs are fixed and new features are implemented in new versions.</source>
         <comment>msgbox informativeText</comment>
         <translation>Вам следует всегда использовать самую новую версию приложения. В новых версиях исправляются ошибки и добавляются новые возможности.</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="447"/>
+        <location filename="../src/application.cpp" line="503"/>
         <source>You are using the latest version.</source>
         <comment>msgbox text</comment>
         <translation>Вы используете самую новую версию.</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="175"/>
+        <location filename="../src/application.cpp" line="194"/>
         <source>Not right now</source>
         <comment>btn text</comment>
         <translation>Не сейчас</translation>
@@ -492,75 +492,87 @@ Would you like to do it now?</source>
 <context>
     <name>Client</name>
     <message>
-        <location filename="../src/client.cpp" line="69"/>
+        <location filename="../src/client.cpp" line="72"/>
         <source>Replying to connection test...</source>
         <comment>log</comment>
         <translation>Ответ на проверку соединения...</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="72"/>
+        <location filename="../src/client.cpp" line="75"/>
         <source>Operation error</source>
         <comment>log</comment>
         <translation>Ошибка операции</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="103"/>
-        <location filename="../src/client.cpp" line="141"/>
-        <location filename="../src/client.cpp" line="181"/>
-        <location filename="../src/client.cpp" line="221"/>
-        <location filename="../src/client.cpp" line="262"/>
+        <location filename="../src/client.cpp" line="106"/>
+        <location filename="../src/client.cpp" line="144"/>
+        <location filename="../src/client.cpp" line="184"/>
+        <location filename="../src/client.cpp" line="224"/>
+        <location filename="../src/client.cpp" line="265"/>
         <source>Connecting to server</source>
         <comment>pdlg windowTitle</comment>
         <translation>Подключение к серверу</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="104"/>
-        <location filename="../src/client.cpp" line="142"/>
-        <location filename="../src/client.cpp" line="182"/>
-        <location filename="../src/client.cpp" line="222"/>
-        <location filename="../src/client.cpp" line="263"/>
+        <location filename="../src/client.cpp" line="107"/>
+        <location filename="../src/client.cpp" line="145"/>
+        <location filename="../src/client.cpp" line="185"/>
+        <location filename="../src/client.cpp" line="225"/>
+        <location filename="../src/client.cpp" line="266"/>
         <source>Connecting to server, please, wait...</source>
         <comment>pdlg labelText</comment>
         <translation>Подключаемся к серверу, пожалуйста, ждите...</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="836"/>
+        <location filename="../src/client.cpp" line="839"/>
         <source>Lab</source>
         <comment>wgt windowTitle</comment>
         <translation>Лаб. работа</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="889"/>
+        <location filename="../src/client.cpp" line="847"/>
+        <source>To the previous page</source>
+        <comment>tbtn toolTip</comment>
+        <translation>На предыдущую страницу</translation>
+    </message>
+    <message>
+        <location filename="../src/client.cpp" line="851"/>
+        <source>To the next page</source>
+        <comment>tbtn toolTip</comment>
+        <translation>На следующую страницу</translation>
+    </message>
+    <message>
+        <location filename="../src/client.cpp" line="902"/>
         <source>No password</source>
         <comment>msgbox windowTitle</comment>
         <translation>Отсутствует пароль</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="891"/>
+        <location filename="../src/client.cpp" line="904"/>
         <source>You have not specified your password</source>
         <comment>msgbox text</comment>
         <translation>Вы не указали пароль</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="892"/>
+        <location filename="../src/client.cpp" line="905"/>
         <source>You can&apos;t connect without password</source>
         <comment>msgbox informativeText</comment>
         <translation>Вы не можете подключиться без пароля</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="936"/>
+        <location filename="../src/client.cpp" line="949"/>
         <source>Executing request...</source>
         <comment>opdlg windowTitle</comment>
         <translation>Выполняется запрос...</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="949"/>
+        <location filename="../src/client.cpp" line="962"/>
         <source>TeXSample connection error</source>
         <comment>msgbox windowTitle</comment>
         <translation>Ошибка соединения TeXSample</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="951"/>
+        <location filename="../src/client.cpp" line="964"/>
         <source>The following connection error occured:</source>
         <comment>msgbox text</comment>
         <translation>Произошла следующая ошибка соединения:</translation>
@@ -616,37 +628,43 @@ Would you like to do it now?</source>
 <context>
     <name>GeneralSettingsTab</name>
     <message>
-        <location filename="../src/application.cpp" line="84"/>
+        <location filename="../src/application.cpp" line="90"/>
         <source>language</source>
         <comment>lbl text</comment>
         <translation>язык</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="87"/>
+        <location filename="../src/application.cpp" line="93"/>
         <source>Enable multiple windows:</source>
         <comment>lbl text</comment>
         <translation>Разрешить несколько окон:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="90"/>
+        <location filename="../src/application.cpp" line="98"/>
+        <source>Check now</source>
+        <comment>btn text</comment>
+        <translation>Проверить сейчас</translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="101"/>
         <source>Check for new versions:</source>
         <comment>lbl text</comment>
         <translation>Поверять наличие новых версий:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="97"/>
+        <location filename="../src/application.cpp" line="108"/>
         <source>General</source>
         <comment>title</comment>
         <translation>Основное</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="121"/>
+        <location filename="../src/application.cpp" line="132"/>
         <source>Failed to change settings</source>
         <comment>msgbox windowTitle</comment>
         <translation>Не удалось изменить настройки</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="123"/>
+        <location filename="../src/application.cpp" line="134"/>
         <source>Can&apos;t disable multiple windows: some error occured</source>
         <comment>msgbox text</comment>
         <translation>Невозможно запретить использование нескольких окон: произошла какая-то ошибка</translation>
@@ -824,6 +842,39 @@ Would you like to do it now?</source>
     </message>
 </context>
 <context>
+    <name>NetworkSettingsTab</name>
+    <message>
+        <location filename="../src/networksettingstab.cpp" line="28"/>
+        <source>Proxy mode</source>
+        <comment>gbox title</comment>
+        <translation>Режим прокси</translation>
+    </message>
+    <message>
+        <location filename="../src/networksettingstab.cpp" line="30"/>
+        <source>No proxy</source>
+        <comment>rbtn text</comment>
+        <translation>Без прокси</translation>
+    </message>
+    <message>
+        <location filename="../src/networksettingstab.cpp" line="33"/>
+        <source>System proxy</source>
+        <comment>rbtn text</comment>
+        <translation>Системный прокси</translation>
+    </message>
+    <message>
+        <location filename="../src/networksettingstab.cpp" line="36"/>
+        <source>User proxy</source>
+        <comment>rbtn text</comment>
+        <translation>Пользовательский прокси</translation>
+    </message>
+    <message>
+        <location filename="../src/networksettingstab.cpp" line="62"/>
+        <source>Network</source>
+        <comment>title</comment>
+        <translation>Сеть</translation>
+    </message>
+</context>
+<context>
     <name>SelectUserDialog</name>
     <message>
         <location filename="../src/clabwidget.cpp" line="191"/>
@@ -853,49 +904,49 @@ Would you like to do it now?</source>
 <context>
     <name>TexsampleSettingsTab</name>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="39"/>
+        <location filename="../src/texsamplesettingstab.cpp" line="40"/>
         <source>Connection</source>
         <comment>gbox title</comment>
         <translation>Соединение</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="52"/>
+        <location filename="../src/texsamplesettingstab.cpp" line="53"/>
         <source>Remove current host from history</source>
         <comment>tbtn toolTip</comment>
         <translation>Удалить текущий адрес из истории</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="56"/>
+        <location filename="../src/texsamplesettingstab.cpp" line="57"/>
         <source>Host:</source>
         <comment>lbl text</comment>
         <translation>Адрес сервера:</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="59"/>
+        <location filename="../src/texsamplesettingstab.cpp" line="60"/>
         <source>Login:</source>
         <comment>lbl text</comment>
         <translation>Логин:</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="63"/>
+        <location filename="../src/texsamplesettingstab.cpp" line="64"/>
         <source>Password:</source>
         <comment>lbl text</comment>
         <translation>Пароль:</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="66"/>
+        <location filename="../src/texsamplesettingstab.cpp" line="67"/>
         <source>Autoconnection:</source>
         <comment>lbl text</comment>
         <translation>Автосоединение:</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="75"/>
+        <location filename="../src/texsamplesettingstab.cpp" line="76"/>
         <source>CloudLab</source>
         <comment>title</comment>
         <translation>CloudLab</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="120"/>
+        <location filename="../src/texsamplesettingstab.cpp" line="38"/>
         <source>Auto select</source>
         <translation>Автоматический выбор</translation>
     </message>

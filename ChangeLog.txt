@@ -1,3 +1,11 @@
+=== CloudLab Client 0.3.1-beta (26 February 2014) ===
+    * Fix host changing
+    * Fix version check
+    * Add ability to check for new versions manually
+    * Fix login dialog tab order
+    * Add navigation to browser
+    * Implement proxy
+
 === CloudLab Client 0.3.0-beta (05 February 2014) ===
     * Fix lab mapping when search filters are applied
     * Use TeXSample 1.2.0

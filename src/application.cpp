@@ -3,6 +3,7 @@
 #include "texsamplesettingstab.h"
 #include "mainwindow.h"
 #include "global.h"
+#include "networksettingstab.h"
 
 #include <TUserInfo>
 #include <TOperationResult>
@@ -43,6 +44,11 @@
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QtConcurrentRun>
+#include <QNetworkProxy>
+#include <QNetworkProxyFactory>
+#include <QNetworkProxyQuery>
+#include <QList>
+#include <QUrl>
 
 #include <QDebug>
 
@@ -85,9 +91,14 @@ GeneralSettingsTab::GeneralSettingsTab() :
     mcboxMultipleWindows = new QCheckBox(this);
       mcboxMultipleWindows->setChecked(Global::multipleWindowsEnabled());
     flt->addRow(tr("Enable multiple windows:", "lbl text"), mcboxMultipleWindows);
-    mcboxNewVersions = new QCheckBox(this);
-      mcboxNewVersions->setChecked(Global::checkForNewVersions());
-    flt->addRow(tr("Check for new versions:", "lbl text"), mcboxNewVersions);
+    QHBoxLayout *hlt = new QHBoxLayout;
+      mcboxNewVersions = new QCheckBox(this);
+        mcboxNewVersions->setChecked(Global::checkForNewVersions());
+      hlt->addWidget(mcboxNewVersions);
+      QPushButton *btn = new QPushButton(tr("Check now", "btn text"));
+        connect(btn, SIGNAL(clicked()), bApp, SLOT(checkForNewVersionsSlot()));
+      hlt->addWidget(btn);
+    flt->addRow(tr("Check for new versions:", "lbl text"), hlt);
 }
 
 /*============================== Public methods ============================*/
@@ -147,6 +158,14 @@ Application::Application() :
 
 Application::~Application()
 {
+    typedef QFutureWatcher<Client::CheckForNewVersionsResult> Watcher;
+    while (!futureWatchers.isEmpty())
+    {
+        Watcher *w = dynamic_cast<Watcher *>(futureWatchers.takeLast());
+        if (!w)
+            continue;
+        w->waitForFinished();
+    }
     Global::savePasswordState();
     BDirTools::rmdir(QDir::tempPath() + "/clab-client/files");
 }
@@ -240,6 +259,12 @@ bool Application::showLoginDialog(QWidget *parent)
     BDialog dlg(parent ? parent : mostSuitableWindow());
       dlg.setWindowTitle(tr("Logging in", "windowTitle"));
       BLoginWidget *lwgt = new BLoginWidget;
+      dlg.setWidget(lwgt);
+      QPushButton *btnOk = dlg.addButton(QDialogButtonBox::Ok, SLOT(accept()));
+        btnOk->setDefault(true);
+        btnOk->setEnabled(lwgt->hasValidInput());
+        connect(lwgt, SIGNAL(inputValidityChanged(bool)), btnOk, SLOT(setEnabled(bool)));
+      dlg.addButton(QDialogButtonBox::Cancel, SLOT(reject()));
         lwgt->setAddressType(BLoginWidget::EditableComboAddress, true);
         QStringList hosts;
         hosts << AutoSelect << Global::hostHistory();
@@ -249,12 +274,6 @@ bool Application::showLoginDialog(QWidget *parent)
         lwgt->restorePasswordWidgetState(Global::passwordWidgetState());
         lwgt->setLogin(Global::login());
         lwgt->setPassword(Global::password());
-      dlg.setWidget(lwgt);
-      QPushButton *btnOk = dlg.addButton(QDialogButtonBox::Ok, SLOT(accept()));
-        btnOk->setDefault(true);
-        btnOk->setEnabled(lwgt->hasValidInput());
-        connect(lwgt, SIGNAL(inputValidityChanged(bool)), btnOk, SLOT(setEnabled(bool)));
-      dlg.addButton(QDialogButtonBox::Cancel, SLOT(reject()));
       dlg.setFixedSize(dlg.sizeHint());
     if (dlg.exec() != QDialog::Accepted)
     {
@@ -381,6 +400,41 @@ void Application::checkForNewVersions(bool persistent)
     Watcher *w = new Watcher;
     w->setFuture(f);
     connect(w, SIGNAL(finished()), bApp, SLOT(checkingForNewVersionsFinished()));
+    bApp->futureWatchers << w;
+}
+
+void Application::resetProxy()
+{
+    switch (Global::proxyMode())
+    {
+    case Global::NoProxy:
+        QNetworkProxy::setApplicationProxy(QNetworkProxy());
+        break;
+    case Global::SystemProxy:
+    {
+        QList<QNetworkProxy> list = QNetworkProxyFactory::systemProxyForQuery(
+                    QNetworkProxyQuery(QUrl("http://www.google.com")));
+        if (!list.isEmpty())
+            QNetworkProxy::setApplicationProxy(list.first());
+        else
+            QNetworkProxy::setApplicationProxy(QNetworkProxy());
+        break;
+    }
+    case Global::UserProxy:
+        QNetworkProxy::setApplicationProxy(QNetworkProxy(QNetworkProxy::Socks5Proxy, Global::proxyHost(),
+                                                         (quint16) Global::proxyPort(), Global::proxyLogin(),
+                                                         Global::proxyPassword()));
+        break;
+    default:
+        break;
+    }
+}
+
+/*============================== Public slots ==============================*/
+
+void Application::checkForNewVersionsSlot()
+{
+    checkForNewVersions(true);
 }
 
 /*============================== Protected methods =========================*/
@@ -389,6 +443,7 @@ QList<BAbstractSettingsTab *> Application::createSettingsTabs() const
 {
     QList<BAbstractSettingsTab *> list;
     list << new GeneralSettingsTab;
+    list << new NetworkSettingsTab;
     list << new TexsampleSettingsTab;
     return list;
 }
@@ -424,6 +479,7 @@ void Application::checkingForNewVersionsFinished()
     Watcher *w = dynamic_cast<Watcher *>(sender());
     if (!w)
         return;
+    bApp->futureWatchers.removeAll(w);
     Client::CheckForNewVersionsResult r = w->result();
     delete w;
     QMessageBox msg(mostSuitableWindow());

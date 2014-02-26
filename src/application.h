@@ -44,6 +44,9 @@ public:
     static bool showRegisterDialog(QWidget *parent = 0);
     static bool showSettings(QWidget *parent = 0);
     static void checkForNewVersions(bool persistent = false);
+    static void resetProxy();
+public slots:
+    void checkForNewVersionsSlot();
 protected:
     QList<BAbstractSettingsTab *> createSettingsTabs() const;
 private:
@@ -56,6 +59,7 @@ private slots:
 private:
     bool minitialWindowCreated;
     QMap<QObject *, MainWindow *> mmainWindows;
+    QList<QObject *> futureWatchers;
 private:
     Q_DISABLE_COPY(Application)
 };
