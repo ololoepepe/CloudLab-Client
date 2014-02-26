@@ -59,6 +59,9 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QtConcurrentRun>
+#include <QToolBar>
+#include <QAction>
+#include <QWebPage>
 
 #include <QDebug>
 
@@ -835,8 +838,18 @@ TOperationResult Client::showLab(quint64 id, QWidget *)
         wgt->setAttribute(Qt::WA_DeleteOnClose, true);
         wgt->setWindowTitle(tr("Lab", "wgt windowTitle"));
         QVBoxLayout *vlt = new QVBoxLayout(wgt);
+          QToolBar *tbar = new QToolBar;
+          vlt->addWidget(tbar);
           QWebView *wvw = new QWebView;
             wvw->setUrl(TLabInfo::UrlType == t ? QUrl::fromUserInput(url) : QUrl::fromLocalFile(url));
+            QAction *act = wvw->page()->action(QWebPage::Back);
+            act->setIcon(Application::icon("back"));
+            act->setToolTip(tr("To the previous page", "tbtn toolTip"));
+            tbar->addAction(act);
+            act = wvw->page()->action(QWebPage::Forward);
+            act->setIcon(Application::icon("forward"));
+            act->setToolTip(tr("To the next page", "tbtn toolTip"));
+            tbar->addAction(act);
           vlt->addWidget(wvw);
           QDialogButtonBox *dlgbbox = new QDialogButtonBox;
             dlgbbox->addButton(QDialogButtonBox::Close);

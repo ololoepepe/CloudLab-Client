@@ -1,9 +1,12 @@
+* Update Help
+
 === PATCH ===
 
 [done] Fix host changing
 [done] Fix version check
 [done] Add ability to check for new versions manually
 [done] Fix login dialog tab order
+[done] Add navigation to browser
 
 === MINOR ===
 

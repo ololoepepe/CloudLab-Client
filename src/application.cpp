@@ -265,7 +265,6 @@ bool Application::showLoginDialog(QWidget *parent)
         btnOk->setEnabled(lwgt->hasValidInput());
         connect(lwgt, SIGNAL(inputValidityChanged(bool)), btnOk, SLOT(setEnabled(bool)));
       dlg.addButton(QDialogButtonBox::Cancel, SLOT(reject()));
-      dlg.setFixedSize(dlg.sizeHint());
         lwgt->setAddressType(BLoginWidget::EditableComboAddress, true);
         QStringList hosts;
         hosts << AutoSelect << Global::hostHistory();
@@ -275,6 +274,7 @@ bool Application::showLoginDialog(QWidget *parent)
         lwgt->restorePasswordWidgetState(Global::passwordWidgetState());
         lwgt->setLogin(Global::login());
         lwgt->setPassword(Global::password());
+      dlg.setFixedSize(dlg.sizeHint());
     if (dlg.exec() != QDialog::Accepted)
     {
         Global::setPasswordWidgetSate(lwgt->savePasswordWidgetState());

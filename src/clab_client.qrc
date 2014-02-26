@@ -45,5 +45,9 @@
         <file>pixmaps/main_developer_photo.png</file>
         <file>icons/edit_add.png</file>
         <file>icons/edit_add.svgz</file>
+        <file>icons/back.png</file>
+        <file>icons/back.svgz</file>
+        <file>icons/forward.png</file>
+        <file>icons/forward.svgz</file>
     </qresource>
 </RCC>
