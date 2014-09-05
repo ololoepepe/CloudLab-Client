@@ -22,14 +22,12 @@
 #ifndef LABPROXYMODEL_H
 #define LABPROXYMODEL_H
 
-class LabsModel;
+class LabModel;
 
 class TLabInfo;
 
-class QVariant;
 class QModelIndex;
 class QString;
-class QAbstractItemModel;
 
 #include <QSortFilterProxyModel>
 #include <QStringList>
@@ -41,25 +39,19 @@ class QAbstractItemModel;
 class LabProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
+private:
+    LabModel *mlabModel;
+    QStringList msearchKeywords;
 public:
-    explicit LabProxyModel(QObject *parent = 0);
-public:
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    void setSourceModel(QAbstractItemModel *sourceModel);
-#endif
-    void setSearchKeywords(const QStringList &list);
+    explicit LabProxyModel(LabModel *sourceModel, QObject *parent = 0);
 public slots:
+    void setSearchKeywords(const QStringList &list);
     void setSearchKeywordsString(const QString &string);
 protected:
     bool filterAcceptsColumn(int column, const QModelIndex &parent) const;
     bool filterAcceptsRow(int row, const QModelIndex &parent) const;
 private:
     bool matchesKeywords(const TLabInfo &info) const;
-private slots:
-    void sourceModelChangedSlot();
-private:
-    LabsModel *mlabsModel;
-    QStringList msearchKeywords;
 private:
     Q_DISABLE_COPY(LabProxyModel)
 };

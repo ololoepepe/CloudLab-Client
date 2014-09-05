@@ -23,19 +23,17 @@
 
 #include "application.h"
 #include "connectionaction.h"
+#include "labmodel.h"
+#include "labproxymodel.h"
 #include "mainwindow.h"
-#include "samplemodel.h"
-#include "sampleproxymodel.h"
 #include "settings.h"
 #include "texsamplecore.h"
 
 #include <TAccessLevel>
+#include <TLabInfo>
 #include <TNetworkClient>
-#include <TSampleInfo>
-#include <TSampleType>
 #include <TUserInfo>
 
-#include <BCodeEditor>
 #include <BSignalDelayProxy>
 
 #include <QAction>
@@ -68,7 +66,7 @@ TexsampleWidget::TexsampleWidget(MainWindow *window, QWidget *parent) :
     QWidget(parent), Window(window)
 {
     mlastId = 0;
-    mproxyModel = new SampleProxyModel(tSmp->sampleModel(), this);
+    mproxyModel = new LabProxyModel(tSmp->labModel(), this);
     TNetworkClient *client = tSmp->client();
     connect(client, SIGNAL(stateChanged(TNetworkClient::State)),
             this, SLOT(clientStateChanged(TNetworkClient::State)));
@@ -92,11 +90,11 @@ TexsampleWidget::TexsampleWidget(MainWindow *window, QWidget *parent) :
         mtbarIndicator->addAction(mactConnection);
         mactUpdate = new QAction(this);
           mactUpdate->setIcon(Application::icon("reload"));
-          connect(mactUpdate, SIGNAL(triggered()), tSmp, SLOT(updateSampleList()));
+          connect(mactUpdate, SIGNAL(triggered()), tSmp, SLOT(updateLabList()));
         mtbar->addAction(mactUpdate);
         mactSend = new QAction(this);
           mactSend->setIcon(Application::icon("mail_send"));
-          connect(mactSend, SIGNAL(triggered()), this, SLOT(sendSample()));
+          connect(mactSend, SIGNAL(triggered()), this, SLOT(sendLab()));
         mtbar->addAction(mactSend);
         mactTools = new QAction(this);
           mactTools->setIcon(Application::icon("configure"));
@@ -146,10 +144,6 @@ TexsampleWidget::TexsampleWidget(MainWindow *window, QWidget *parent) :
       vlt->addWidget(mtbar);
       mgboxSelect = new QGroupBox(this);
         QFormLayout *flt = new QFormLayout;
-          mlblType = new QLabel;
-          mcmboxType = new QComboBox;
-            connect(mcmboxType, SIGNAL(currentIndexChanged(int)), this, SLOT(cmboxTypeCurrentIndexChanged(int)));
-          flt->addRow(mlblType, mcmboxType);
           mlblSearch = new QLabel;
           QHBoxLayout *hlt = new QHBoxLayout;
             mledtSearch = new QLineEdit;
@@ -176,15 +170,13 @@ TexsampleWidget::TexsampleWidget(MainWindow *window, QWidget *parent) :
     //
     retranslateUi();
     connect(bApp, SIGNAL(languageChanged()), this, SLOT(retranslateUi()));
-    mcmboxType->setCurrentIndex(mcmboxType->findData(Settings::TexsampleWidget::selectedSampleType()));
-    mtblvw->horizontalHeader()->restoreState(Settings::TexsampleWidget::sampleTableHeaderState());
+    mtblvw->horizontalHeader()->restoreState(Settings::TexsampleWidget::labTableHeaderState());
     clientStateChanged(client->state());
 }
 
 TexsampleWidget::~TexsampleWidget()
 {
-    Settings::TexsampleWidget::setSampleTableHeaderState(mtblvw->horizontalHeader()->saveState());
-    Settings::TexsampleWidget::setSelectedSampleType(mcmboxType->itemData(mcmboxType->currentIndex()).toInt());
+    Settings::TexsampleWidget::setLabTableHeaderState(mtblvw->horizontalHeader()->saveState());
 }
 
 /*============================== Public methods ============================*/
@@ -202,23 +194,6 @@ QList<QAction *> TexsampleWidget::toolBarActions() const
     list << mactSend;
     list << mactTools;
     return list;
-}
-
-/*============================== Private methods ===========================*/
-
-void TexsampleWidget::retranslateCmboxType()
-{
-    mcmboxType->blockSignals(true);
-    int ind = mcmboxType->currentIndex();
-    if (ind < 0)
-        ind = 0;
-    mcmboxType->clear();
-    mcmboxType->addItem(TSampleType::sampleTypeToString(TSampleType::Approved, false), int(TSampleType::Approved));
-    mcmboxType->addItem(TSampleType::sampleTypeToString(TSampleType::Rejected, false), int(TSampleType::Rejected));
-    mcmboxType->addItem(TSampleType::sampleTypeToString(TSampleType::Unverified, false), int(TSampleType::Unverified));
-    mcmboxType->addItem(tr("My", "cmbox item text"), int(SampleProxyModel::CurrentUserSample));
-    mcmboxType->setCurrentIndex(ind);
-    mcmboxType->blockSignals(false);
 }
 
 /*============================== Private slots =============================*/
@@ -261,32 +236,25 @@ void TexsampleWidget::clientStateChanged(TNetworkClient::State state)
     mactInviteManagement->setEnabled(lvl >= TAccessLevel::AdminLevel);
 }
 
-void TexsampleWidget::cmboxTypeCurrentIndexChanged(int index)
-{
-    if (index < 0)
-        return;
-    mproxyModel->setSampleType(mcmboxType->itemData(index).toInt());
-}
-
-void TexsampleWidget::deleteSample()
+void TexsampleWidget::deleteLab()
 {
     if (!mlastId)
         return;
-    tSmp->deleteSample(mlastId);
+    tSmp->deleteLab(mlastId);
 }
 
-void TexsampleWidget::editSample()
+void TexsampleWidget::editLab()
 {
     if (!mlastId)
         return;
-    tSmp->editSample(mlastId, Window->codeEditor());
+    tSmp->editLab(mlastId);
 }
 
-void TexsampleWidget::insertSample()
+void TexsampleWidget::getLab()
 {
     if (!mlastId)
         return;
-    tSmp->insertSample(mlastId, Window->codeEditor());
+    tSmp->getLab(mlastId);
 }
 
 void TexsampleWidget::retranslateUi()
@@ -298,9 +266,9 @@ void TexsampleWidget::retranslateUi()
     mactConnect->setText(tr("Connect", "act text"));
     mactDisconnect->setText(tr("Disconnect", "act text"));
     mactUpdate->setText(tr("Update", "act text"));
-    mactUpdate->setToolTip(tr("Update samples list", "act toolTip"));
-    mactSend->setText(tr("Send sample...", "act text"));
-    mactSend->setToolTip(tr("Send sample...", "act toolTip"));
+    mactUpdate->setToolTip(tr("Update labs list", "act toolTip"));
+    mactSend->setText(tr("Send lab...", "act text"));
+    mactSend->setToolTip(tr("Send lab...", "act toolTip"));
     mactTools->setText(tr("Tools", "act text"));
     mactTools->setToolTip(tr("Tools", "act toolTip"));
     mactRegister->setText(tr("Register...", "act tooTip"));
@@ -314,68 +282,46 @@ void TexsampleWidget::retranslateUi()
     mactGroupManagement->setText(tr("Group management...", "act text"));
     mactInviteManagement->setText(tr("Invite management...", "act text"));
     //
-    mgboxSelect->setTitle( tr("Selection", "gbox title") );
+    mgboxSelect->setTitle(tr("Selection", "gbox title"));
     //
-    mlblType->setText(tr("Type:", "lbl text"));
     mlblSearch->setText(tr("Search:", "lbl text"));
-    //
-    retranslateCmboxType();
 }
 
-void TexsampleWidget::saveSample()
+void TexsampleWidget::sendLab()
+{
+    tSmp->sendLab();
+}
+
+void TexsampleWidget::showLabInfo()
 {
     if (!mlastId)
         return;
-    tSmp->saveSample(mlastId, Window);
-}
-
-void TexsampleWidget::sendSample()
-{
-    tSmp->sendSample(Window->codeEditor());
-}
-
-void TexsampleWidget::showSampleInfo()
-{
-    if (!mlastId)
-        return;
-    tSmp->showSampleInfo(mlastId);
-}
-
-void TexsampleWidget::showSamplePreview()
-{
-    if (!mlastId)
-        return;
-    tSmp->showSamplePreview(mlastId);
+    tSmp->showLabInfo(mlastId);
 }
 
 void TexsampleWidget::tblvwCustomContextMenuRequested(const QPoint &pos)
 {
-    mlastId = tSmp->sampleModel()->sampleIdAt(mproxyModel->mapToSource(mtblvw->indexAt(pos)).row());
+    mlastId = tSmp->labModel()->labIdAt(mproxyModel->mapToSource(mtblvw->indexAt(pos)).row());
     if (!mlastId)
         return;
     TNetworkClient *client = tSmp->client();
     QMenu mnu;
-    QAction *act = mnu.addAction(tr("Insert...", "act text"), this, SLOT(insertSample()));
+    //TODO: size
+    //QString s = BeQt::fileSizeToString(tSmp->labModel()->labInfo(mlastId),BeQt::KilobytesFormat);
+    QAction *act = mnu.addAction(tr("Get...", "act text"), this, SLOT(getLab()));
       act->setEnabled(client->isAuthorized());
       act->setIcon(Application::icon("editpaste"));
-    act = mnu.addAction(tr("Save...", "act text"), this, SLOT(saveSample()));
-      act->setEnabled(client->isAuthorized());
-      act->setIcon(Application::icon("filesave"));
     mnu.addSeparator();
-    act = mnu.addAction(tr("Information...", "act text"), this, SLOT(showSampleInfo()));
+    act = mnu.addAction(tr("Information...", "act text"), this, SLOT(showLabInfo()));
       act->setIcon(Application::icon("help_about"));
-    QString s = BeQt::fileSizeToString(tSmp->sampleModel()->sampleInfo(mlastId).previewSize(),BeQt::KilobytesFormat);
-    act = mnu.addAction(tr("Preview", "act text") + " (" + s + ")", this, SLOT(showSamplePreview()));
-      act->setEnabled(client->isAuthorized());
-      act->setIcon(Application::icon("pdf"));
     mnu.addSeparator();
-    act = mnu.addAction(tr("Edit...", "act text"), this, SLOT(editSample()));
+    act = mnu.addAction(tr("Edit...", "act text"), this, SLOT(editLab()));
       act->setIcon(Application::icon("edit"));
-      TSampleInfo sampleInfo = tSmp->sampleModel()->sampleInfo(mlastId);
+      TLabInfo labInfo = tSmp->labModel()->labInfo(mlastId);
       TUserInfo userInfo = client->userInfo();
-      bool own = (sampleInfo.senderId() == userInfo.id() && int(sampleInfo.type()) != TSampleType::Approved);
+      bool own = (labInfo.senderId() == userInfo.id());
       act->setEnabled(client->isAuthorized() && (own || int(userInfo.accessLevel()) >= TAccessLevel::ModeratorLevel));
-    act = mnu.addAction(tr("Delete...", "act text"), this, SLOT(deleteSample()));
+    act = mnu.addAction(tr("Delete...", "act text"), this, SLOT(deleteLab()));
     act->setEnabled(client->isAuthorized() && (own || int(userInfo.accessLevel()) >= TAccessLevel::AdminLevel));
       act->setIcon(Application::icon("editdelete"));
     mnu.exec(mtblvw->mapToGlobal(pos));
@@ -388,8 +334,8 @@ void TexsampleWidget::tblvwDoubleClicked(const QModelIndex &index)
     QModelIndex ind = mproxyModel->mapToSource(index);
     if (!ind.isValid())
         return;
-    mlastId = tSmp->sampleModel()->sampleIdAt(ind.row());
+    mlastId = tSmp->labModel()->labIdAt(ind.row());
     if (!mlastId)
         return;
-    insertSample();
+    getLab();
 }

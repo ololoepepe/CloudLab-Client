@@ -23,8 +23,8 @@
 #define TEXSAMPLEWIDGET_H
 
 class ConnectionAction;
+class LabProxyModel;
 class MainWindow;
-class SampleProxyModel;
 
 class QAction;
 class QComboBox;
@@ -52,7 +52,7 @@ class TexsampleWidget : public QWidget
 private:
     MainWindow *const Window;
 private:
-    SampleProxyModel *mproxyModel;
+    LabProxyModel *mproxyModel;
     quint64 mlastId;
     //
     QToolBar *mtbarIndicator;
@@ -75,8 +75,6 @@ private:
           QAction *mactGroupManagement;
           QAction *mactInviteManagement;
     QGroupBox *mgboxSelect;
-      QLabel *mlblType;
-      QComboBox *mcmboxType;
       QLabel *mlblSearch;
       QLineEdit *mledtSearch;
     QTableView *mtblvw;
@@ -86,19 +84,14 @@ public:
 public:
     QWidget *indicator() const;
     QList<QAction *> toolBarActions() const;
-private:
-    void retranslateCmboxType();
 private slots:
     void clientStateChanged(TNetworkClient::State state);
-    void cmboxTypeCurrentIndexChanged(int index);
-    void deleteSample();
-    void editSample();
-    void insertSample();
+    void deleteLab();
+    void editLab();
+    void getLab();
     void retranslateUi();
-    void saveSample();
-    void sendSample();
-    void showSampleInfo();
-    void showSamplePreview();
+    void sendLab();
+    void showLabInfo();
     void tblvwCustomContextMenuRequested(const QPoint &pos);
     void tblvwDoubleClicked(const QModelIndex &index);
 private:

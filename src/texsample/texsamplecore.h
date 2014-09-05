@@ -99,7 +99,7 @@ public slots:
     bool deleteLab(quint64 labId, QWidget *parent = 0);
     void disconnectFromServer();
     void editLab(quint64 labId);
-    bool getLab(quint64 labId);
+    bool getLab(quint64 labId, QWidget *parent = 0);
     void sendLab();
     bool showAccountManagementDialog(QWidget *parent = 0);
     bool showConfirmEmailChangeDialog(QWidget *parent = 0);
@@ -132,10 +132,12 @@ private:
     typedef QFutureWatcher<CheckForNewVersionResult> Watcher;
 private:
     static CheckForNewVersionResult checkForNewVersionFunction(bool persistent);
+    static void runExecutable(const QString &url, const QString &path);
     static void showMessageFunction(const QString &text, const QString &informativeText, bool error,
                                     QWidget *parentWidget);
     static bool waitForConnectedFunction(BNetworkConnection *connection, int timeout, QWidget *parentWidget,
                                          QString *msg);
+    static void waitForDestroyed(QWidget *wgt, const QString &path);
     static bool waitForFinishedFunction(BNetworkOperation *op, int timeout, QWidget *parentWidget, QString *msg);
 private slots:
     void checkingForNewVersionFinished();

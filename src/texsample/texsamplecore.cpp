@@ -52,6 +52,7 @@
 
 #include <QAbstractSocket>
 #include <QByteArray>
+#include <QDataStream>
 #include <QDateTime>
 #include <QDebug>
 #include <QDialogButtonBox>
@@ -60,6 +61,7 @@
 #include <QFileInfo>
 #include <QFuture>
 #include <QFutureWatcher>
+#include <QIODevice>
 #include <QList>
 #include <QMap>
 #include <QMessageBox>
@@ -72,9 +74,12 @@
 #include <QTextCodec>
 #include <QThread>
 #include <QTimer>
+#include <QToolBar>
 #include <QUrl>
 #include <QVariant>
 #include <QVBoxLayout>
+#include <QWebPage>
+#include <QWebView>
 #include <QWidget>
 
 #undef bApp
@@ -104,7 +109,9 @@ TexsampleCore::TexsampleCore(QObject *parent) :
     mdestructorCalled = false;
     BLocationProvider *provider = new BLocationProvider;
     provider->addLocation("texsample");
+    provider->addLocation("texsample/labs");
     provider->createLocationPath("texsample", Application::UserResource);
+    provider->createLocationPath("texsample/labs", Application::UserResource);
     Application::installLocationProvider(provider);
     QString texsampleLocation = BDirTools::findResource("texsample", BDirTools::UserOnly);
     mcache = new Cache(texsampleLocation);
@@ -149,7 +156,7 @@ TexsampleCore::~TexsampleCore()
             continue;
         w->waitForFinished();
     }
-    BDirTools::rmdir(QDir::tempPath() + "/cloudlab-client/files");
+    BDirTools::rmdir(Application::location("texsample/labs", Application::UserResource));
 }
 
 /*============================== Public methods ============================*/
@@ -190,7 +197,7 @@ void TexsampleCore::updateClientSettings()
     if (mclient->hostName() != Settings::Texsample::host(true)) {
         mgroupModel->clear();
         minviteModel->clear();
-        msampleModel->clear();
+        mlabModel->clear();
         muserModel->clear();
         if (!mclient->hostName().isEmpty())
             mcache->clear();
@@ -325,11 +332,84 @@ void TexsampleCore::editLab(quint64 labId)
     dlg->show();
 }
 
-bool TexsampleCore::getLab(quint64 labId)
+bool TexsampleCore::getLab(quint64 labId, QWidget *parent)
 {
     if (!labId)
         return false;
-    //TODO
+    if (!mclient->isAuthorized())
+        return false;
+    if (!parent)
+        parent = bApp->mostSuitableWindow();
+    TGetLabDataRequestData requestData;
+    requestData.setLabId(labId);
+    requestData.setOs(BeQt::osType());
+    TReply reply = mclient->performOperation(TOperation::GetLabData, requestData, parent);
+    if (!reply.success()) {
+        QMessageBox msg(bApp->mostSuitableWindow());
+        msg.setWindowTitle(tr("Getting lab error", "msgbox windowTitle"));
+        msg.setIcon(QMessageBox::Critical);
+        msg.setText(tr("Failed to get lab due to the following error:", "msgbox text"));
+        msg.setInformativeText(reply.message());
+        msg.setStandardButtons(QMessageBox::Ok);
+        msg.setDefaultButton(QMessageBox::Ok);
+        msg.exec();
+        return false;
+    }
+    TLabData data = reply.data().value<TGetLabDataReplyData>().data();
+    bApp->showStatusBarMessage(tr("Lab was successfully downloaded", "message"));
+    QString path = Application::location("texsample/labs", Application::SharedResource) + "/labs/"
+            + BUuid::createUuid().toString(true);
+    int type = data.type();
+    const TLabApplication &app = data.application();
+    QString url = data.url();
+    if (TLabType::DesktopApplication == type || TLabType::WebApplication == type) {
+        if (!app.save(path))
+            return false;
+        //FIXME: Improve with the net TeXSample release
+        //It is a hack, because there is no other way to get main file name
+        QByteArray ba;
+        QDataStream out(&ba, QIODevice::WriteOnly);
+        out << app;
+        QDataStream in(ba);
+        QVariantMap m;
+        in >> m;
+        TBinaryFile mainFile = m.value("main_file").value<TBinaryFile>();
+        if (!mainFile.isValid())
+            return false;
+        url = path + "/" + mainFile.fileName();
+        //End of hack
+    }
+    if (TLabType::DesktopApplication == type) {
+        QtConcurrent::run(&runExecutable, url, path);
+    } else {
+        QWidget *wgt = new QWidget;
+        wgt->setAttribute(Qt::WA_DeleteOnClose, true);
+        BTranslation t = BTranslation::translate("TexsampleCore", "Lab", "wgt windowTitle");
+        new BDynamicTranslator(wgt, "windowTitle", t);
+        wgt->setWindowTitle(t.translate());
+        QVBoxLayout *vlt = new QVBoxLayout(wgt);
+          QToolBar *tbar = new QToolBar;
+          vlt->addWidget(tbar);
+          QWebView *wvw = new QWebView;
+            wvw->setUrl(TLabType::Url == type ? QUrl::fromUserInput(url) : QUrl::fromLocalFile(url));
+            QAction *act = wvw->page()->action(QWebPage::Back);
+            act->setIcon(Application::icon("back"));
+            act->setToolTip(tr("To the previous page", "tbtn toolTip"));
+            tbar->addAction(act);
+            act = wvw->page()->action(QWebPage::Forward);
+            act->setIcon(Application::icon("forward"));
+            act->setToolTip(tr("To the next page", "tbtn toolTip"));
+            tbar->addAction(act);
+          vlt->addWidget(wvw);
+          QDialogButtonBox *dlgbbox = new QDialogButtonBox;
+            dlgbbox->addButton(QDialogButtonBox::Close);
+            connect(dlgbbox->button(QDialogButtonBox::Close), SIGNAL(clicked()), wgt, SLOT(close()));
+          vlt->addWidget(dlgbbox);
+        wgt->show();
+        if (TLabType::WebApplication == type)
+            QtConcurrent::run(&waitForDestroyed, wgt, path);
+    }
+    return true;
 }
 
 void TexsampleCore::sendLab()
@@ -684,6 +764,14 @@ TexsampleCore::CheckForNewVersionResult TexsampleCore::checkForNewVersionFunctio
     return result;
 }
 
+void TexsampleCore::runExecutable(const QString &url, const QString &path)
+{
+    if (path.isEmpty() || url.isEmpty())
+        return;
+    BeQt::execProcess(QFileInfo(url).path(), BTextTools::wrapped(url, "\""), QStringList(), 5 * BeQt::Second, -1);
+    BDirTools::rmdir(path);
+}
+
 void TexsampleCore::showMessageFunction(const QString &text, const QString &informativeText, bool error,
                                         QWidget *parentWidget)
 {
@@ -733,6 +821,14 @@ bool TexsampleCore::waitForConnectedFunction(BNetworkConnection *connection, int
         return bRet(msg, connection->errorString(), false);
     else
         return bRet(msg, tr("An error occured, or connection timed out", "error"), false);
+}
+
+void TexsampleCore::waitForDestroyed(QWidget *wgt, const QString &path)
+{
+    if (!wgt || path.isEmpty())
+        return;
+    BeQt::waitNonBlocking(wgt, SIGNAL(destroyed()));
+    BDirTools::rmdir(path);
 }
 
 bool TexsampleCore::waitForFinishedFunction(BNetworkOperation *op, int timeout, QWidget *parentWidget, QString *msg)

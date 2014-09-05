@@ -21,69 +21,119 @@
 
 #include "labmodel.h"
 
-#include <TUserInfo>
+#include <TAuthorInfoList>
+#include <TFileInfoList>
+#include <TIdList>
+#include <TLabDataInfoList>
 #include <TLabInfo>
 #include <TLabInfoList>
 
-#include <BApplication>
-
 #include <QAbstractTableModel>
-#include <QModelIndex>
-#include <QVariant>
-#include <QList>
-#include <QString>
-#include <QVariantMap>
-
+#include <QDateTime>
 #include <QDebug>
+#include <QList>
+#include <QModelIndex>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
 
 /*============================================================================
 ================================ LabModel ====================================
 ============================================================================*/
-
-/*============================== Static public methods =====================*/
-
-LabModel *LabModel::instance()
-{
-    if (!minstance)
-        minstance = new LabModel;
-    return minstance;
-}
 
 /*============================== Public constructors =======================*/
 
 LabModel::LabModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
-    connect(bApp, SIGNAL(languageChanged()), this, SLOT(retranslateUi()));
+    mlastUpdateDateTime.setTimeSpec(Qt::UTC);
 }
 
 /*============================== Public methods ============================*/
 
-int LabModel::rowCount(const QModelIndex &) const
+void LabModel::addLab(const TLabInfo &lab)
 {
-    return mlabs.size();
+    TLabInfoList list;
+    list << lab;
+    addLabs(list);
+}
+
+void LabModel::addLabs(const TLabInfoList &labList)
+{
+    TLabInfoList list = labList;
+    foreach (int i, bRangeR(list.size() - 1, 0)) {
+        const TLabInfo &info = list.at(i);
+        if (map.contains(info.id())) {
+            if (info.lastModificationDateTime() > map.value(info.id())->lastModificationDateTime()) {
+                int row = indexOf(info.id());
+                labs[row] = info;
+                map.insert(info.id(), &labs[row]);
+                Q_EMIT dataChanged(index(row, 0), index(row, columnCount() - 1));
+            }
+            list.removeAt(i);
+        } else if (!info.isValid()) {
+            list.removeAt(i);
+        }
+    }
+    if (list.isEmpty())
+        return;
+    int ind = labs.size();
+    beginInsertRows(QModelIndex(), ind, ind + list.size() - 1);
+    foreach (TLabInfo info, list) {
+        labs.append(info);
+        map.insert(info.id(), &labs.last());
+    }
+    endInsertRows();
+}
+
+void LabModel::clear()
+{
+    mlastUpdateDateTime = QDateTime().toUTC();
+    if (labs.isEmpty())
+        return;
+    map.clear();
+    beginRemoveRows(QModelIndex(), 0, labs.size() - 1);
+    labs.clear();
+    endRemoveRows();
 }
 
 int LabModel::columnCount(const QModelIndex &) const
 {
-    return 3;
+    return 12;
 }
 
 QVariant LabModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || Qt::DisplayRole != role)
+    if (!index.isValid() || index.column() > columnCount() - 1 || Qt::DisplayRole != role)
         return QVariant();
-    const TLabInfo *l = lab( index.row() );
-    if (!l)
+    TLabInfo info = labInfoAt(index.row());
+    if (!info.isValid())
         return QVariant();
-    switch ( index.column() )
-    {
+    switch (index.column()) {
     case 0:
-        return l->id();
+        return info.id();
     case 1:
-        return l->title();
+        return info.title();
     case 2:
-        return l->sender().login();
+        return info.senderId();
+    case 3:
+        return info.senderLogin();
+    case 4:
+        return info.description();
+    case 5:
+        return info.authors();
+    case 6:
+        return info.tags();
+    case 7:
+        return info.groups();
+    case 8:
+        return info.dataInfos();
+    case 9:
+        return info.extraFiles();
+    case 10:
+        return info.creationDateTime();
+    case 11:
+        return info.lastModificationDateTime();
     default:
         return QVariant();
     }
@@ -93,107 +143,116 @@ QVariant LabModel::headerData(int section, Qt::Orientation orientation, int role
 {
     if (Qt::Horizontal != orientation || Qt::DisplayRole != role)
         return QVariant();
-    switch (section)
-    {
+    switch (section) {
+    case 0:
+        return tr("ID", "headerData");
     case 1:
         return tr("Title", "headerData");
     case 2:
-        return tr("Sender", "headerData");
+        return tr("Sender ID", "headerData");
+    case 3:
+        return tr("Sender login", "headerData");
+    case 4:
+        return tr("Description", "headerData");
+    case 5:
+        return tr("Authors", "headerData");
+    case 6:
+        return tr("Tags", "headerData");
+    case 7:
+        return tr("Groups", "headerData");
+    case 8:
+        return tr("Data infos", "headerData");
+    case 9:
+        return tr("Extra file infos", "headerData");
+    case 10:
+        return tr("Creation date", "headerData");
+    case 11:
+        return tr("Last modified", "headerData");
     default:
         return QVariant();
     }
 }
 
-void LabModel::insertLab(const TLabInfo &l)
+quint64 LabModel::labIdAt(int index) const
 {
-    TLabInfoList list;
-    list << l;
-    insertLabs(list);
+    if (index < 0 || index >= labs.size())
+        return 0;
+    return labs.at(index).id();
 }
 
-void LabModel::insertLabs(const TLabInfoList &list)
+TLabInfo LabModel::labInfo(quint64 id) const
 {
-    TLabInfoList nlist = list;
-    foreach (int i, bRangeR(nlist.size() - 1, 0))
-    {
-        const TLabInfo &l = nlist.at(i);
-        if ( !l.isValid(TLabInfo::GeneralContext) )
-            nlist.removeAt(i);
-        else if ( mlabsMap.contains( l.id() ) )
-            removeLab( l.id() );
-    }
-    if (nlist.isEmpty())
-        return;
-    int ind = mlabs.size();
-    beginInsertRows(QModelIndex(), ind, ind + nlist.size() - 1);
-    foreach (const TLabInfo &l, nlist)
-    {
-        mlabs.append(l);
-        mlabsMap.insert( l.id(), &mlabs.last() );
-    }
-    endInsertRows();
+    const TLabInfo *info = id ? map.value(id) : 0;
+    if (!info)
+        return TLabInfo();
+    return *info;
+}
+
+TLabInfo LabModel::labInfoAt(int index) const
+{
+    if (index < 0 || index >= labs.size())
+        return TLabInfo();
+    return labs.at(index);
+}
+
+QDateTime LabModel::lastUpdateDateTime() const
+{
+    return mlastUpdateDateTime;
 }
 
 void LabModel::removeLab(quint64 id)
 {
-    if (!id || !mlabsMap.contains(id))
+    if (!id || !map.contains(id))
         return;
-    TLabInfo *l = mlabsMap.take(id);
-    int ind = mlabs.indexOf(*l);
+    map.remove(id);
+    int ind = indexOf(id);
     beginRemoveRows(QModelIndex(), ind, ind);
-    mlabs.removeAt(ind);
+    labs.removeAt(ind);
     endRemoveRows();
 }
 
-void LabModel::removeLabs(const QList<quint64> &list)
+void LabModel::removeLabs(const TIdList &idList)
 {
-    foreach (const quint64 &s, list)
-        removeLab(s);
+    foreach (quint64 id, idList)
+        removeLab(id);
 }
 
-void LabModel::clear()
+int LabModel::rowCount(const QModelIndex &) const
 {
-    if (mlabs.isEmpty())
+    return labs.size();
+}
+
+void LabModel::update(const TLabInfoList &newLabs, const TIdList &deletedLabs, const QDateTime &requestDateTime)
+{
+    removeLabs(deletedLabs);
+    addLabs(newLabs);
+    mlastUpdateDateTime = requestDateTime.toUTC();
+}
+
+void LabModel::update(const TLabInfoList &newLabs, const QDateTime &requestDateTime)
+{
+    update(newLabs, TIdList(), requestDateTime);
+}
+
+void LabModel::updateLab(quint64 labId, const TLabInfo &newInfo)
+{
+    TLabInfo *info = map.value(labId);
+    if (!info)
         return;
-    beginRemoveRows(QModelIndex(), 0, mlabs.size() - 1);
-    mlabsMap.clear();
-    mlabs.clear();
-    endRemoveRows();
+    int row = indexOf(labId);
+    *info = newInfo;
+    emit dataChanged(index(row, 0), index(row, columnCount() - 1));
 }
 
-const TLabInfo *LabModel::lab(int index) const
+/*============================== Private methods ===========================*/
+
+int LabModel::indexOf(quint64 id) const
 {
-    return ( index >= 0 && index < mlabs.size() ) ? &mlabs.at(index) : 0;
+    if (!id)
+        return -1;
+    foreach (int i, bRangeD(0, labs.size() - 1)) {
+        if (labs.at(i).id() == id)
+            return i;
+    }
+    return -1;
 }
-
-const TLabInfo *LabModel::lab(quint64 id) const
-{
-    return id ? mlabsMap.value(id) : 0;
-}
-
-const TLabInfoList *LabModel::labs() const
-{
-    return &mlabs;
-}
-
-quint64 LabModel::indexAt(int row) const
-{
-    const TLabInfo *l = lab(row);
-    return l ? l->id() : 0;
-}
-
-bool LabModel::isEmpty() const
-{
-    return mlabs.isEmpty();
-}
-
-/*============================== Private slots =============================*/
-
-void LabModel::retranslateUi()
-{
-    headerDataChanged(Qt::Horizontal, 1, 2);
-}
-
-/*============================== Static private members ====================*/
-
-LabModel *LabModel::minstance = 0;

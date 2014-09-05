@@ -24,19 +24,16 @@
 
 class TLabInfo;
 
-class QStringList;
 class QVariant;
 
+#include <TIdList>
 #include <TLabInfoList>
 
 #include <QAbstractTableModel>
-#include <QModelIndex>
-#include <QString>
+#include <QDateTime>
 #include <QList>
 #include <QMap>
-#include <QVariantMap>
-
-#define sModel LabsModel::instance()
+#include <QModelIndex>
 
 /*============================================================================
 ================================ LabModel ====================================
@@ -45,32 +42,32 @@ class QVariant;
 class LabModel : public QAbstractTableModel
 {
     Q_OBJECT
-public:
-    static LabModel *instance();
+private:
+    TLabInfoList labs;
+    QMap<quint64, TLabInfo *> map;
+    QDateTime mlastUpdateDateTime;
 public:
     explicit LabModel(QObject *parent = 0);
 public:
-    int rowCount( const QModelIndex &parent = QModelIndex() ) const;
-    int columnCount( const QModelIndex &parent = QModelIndex() ) const;
+    void addLab(const TLabInfo &lab);
+    void addLabs(const TLabInfoList &labList);
+    void clear();
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-    void insertLab(const TLabInfo &l);
-    void insertLabs(const TLabInfoList &list);
+    quint64 labIdAt(int index) const;
+    TLabInfo labInfo(quint64 id) const;
+    TLabInfo labInfoAt(int index) const;
+    QDateTime lastUpdateDateTime() const;
     void removeLab(quint64 id);
-    void removeLabs(const QList<quint64> &list);
-    void clear();
-    const TLabInfo* lab(int index) const;
-    const TLabInfo* lab(quint64 id) const;
-    const TLabInfoList *labs() const;
-    quint64 indexAt(int row) const;
-    bool isEmpty() const;
-private slots:
-    void retranslateUi();
-private:
-    static LabModel *minstance;
-private:
-    TLabInfoList mlabs;
-    QMap<quint64, TLabInfo *> mlabsMap;
+    void removeLabs(const TIdList &idList);
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    void update(const TLabInfoList &newLabs, const TIdList &deletedLabs,
+                const QDateTime &requestDateTime = QDateTime());
+    void update(const TLabInfoList &newLabs, const QDateTime &requestDateTime = QDateTime());
+    void updateLab(quint64 labId, const TLabInfo &newInfo);
+public:
+    int indexOf(quint64 id) const;
 private:
     Q_DISABLE_COPY(LabModel)
 };
