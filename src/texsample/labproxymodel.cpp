@@ -1,4 +1,25 @@
-#include "labsproxymodel.h"
+/****************************************************************************
+**
+** Copyright (C) 2013-2014 Andrey Bogdanov
+**
+** This file is part of CloudLab Client.
+**
+** CloudLab Client is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** CloudLab Client is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with CloudLab Client.  If not, see <http://www.gnu.org/licenses/>.
+**
+****************************************************************************/
+
+#include "labproxymodel.h"
 #include "labsmodel.h"
 #include "client.h"
 #include "application.h"
@@ -39,12 +60,12 @@ static QStringList words(const QString &string)
 }
 
 /*============================================================================
-================================ LabsProxyModel ==============================
+================================ LabProxyModel ===============================
 ============================================================================*/
 
 /*============================== Public constructors =======================*/
 
-LabsProxyModel::LabsProxyModel(QObject *parent) :
+LabProxyModel::LabProxyModel(QObject *parent) :
     QSortFilterProxyModel(parent)
 {
     mlabsModel = 0;
@@ -56,14 +77,14 @@ LabsProxyModel::LabsProxyModel(QObject *parent) :
 /*============================== Public methods ============================*/
 
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-void LabsProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
+void LabProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     QSortFilterProxyModel::setSourceModel(sourceModel);
     sourceModelChangedSlot();
 }
 #endif
 
-void LabsProxyModel::setSearchKeywords(const QStringList &list)
+void LabProxyModel::setSearchKeywords(const QStringList &list)
 {
     msearchKeywords = list;
     msearchKeywords.removeAll("");
@@ -73,7 +94,7 @@ void LabsProxyModel::setSearchKeywords(const QStringList &list)
 
 /*============================== Public slots ==============================*/
 
-void LabsProxyModel::setSearchKeywordsString(const QString &string)
+void LabProxyModel::setSearchKeywordsString(const QString &string)
 {
     static QRegExp rx("\\,\\s*");
     setSearchKeywords(string.split(rx, QString::SkipEmptyParts));
@@ -81,12 +102,12 @@ void LabsProxyModel::setSearchKeywordsString(const QString &string)
 
 /*============================== Protected methods =========================*/
 
-bool LabsProxyModel::filterAcceptsColumn(int column, const QModelIndex &) const
+bool LabProxyModel::filterAcceptsColumn(int column, const QModelIndex &) const
 {
     return mlabsModel && bRange(1, 2).contains(column);
 }
 
-bool LabsProxyModel::filterAcceptsRow(int row, const QModelIndex &) const
+bool LabProxyModel::filterAcceptsRow(int row, const QModelIndex &) const
 {
     const TLabInfo *s = mlabsModel ? mlabsModel->lab(row) : 0;
     return s && matchesKeywords(*s);
@@ -94,7 +115,7 @@ bool LabsProxyModel::filterAcceptsRow(int row, const QModelIndex &) const
 
 /*============================== Private methods ===========================*/
 
-bool LabsProxyModel::matchesKeywords(const TLabInfo &info) const
+bool LabProxyModel::matchesKeywords(const TLabInfo &info) const
 {
     Qt::CaseSensitivity cs = Qt::CaseInsensitive;
     if (msearchKeywords.isEmpty())
@@ -115,7 +136,7 @@ bool LabsProxyModel::matchesKeywords(const TLabInfo &info) const
 
 /*============================== Private slots =============================*/
 
-void LabsProxyModel::sourceModelChangedSlot()
+void LabProxyModel::sourceModelChangedSlot()
 {
     mlabsModel = static_cast<LabsModel *>(sourceModel());
 }

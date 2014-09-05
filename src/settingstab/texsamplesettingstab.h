@@ -19,31 +19,43 @@
 **
 ****************************************************************************/
 
-class QStringList;
+#ifndef TEXSAMPLESETTINGSTAB_H
+#define TEXSAMPLESETTINGSTAB_H
 
-#include "application.h"
+class BLoginWidget;
 
-#include <BApplicationServer>
+class QCheckBox;
+class QIcon;
+class QString;
 
-#include <QDebug>
-#include <QDir>
-#include <QHash>
+#include <BAbstractSettingsTab>
+
 #include <QObject>
-#include <QString>
+#include <QStringList>
 
-int main(int argc, char *argv[])
+/*============================================================================
+================================ TexsampleSettingsTab ========================
+============================================================================*/
+
+class TexsampleSettingsTab : public BAbstractSettingsTab
 {
-    static const QString AppName = "CloudLab Client";
-    QString home = QDir::home().dirName();
-    BApplicationServer s(9960 + qHash(home) % 10, AppName + "1" + home);
-    int ret = 0;
-    if (!s.testServer()) {
-        Application app(argc, argv, AppName, "Andrey Bogdanov");
-        QObject::connect(&s, SIGNAL(messageReceived(QStringList)), &app, SLOT(messageReceived(QStringList)));
-        s.listen();
-        ret = app.exec();
-    } else {
-        s.sendMessage(argc, argv);
-    }
-    return ret;
-}
+    Q_OBJECT
+private:
+    BLoginWidget *lgnwgt;
+    QCheckBox *cboxConnectOnStartup;
+    QCheckBox *cboxCaching;
+public:
+    explicit TexsampleSettingsTab();
+public:
+    QIcon icon() const;
+    QString id() const;
+    bool restoreDefault();
+    bool saveSettings();
+    QString title() const;
+private slots:
+    void clearCache();
+private:
+    Q_DISABLE_COPY(TexsampleSettingsTab)
+};
+
+#endif // TEXSAMPLESETTINGSTAB_H

@@ -1,5 +1,26 @@
-#ifndef LABSMODEL_H
-#define LABSMODEL_H
+/****************************************************************************
+**
+** Copyright (C) 2013-2014 Andrey Bogdanov
+**
+** This file is part of CloudLab Client.
+**
+** CloudLab Client is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** CloudLab Client is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with CloudLab Client.  If not, see <http://www.gnu.org/licenses/>.
+**
+****************************************************************************/
+
+#ifndef LABMODEL_H
+#define LABMODEL_H
 
 class TLabInfo;
 
@@ -18,16 +39,16 @@ class QVariant;
 #define sModel LabsModel::instance()
 
 /*============================================================================
-================================ LabsModel ===================================
+================================ LabModel ====================================
 ============================================================================*/
 
-class LabsModel : public QAbstractTableModel
+class LabModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    static LabsModel *instance();
+    static LabModel *instance();
 public:
-    explicit LabsModel(QObject *parent = 0);
+    explicit LabModel(QObject *parent = 0);
 public:
     int rowCount( const QModelIndex &parent = QModelIndex() ) const;
     int columnCount( const QModelIndex &parent = QModelIndex() ) const;
@@ -46,12 +67,12 @@ public:
 private slots:
     void retranslateUi();
 private:
-    static LabsModel *minstance;
+    static LabModel *minstance;
 private:
     TLabInfoList mlabs;
     QMap<quint64, TLabInfo *> mlabsMap;
 private:
-    Q_DISABLE_COPY(LabsModel)
+    Q_DISABLE_COPY(LabModel)
 };
 
-#endif // LABSMODEL_H
+#endif // LABMODEL_H

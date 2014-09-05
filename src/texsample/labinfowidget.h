@@ -1,5 +1,26 @@
-#ifndef LABWIDGET_H
-#define LABWIDGET_H
+/****************************************************************************
+**
+** Copyright (C) 2013-2014 Andrey Bogdanov
+**
+** This file is part of CloudLab Client.
+**
+** CloudLab Client is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** CloudLab Client is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with CloudLab Client.  If not, see <http://www.gnu.org/licenses/>.
+**
+****************************************************************************/
+
+#ifndef LABINFOWIDGET_H
+#define LABINFOWIDGET_H
 
 class FilesWidget;
 
@@ -79,10 +100,10 @@ private:
 };
 
 /*============================================================================
-================================ LabWidget ===================================
+================================ LabInfoWidget ===============================
 ============================================================================*/
 
-class LabWidget : public QWidget
+class LabInfoWidget : public QWidget
 {
     Q_OBJECT
 public:
@@ -93,7 +114,7 @@ public:
         ShowMode
     };
 public:
-    explicit LabWidget(Mode m, QWidget *parent = 0);
+    explicit LabInfoWidget(Mode m, QWidget *parent = 0);
 public:
     void setInfo(const TLabInfo &info);
     void setCheckSourceValidity(bool b);
@@ -149,4 +170,4 @@ private:
     FilesWidget *flswgt;
 };
 
-#endif // LABWIDGET_H
+#endif // LABINFOWIDGET_H

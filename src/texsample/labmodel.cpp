@@ -1,4 +1,25 @@
-#include "labsmodel.h"
+/****************************************************************************
+**
+** Copyright (C) 2013-2014 Andrey Bogdanov
+**
+** This file is part of CloudLab Client.
+**
+** CloudLab Client is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** CloudLab Client is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with CloudLab Client.  If not, see <http://www.gnu.org/licenses/>.
+**
+****************************************************************************/
+
+#include "labmodel.h"
 
 #include <TUserInfo>
 #include <TLabInfo>
@@ -16,21 +37,21 @@
 #include <QDebug>
 
 /*============================================================================
-================================ LabsModel ===================================
+================================ LabModel ====================================
 ============================================================================*/
 
 /*============================== Static public methods =====================*/
 
-LabsModel *LabsModel::instance()
+LabModel *LabModel::instance()
 {
     if (!minstance)
-        minstance = new LabsModel;
+        minstance = new LabModel;
     return minstance;
 }
 
 /*============================== Public constructors =======================*/
 
-LabsModel::LabsModel(QObject *parent) :
+LabModel::LabModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
     connect(bApp, SIGNAL(languageChanged()), this, SLOT(retranslateUi()));
@@ -38,17 +59,17 @@ LabsModel::LabsModel(QObject *parent) :
 
 /*============================== Public methods ============================*/
 
-int LabsModel::rowCount(const QModelIndex &) const
+int LabModel::rowCount(const QModelIndex &) const
 {
     return mlabs.size();
 }
 
-int LabsModel::columnCount(const QModelIndex &) const
+int LabModel::columnCount(const QModelIndex &) const
 {
     return 3;
 }
 
-QVariant LabsModel::data(const QModelIndex &index, int role) const
+QVariant LabModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || Qt::DisplayRole != role)
         return QVariant();
@@ -68,7 +89,7 @@ QVariant LabsModel::data(const QModelIndex &index, int role) const
     }
 }
 
-QVariant LabsModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant LabModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (Qt::Horizontal != orientation || Qt::DisplayRole != role)
         return QVariant();
@@ -83,14 +104,14 @@ QVariant LabsModel::headerData(int section, Qt::Orientation orientation, int rol
     }
 }
 
-void LabsModel::insertLab(const TLabInfo &l)
+void LabModel::insertLab(const TLabInfo &l)
 {
     TLabInfoList list;
     list << l;
     insertLabs(list);
 }
 
-void LabsModel::insertLabs(const TLabInfoList &list)
+void LabModel::insertLabs(const TLabInfoList &list)
 {
     TLabInfoList nlist = list;
     foreach (int i, bRangeR(nlist.size() - 1, 0))
@@ -113,7 +134,7 @@ void LabsModel::insertLabs(const TLabInfoList &list)
     endInsertRows();
 }
 
-void LabsModel::removeLab(quint64 id)
+void LabModel::removeLab(quint64 id)
 {
     if (!id || !mlabsMap.contains(id))
         return;
@@ -124,13 +145,13 @@ void LabsModel::removeLab(quint64 id)
     endRemoveRows();
 }
 
-void LabsModel::removeLabs(const QList<quint64> &list)
+void LabModel::removeLabs(const QList<quint64> &list)
 {
     foreach (const quint64 &s, list)
         removeLab(s);
 }
 
-void LabsModel::clear()
+void LabModel::clear()
 {
     if (mlabs.isEmpty())
         return;
@@ -140,39 +161,39 @@ void LabsModel::clear()
     endRemoveRows();
 }
 
-const TLabInfo *LabsModel::lab(int index) const
+const TLabInfo *LabModel::lab(int index) const
 {
     return ( index >= 0 && index < mlabs.size() ) ? &mlabs.at(index) : 0;
 }
 
-const TLabInfo *LabsModel::lab(quint64 id) const
+const TLabInfo *LabModel::lab(quint64 id) const
 {
     return id ? mlabsMap.value(id) : 0;
 }
 
-const TLabInfoList *LabsModel::labs() const
+const TLabInfoList *LabModel::labs() const
 {
     return &mlabs;
 }
 
-quint64 LabsModel::indexAt(int row) const
+quint64 LabModel::indexAt(int row) const
 {
     const TLabInfo *l = lab(row);
     return l ? l->id() : 0;
 }
 
-bool LabsModel::isEmpty() const
+bool LabModel::isEmpty() const
 {
     return mlabs.isEmpty();
 }
 
 /*============================== Private slots =============================*/
 
-void LabsModel::retranslateUi()
+void LabModel::retranslateUi()
 {
     headerDataChanged(Qt::Horizontal, 1, 2);
 }
 
 /*============================== Static private members ====================*/
 
-LabsModel *LabsModel::minstance = 0;
+LabModel *LabModel::minstance = 0;

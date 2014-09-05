@@ -28,7 +28,6 @@
         <file>icons/edit_user.svgz</file>
         <file>changelog/ChangeLog.txt</file>
         <file>changelog/ChangeLog_ru.txt</file>
-        <file>icons/clab-client.png</file>
         <file>icons/clab-client.svgz</file>
         <file>icons/users.png</file>
         <file>icons/users.svgz</file>
@@ -49,5 +48,12 @@
         <file>icons/back.svgz</file>
         <file>icons/forward.png</file>
         <file>icons/forward.svgz</file>
+        <file>icons/cloudlab-client.png</file>
+        <file>icons/linux_logo.png</file>
+        <file>icons/linux_logo.svgz</file>
+        <file>icons/macos_logo.png</file>
+        <file>icons/macos_logo.svgz</file>
+        <file>icons/windows_logo.png</file>
+        <file>icons/windows_logo.svgz</file>
     </qresource>
 </RCC>

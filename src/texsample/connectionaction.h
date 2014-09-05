@@ -19,31 +19,29 @@
 **
 ****************************************************************************/
 
-class QStringList;
+#ifndef CONNECTIONACTION_H
+#define CONNECTIONACTION_H
 
-#include "application.h"
+class QString;
+class QWidget;
 
-#include <BApplicationServer>
-
-#include <QDebug>
-#include <QDir>
-#include <QHash>
 #include <QObject>
-#include <QString>
+#include <QWidgetAction>
 
-int main(int argc, char *argv[])
+/*============================================================================
+================================ ConnectionAction ============================
+============================================================================*/
+
+class ConnectionAction : public QWidgetAction
 {
-    static const QString AppName = "CloudLab Client";
-    QString home = QDir::home().dirName();
-    BApplicationServer s(9960 + qHash(home) % 10, AppName + "1" + home);
-    int ret = 0;
-    if (!s.testServer()) {
-        Application app(argc, argv, AppName, "Andrey Bogdanov");
-        QObject::connect(&s, SIGNAL(messageReceived(QStringList)), &app, SLOT(messageReceived(QStringList)));
-        s.listen();
-        ret = app.exec();
-    } else {
-        s.sendMessage(argc, argv);
-    }
-    return ret;
-}
+    Q_OBJECT
+public:
+    explicit ConnectionAction(QObject *parent = 0);
+public:
+    void resetIcon(const QString &toolTip, const QString &iconName, bool animated = false);
+protected:
+    QWidget *createWidget(QWidget *parent);
+    void deleteWidget(QWidget *widget);
+};
+
+#endif // CONNECTIONACTION_H

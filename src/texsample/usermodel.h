@@ -19,61 +19,47 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
-class ClabWidget;
+#ifndef USERMODEL_H
+#define USERMODEL_H
 
 class QString;
-class QAction;
-class QMenu;
-class QSignalMapper;
-class QCloseEvent;
-class QToolBar;
-class QByteArray;
-class QLabel;
 
-#include <BApplication>
+class BSqlDatabase;
 
-#include <QMainWindow>
-#include <QTextCodec>
+#include <TUserModel>
+
+#include <QImage>
+#include <QMap>
+#include <QObject>
 
 /*============================================================================
-================================ MainWindow ==================================
+================================ UserModel ===================================
 ============================================================================*/
 
-class MainWindow : public QMainWindow
+class UserModel : public TUserModel
 {
     Q_OBJECT
+private:
+    const QString Location;
+private:
+    QMap<quint64, QImage> mavatarCache;
+    BSqlDatabase *mdb;
+    int mmax;
 public:
-    explicit MainWindow();
-    ~MainWindow();
+    explicit UserModel(const QString &location, QObject *parent = 0);
+    ~UserModel();
 public:
-    static QByteArray getWindowGeometry();
-    static QByteArray getWindowState();
-    static void setWindowGeometry(const QByteArray &geometry);
-    static void setWindowState(const QByteArray &state);
+    int maximumCachedAvatarCount() const;
+    void setMaximumCachedAvatarCount(int count);
 protected:
-    void closeEvent(QCloseEvent *e);
+    bool avatarStoredSeparately() const;
+    QImage loadAvatar(quint64 userId) const;
+    void removeAvatar(quint64 userId);
+    void saveAvatar(quint64 userId, const QImage &avatar);
 private:
-    void initCentralWidget();
-    void initMenus();
-private slots:
-    void retranslateUi();
+    UserModel *getSelf() const;
 private:
-    QSignalMapper *mmprAutotext;
-    QSignalMapper *mmprOpenFile;
-    //
-    ClabWidget *mwgt;
-    //
-    QMenu *mmnuFile;
-      QAction *mactQuit;
-    QMenu *mmnuEdit;
-      QMenu *mmnuAutotext;
-    QMenu *mmnuClab;
-    QMenu *mmnuHelp;
-private:
-    Q_DISABLE_COPY(MainWindow)
+    Q_DISABLE_COPY(UserModel)
 };
 
-#endif // MAINWINDOW_H
+#endif // USERMODEL_H

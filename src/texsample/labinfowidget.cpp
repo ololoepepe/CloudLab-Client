@@ -1,4 +1,25 @@
-#include "labwidget.h"
+/****************************************************************************
+**
+** Copyright (C) 2013-2014 Andrey Bogdanov
+**
+** This file is part of CloudLab Client.
+**
+** CloudLab Client is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** CloudLab Client is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with CloudLab Client.  If not, see <http://www.gnu.org/licenses/>.
+**
+****************************************************************************/
+
+#include "labinfowidget.h"
 #include "client.h"
 #include "application.h"
 
@@ -199,12 +220,12 @@ void FilesWidget::addFile()
 }
 
 /*============================================================================
-================================ LabWidget ===================================
+================================ LabInfoWidget ===============================
 ============================================================================*/
 
 /*============================== Public constructors =======================*/
 
-LabWidget::LabWidget(Mode m, QWidget *parent) :
+LabInfoWidget::LabInfoWidget(Mode m, QWidget *parent) :
     QWidget(parent), mmode(m)
 {
     mvalid = false;
@@ -320,7 +341,7 @@ LabWidget::LabWidget(Mode m, QWidget *parent) :
 
 /*============================== Public methods ============================*/
 
-void LabWidget::setInfo(const TLabInfo &info)
+void LabInfoWidget::setInfo(const TLabInfo &info)
 {
     mid = info.id();
     msenderId = info.sender().id();
@@ -361,7 +382,7 @@ void LabWidget::setInfo(const TLabInfo &info)
     checkInputs();
 }
 
-void LabWidget::setCheckSourceValidity(bool b)
+void LabInfoWidget::setCheckSourceValidity(bool b)
 {
     if (b == mcheckSource)
         return;
@@ -369,24 +390,24 @@ void LabWidget::setCheckSourceValidity(bool b)
     checkInputs();
 }
 
-void LabWidget::setClabGroups(const QStringList &list)
+void LabInfoWidget::setClabGroups(const QStringList &list)
 {
     mlstwgtGroups->setItems(list);
 }
 
-void LabWidget::restoreState(const QByteArray &state)
+void LabInfoWidget::restoreState(const QByteArray &state)
 {
     QVariantMap m = BeQt::deserialize(state).toMap();
     mtgswgt->setAvailableTags(m.value("tags").toStringList());
     mlstwgtAuthors->setAvailableItems(m.value("authors").toStringList());
 }
 
-LabWidget::Mode LabWidget::mode() const
+LabInfoWidget::Mode LabInfoWidget::mode() const
 {
     return mmode;
 }
 
-TLabInfo LabWidget::info() const
+TLabInfo LabInfoWidget::info() const
 {
     TLabInfo info;
     switch (mmode)
@@ -421,12 +442,12 @@ TLabInfo LabWidget::info() const
     return info;
 }
 
-bool LabWidget::checkSourceValidity() const
+bool LabInfoWidget::checkSourceValidity() const
 {
     return mcheckSource;
 }
 
-TLabProject LabWidget::webProject() const
+TLabProject LabInfoWidget::webProject() const
 {
     TLabProject p((mcmboxType->currentIndex() == 1) ? mledtFile.value(BeQt::LinuxOS)->text() : QString());
     if (p.isExecutable())
@@ -434,7 +455,7 @@ TLabProject LabWidget::webProject() const
     return p;
 }
 
-TLabProject LabWidget::linuxProject() const
+TLabProject LabInfoWidget::linuxProject() const
 {
     TLabProject p((mcmboxType->currentIndex() == 0) ? mledtFile.value(BeQt::LinuxOS)->text() : QString());
     if (!p.isExecutable())
@@ -442,7 +463,7 @@ TLabProject LabWidget::linuxProject() const
     return p;
 }
 
-TLabProject LabWidget::macProject() const
+TLabProject LabInfoWidget::macProject() const
 {
     TLabProject p((mcmboxType->currentIndex() == 0) ? mledtFile.value(BeQt::MacOS)->text() : QString());
     if (!p.isExecutable())
@@ -450,7 +471,7 @@ TLabProject LabWidget::macProject() const
     return p;
 }
 
-TLabProject LabWidget::winProject() const
+TLabProject LabInfoWidget::winProject() const
 {
     TLabProject p((mcmboxType->currentIndex() == 0) ? mledtFile.value(BeQt::WindowsOS)->text() : QString());
     if (!p.isExecutable())
@@ -458,22 +479,22 @@ TLabProject LabWidget::winProject() const
     return p;
 }
 
-QString LabWidget::url() const
+QString LabInfoWidget::url() const
 {
     return (mcmboxType->currentIndex() == 2) ? mledtFile.value(BeQt::LinuxOS)->text() : QString();
 }
 
-QStringList LabWidget::extraAttachedFiles() const
+QStringList LabInfoWidget::extraAttachedFiles() const
 {
     return flswgt->files();
 }
 
-QStringList LabWidget::clabGroups() const
+QStringList LabInfoWidget::clabGroups() const
 {
     return mlstwgtGroups->items();
 }
 
-QByteArray LabWidget::saveState() const
+QByteArray LabInfoWidget::saveState() const
 {
     QVariantMap m;
     m.insert("tags", mtgswgt->availableTags());
@@ -481,19 +502,19 @@ QByteArray LabWidget::saveState() const
     return BeQt::serialize(m);
 }
 
-bool LabWidget::isValid() const
+bool LabInfoWidget::isValid() const
 {
     return mvalid;
 }
 
 /*============================== Public slots ==============================*/
 
-void LabWidget::clear()
+void LabInfoWidget::clear()
 {
     setInfo(TLabInfo());
 }
 
-void LabWidget::setFocus()
+void LabInfoWidget::setFocus()
 {
     mledtTitle->setFocus();
     if (!mledtTitle->isReadOnly())
@@ -502,7 +523,7 @@ void LabWidget::setFocus()
 
 /*============================== Private slots =============================*/
 
-void LabWidget::checkInputs()
+void LabInfoWidget::checkInputs()
 {
     minputTitle->setValid(!mledtTitle->text().isEmpty() && mledtTitle->hasAcceptableInput());
     bool src = true;
@@ -530,7 +551,7 @@ void LabWidget::checkInputs()
     emit validityChanged(v);
 }
 
-void LabWidget::showSenderInfo()
+void LabInfoWidget::showSenderInfo()
 {
     if (!msenderId)
         return;
@@ -552,7 +573,7 @@ void LabWidget::showSenderInfo()
     dlg.exec();
 }
 
-void LabWidget::cmboxTypeCurrentIndexChanged(int index)
+void LabInfoWidget::cmboxTypeCurrentIndexChanged(int index)
 {
     switch (index)
     {
@@ -587,7 +608,7 @@ void LabWidget::cmboxTypeCurrentIndexChanged(int index)
     checkInputs();
 }
 
-void LabWidget::selectFile(int id)
+void LabInfoWidget::selectFile(int id)
 {
     QLineEdit *ledt = mledtFile.value(id);
     if (!ledt)
@@ -601,7 +622,7 @@ void LabWidget::selectFile(int id)
     ledt->setText(fn);
 }
 
-void LabWidget::getFile(const QString &fileName)
+void LabInfoWidget::getFile(const QString &fileName)
 {
     if (fileName.isEmpty())
         return;
@@ -613,4 +634,4 @@ void LabWidget::getFile(const QString &fileName)
 
 /*============================== Static private constants ==================*/
 
-const QString LabWidget::DateTimeFormat = "dd MMMM yyyy hh:mm";
+const QString LabInfoWidget::DateTimeFormat = "dd MMMM yyyy hh:mm";

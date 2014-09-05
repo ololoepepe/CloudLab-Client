@@ -19,31 +19,34 @@
 **
 ****************************************************************************/
 
-class QStringList;
+#ifndef DIALOG_H
+#define DIALOG_H
 
-#include "application.h"
+class QByteArray;
+class QCloseEvent;
+class QWidget;
 
-#include <BApplicationServer>
+#include <BDialog>
+#include <BTranslation>
 
-#include <QDebug>
-#include <QDir>
-#include <QHash>
 #include <QObject>
-#include <QString>
 
-int main(int argc, char *argv[])
+/*============================================================================
+================================ Dialog ======================================
+============================================================================*/
+
+class Dialog : public BDialog
 {
-    static const QString AppName = "CloudLab Client";
-    QString home = QDir::home().dirName();
-    BApplicationServer s(9960 + qHash(home) % 10, AppName + "1" + home);
-    int ret = 0;
-    if (!s.testServer()) {
-        Application app(argc, argv, AppName, "Andrey Bogdanov");
-        QObject::connect(&s, SIGNAL(messageReceived(QStringList)), &app, SLOT(messageReceived(QStringList)));
-        s.listen();
-        ret = app.exec();
-    } else {
-        s.sendMessage(argc, argv);
-    }
-    return ret;
-}
+    Q_OBJECT
+public:
+    typedef void (*StoreGeometryFunction)(const QByteArray &geometry);
+private:
+    const StoreGeometryFunction StoreGeometryFunc;
+    const BTranslation Title;
+public:
+    explicit Dialog(StoreGeometryFunction f, const BTranslation &title, QWidget *parent = 0);
+protected:
+    void closeEvent(QCloseEvent *event);
+};
+
+#endif // DIALOG_H

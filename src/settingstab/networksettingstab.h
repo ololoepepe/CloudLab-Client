@@ -19,31 +19,42 @@
 **
 ****************************************************************************/
 
-class QStringList;
+#ifndef NETWORKSETTINGSTAB_H
+#define NETWORKSETTINGSTAB_H
 
-#include "application.h"
+class BLoginWidget;
 
-#include <BApplicationServer>
+class QButtonGroup;
+class QIcon;
+class QString;
 
-#include <QDebug>
-#include <QDir>
-#include <QHash>
+#include <BAbstractSettingsTab>
+
 #include <QObject>
-#include <QString>
 
-int main(int argc, char *argv[])
+/*============================================================================
+================================ NetworkSettingsTab ==========================
+============================================================================*/
+
+class NetworkSettingsTab : public BAbstractSettingsTab
 {
-    static const QString AppName = "CloudLab Client";
-    QString home = QDir::home().dirName();
-    BApplicationServer s(9960 + qHash(home) % 10, AppName + "1" + home);
-    int ret = 0;
-    if (!s.testServer()) {
-        Application app(argc, argv, AppName, "Andrey Bogdanov");
-        QObject::connect(&s, SIGNAL(messageReceived(QStringList)), &app, SLOT(messageReceived(QStringList)));
-        s.listen();
-        ret = app.exec();
-    } else {
-        s.sendMessage(argc, argv);
-    }
-    return ret;
-}
+    Q_OBJECT
+private:
+    QButtonGroup *btngr;
+    BLoginWidget *lwgt;
+public:
+    explicit NetworkSettingsTab();
+public:
+    QIcon icon() const;
+    QString id() const;
+    bool hasDefault() const;
+    bool restoreDefault();
+    bool saveSettings();
+    QString title() const;
+private slots:
+    void btnClicked(int index);
+private:
+    Q_DISABLE_COPY(NetworkSettingsTab)
+};
+
+#endif // NETWORKSETTINGSTAB_H

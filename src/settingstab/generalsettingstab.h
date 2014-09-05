@@ -19,31 +19,39 @@
 **
 ****************************************************************************/
 
-class QStringList;
+#ifndef GENERALSETTINGSTAB_H
+#define GENERALSETTINGSTAB_H
 
-#include "application.h"
+class BLocaleComboBox;
 
-#include <BApplicationServer>
+class QCheckBox;
+class QIcon;
+class QString;
 
-#include <QDebug>
-#include <QDir>
-#include <QHash>
-#include <QObject>
-#include <QString>
+#include <BAbstractSettingsTab>
 
-int main(int argc, char *argv[])
+/*============================================================================
+================================ GeneralSettingsTab ==========================
+============================================================================*/
+
+class GeneralSettingsTab : public BAbstractSettingsTab
 {
-    static const QString AppName = "CloudLab Client";
-    QString home = QDir::home().dirName();
-    BApplicationServer s(9960 + qHash(home) % 10, AppName + "1" + home);
-    int ret = 0;
-    if (!s.testServer()) {
-        Application app(argc, argv, AppName, "Andrey Bogdanov");
-        QObject::connect(&s, SIGNAL(messageReceived(QStringList)), &app, SLOT(messageReceived(QStringList)));
-        s.listen();
-        ret = app.exec();
-    } else {
-        s.sendMessage(argc, argv);
-    }
-    return ret;
-}
+    Q_OBJECT
+private:
+    BLocaleComboBox *mlcmbox;
+    QCheckBox *mcboxMultipleWindows;
+    QCheckBox *mcboxNewVersions;
+public:
+    explicit GeneralSettingsTab();
+public:
+    QIcon icon() const;
+    QString id() const;
+    bool hasDefault() const;
+    bool restoreDefault();
+    bool saveSettings();
+    QString title() const;
+private:
+    Q_DISABLE_COPY(GeneralSettingsTab)
+};
+
+#endif // GENERALSETTINGSTAB_H

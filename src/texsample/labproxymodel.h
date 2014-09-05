@@ -19,61 +19,49 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef LABPROXYMODEL_H
+#define LABPROXYMODEL_H
 
-class ClabWidget;
+class LabsModel;
 
+class TLabInfo;
+
+class QVariant;
+class QModelIndex;
 class QString;
-class QAction;
-class QMenu;
-class QSignalMapper;
-class QCloseEvent;
-class QToolBar;
-class QByteArray;
-class QLabel;
+class QAbstractItemModel;
 
-#include <BApplication>
-
-#include <QMainWindow>
-#include <QTextCodec>
+#include <QSortFilterProxyModel>
+#include <QStringList>
 
 /*============================================================================
-================================ MainWindow ==================================
+================================ LabProxyModel ===============================
 ============================================================================*/
 
-class MainWindow : public QMainWindow
+class LabProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
-    explicit MainWindow();
-    ~MainWindow();
+    explicit LabProxyModel(QObject *parent = 0);
 public:
-    static QByteArray getWindowGeometry();
-    static QByteArray getWindowState();
-    static void setWindowGeometry(const QByteArray &geometry);
-    static void setWindowState(const QByteArray &state);
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+    void setSourceModel(QAbstractItemModel *sourceModel);
+#endif
+    void setSearchKeywords(const QStringList &list);
+public slots:
+    void setSearchKeywordsString(const QString &string);
 protected:
-    void closeEvent(QCloseEvent *e);
+    bool filterAcceptsColumn(int column, const QModelIndex &parent) const;
+    bool filterAcceptsRow(int row, const QModelIndex &parent) const;
 private:
-    void initCentralWidget();
-    void initMenus();
+    bool matchesKeywords(const TLabInfo &info) const;
 private slots:
-    void retranslateUi();
+    void sourceModelChangedSlot();
 private:
-    QSignalMapper *mmprAutotext;
-    QSignalMapper *mmprOpenFile;
-    //
-    ClabWidget *mwgt;
-    //
-    QMenu *mmnuFile;
-      QAction *mactQuit;
-    QMenu *mmnuEdit;
-      QMenu *mmnuAutotext;
-    QMenu *mmnuClab;
-    QMenu *mmnuHelp;
+    LabsModel *mlabsModel;
+    QStringList msearchKeywords;
 private:
-    Q_DISABLE_COPY(MainWindow)
+    Q_DISABLE_COPY(LabProxyModel)
 };
 
-#endif // MAINWINDOW_H
+#endif // LABPROXYMODEL_H
