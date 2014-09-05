@@ -23,16 +23,14 @@
 #define TEXSAMPLECORE_H
 
 class Cache;
-class SampleModel;
+class LabModel;
 
 class TBinaryFile;
 class TGroupModel;
 class TInviteModel;
 class TNetworkClient;
-class TTexProject;
 class TUserModel;
 
-class BCodeEditor;
 class BNetworkConnection;
 class BNetworkOperation;
 
@@ -70,15 +68,15 @@ private:
     Cache *mcache;
     TNetworkClient *mclient;
     bool mdestructorCalled;
-    QMap< quint64, QPointer<QWidget> > meditSampleDialogs;
+    QMap< quint64, QPointer<QWidget> > meditLabDialogs;
     QList<QObject *> mfutureWatchers;
     QPointer<QWidget> mgroupManagementDialog;
     TGroupModel *mgroupModel;
     QPointer<QWidget> minviteManagementDialog;
     TInviteModel *minviteModel;
-    QMap< quint64, QPointer<QWidget> > msampleInfoDialogs;
-    SampleModel *msampleModel;
-    QPointer<QWidget> msendSampleDialog;
+    QMap< quint64, QPointer<QWidget> > mlabInfoDialogs;
+    LabModel *mlabModel;
+    QPointer<QWidget> msendLabDialog;
     QMap< quint64, QPointer<QWidget> > muserInfoDialogs;
     QPointer<QWidget> muserManagementDialog;
     TUserModel *muserModel;
@@ -90,7 +88,7 @@ public:
     TNetworkClient *client() const;
     TGroupModel *groupModel() const;
     TInviteModel *inviteModel() const;
-    SampleModel *sampleModel() const;
+    LabModel *labModel() const;
     void updateCacheSettings();
     void updateClientSettings();
     TUserModel *userModel() const;
@@ -98,12 +96,11 @@ public slots:
     bool checkForNewVersion(bool persistent = false);
     bool checkForNewVersionPersistent();
     void connectToServer();
-    bool deleteSample(quint64 sampleId, QWidget *parent = 0);
+    bool deleteLab(quint64 labId, QWidget *parent = 0);
     void disconnectFromServer();
-    void editSample(quint64 sampleId, BCodeEditor *editor = 0);
-    bool insertSample(quint64 sampleId, BCodeEditor *editor);
-    bool saveSample(quint64 sampleId, QWidget *parent = 0);
-    void sendSample(BCodeEditor *editor = 0);
+    void editLab(quint64 labId);
+    bool getLab(quint64 labId);
+    void sendLab();
     bool showAccountManagementDialog(QWidget *parent = 0);
     bool showConfirmEmailChangeDialog(QWidget *parent = 0);
     bool showConfirmRegistrationDialog(QWidget *parent = 0);
@@ -111,12 +108,11 @@ public slots:
     void showInviteManagementWidget();
     bool showRecoverDialog(QWidget *parent = 0);
     bool showRegisterDialog(QWidget *parent = 0);
-    void showSampleInfo(quint64 sampleId);
-    void showSamplePreview(quint64 sampleId);
+    void showLabInfo(quint64 labId);
     bool showTexsampleSettings(QWidget *parent = 0);
     void showUserInfo(quint64 userId);
     void showUserManagementWidget();
-    void updateSampleList();
+    void updateLabList();
 signals:
     void stopWaiting();
 private:
@@ -136,21 +132,17 @@ private:
     typedef QFutureWatcher<CheckForNewVersionResult> Watcher;
 private:
     static CheckForNewVersionResult checkForNewVersionFunction(bool persistent);
-    static bool saveSamplePreview(const QString &path, const TBinaryFile &mainFile,
-                                  const TBinaryFileList &extraFiles = TBinaryFileList());
     static void showMessageFunction(const QString &text, const QString &informativeText, bool error,
                                     QWidget *parentWidget);
     static bool waitForConnectedFunction(BNetworkConnection *connection, int timeout, QWidget *parentWidget,
                                          QString *msg);
     static bool waitForFinishedFunction(BNetworkOperation *op, int timeout, QWidget *parentWidget, QString *msg);
-private:
-    bool getSampleSource(quint64 sampleId, TTexProject &source, QWidget *parent = 0);
 private slots:
     void checkingForNewVersionFinished();
     void checkTexsample();
     void clientAuthorizedChanged(bool authorized);
-    void editSampleDialogFinished(int result);
-    void sendSampleDialogFinished(int result);
+    void editLabDialogFinished(int result);
+    void sendLabDialogFinished(int result);
 };
 
 #endif // TEXSAMPLECORE_H

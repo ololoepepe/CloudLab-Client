@@ -71,26 +71,15 @@ void Cache::clear()
     if (!mdb->transaction())
         return;
     if (!mdb->deleteFrom("users") || !mdb->deleteFrom("invite_codes") || !mdb->deleteFrom("groups")
-            || !mdb->deleteFrom("samples") || !mdb->deleteFrom("sample_previews") || !mdb->deleteFrom("sample_sources")
-            || !mdb->deleteFrom("last_request_date_times") || !mdb->exec("VACUUM")) {
+            || !mdb->deleteFrom("labs") || !mdb->deleteFrom("last_request_date_times") || !mdb->exec("VACUUM")) {
         bRet(mdb->rollback());
     }
     mdb->commit();
 }
 
-QVariant Cache::data(const QString &operation, const QVariant &id) const
+QVariant Cache::data(const QString &, const QVariant &) const
 {
-    typedef QMap<QString, GetDataFunction> GetDataFunctionMap;
-    init_once(GetDataFunctionMap, functionMap, GetDataFunctionMap()) {
-        functionMap.insert(TOperation::GetSamplePreview, &Cache::getSamplePreview);
-        functionMap.insert(TOperation::GetSampleSource, &Cache::getSampleSource);
-    }
-    if (!menabled || !mdb)
-        return QVariant();
-    GetDataFunction f = functionMap.value(operation);
-    if (!f)
-        return QVariant();
-    return (getSelf()->*f)(id);
+    return QVariant();
 }
 
 TGroupInfoList Cache::groupInfoList() const
@@ -132,23 +121,12 @@ QDateTime Cache::lastRequestDateTime(RequestType type, const quint64 id) const
         return QDateTime();
     QDateTime dt;
     dt.setTimeSpec(Qt::UTC);
-    if (bRangeD(SamplePreviewRequest, SampleSourceRequest).contains(type)) {
-        if (!id)
-            return QDateTime();
-        QString table = (SamplePreviewRequest == type) ? "sample_previews" : "sample_sources";
-        BSqlResult result = mdb->select(table, "last_request_date_time", BSqlWhere("id = :id", ":id", id));
-        if (!result.success() || result.values().isEmpty())
-            return QDateTime();
-        dt.setMSecsSinceEpoch(result.value("last_request_date_time").toLongLong());
-        return dt;
-    } else {
-        BSqlWhere where("request_type = :request_type", ":request_type", int(type));
-        BSqlResult result = mdb->select("last_request_date_times", "date_time", where);
-        if (!result.success() || result.values().isEmpty())
-            return QDateTime();
-        dt.setMSecsSinceEpoch(result.value("date_time").toLongLong());
-        return dt;
-    }
+    BSqlWhere where("request_type = :request_type", ":request_type", int(type));
+    BSqlResult result = mdb->select("last_request_date_times", "date_time", where);
+    if (!result.success() || result.values().isEmpty())
+        return QDateTime();
+    dt.setMSecsSinceEpoch(result.value("date_time").toLongLong());
+    return dt;
 }
 
 void Cache::removeData(const QString &operation, const QVariant &id)
@@ -157,7 +135,7 @@ void Cache::removeData(const QString &operation, const QVariant &id)
     init_once(RemoveDataFunctionMap, functionMap, RemoveDataFunctionMap()) {
         functionMap.insert(TOperation::DeleteGroup, &Cache::handleDeleteGroup);
         functionMap.insert(TOperation::DeleteInvites, &Cache::handleDeleteInvites);
-        functionMap.insert(TOperation::DeleteSample, &Cache::handleDeleteSample);
+        functionMap.insert(TOperation::DeleteLab, &Cache::handleDeleteLab);
         functionMap.insert(TOperation::DeleteUser, &Cache::handleDeleteUser);
     }
     if (!menabled || !mdb)
@@ -172,16 +150,16 @@ void Cache::removeData(const QString &operation, const QVariant &id)
     mdb->commit();
 }
 
-TSampleInfoList Cache::sampleInfoList() const
+TLabInfoList Cache::labInfoList() const
 {
-    TSampleInfoList list;
+    TLabInfoList list;
     if (!menabled || !mdb)
         return list;
-    BSqlResult result = getSelf()->mdb->select("samples", "info");
+    BSqlResult result = getSelf()->mdb->select("labs", "info");
     if (!result.success())
         return list;
     foreach (const QVariantMap &m, result.values())
-        list << BeQt::deserialize(m.value("info").toByteArray()).value<TSampleInfo>();
+        list << BeQt::deserialize(m.value("info").toByteArray()).value<TLabInfo>();
     return list;
 }
 
@@ -191,19 +169,16 @@ void Cache::setData(const QString &operation, const QDateTime &requestDateTime, 
     typedef QMap<QString, SetDataFunction> SetDataFunctionMap;
     init_once(SetDataFunctionMap, functionMap, SetDataFunctionMap()) {
         functionMap.insert(TOperation::AddGroup, &Cache::handleAddGroup);
-        functionMap.insert(TOperation::AddSample, &Cache::handleAddSample);
+        functionMap.insert(TOperation::AddLab, &Cache::handleAddLab);
         functionMap.insert(TOperation::AddUser, &Cache::handleAddUser);
         functionMap.insert(TOperation::GenerateInvites, &Cache::handleGenerateInvites);
         functionMap.insert(TOperation::EditGroup, &Cache::handleEditGroup);
-        functionMap.insert(TOperation::EditSample, &Cache::handleEditSample);
-        functionMap.insert(TOperation::EditSampleAdmin, &Cache::handleEditSampleAdmin);
+        functionMap.insert(TOperation::EditLab, &Cache::handleEditLab);
         functionMap.insert(TOperation::EditSelf, &Cache::handleEditSelf);
         functionMap.insert(TOperation::EditUser, &Cache::handleEditUser);
         functionMap.insert(TOperation::GetGroupInfoList, &Cache::handleGetGroupInfoList);
         functionMap.insert(TOperation::GetInviteInfoList, &Cache::handleGetInviteInfoList);
-        functionMap.insert(TOperation::GetSampleInfoList, &Cache::handleGetSampleInfoList);
-        functionMap.insert(TOperation::GetSamplePreview, &Cache::handleGetSamplePreview);
-        functionMap.insert(TOperation::GetSampleSource, &Cache::handleGetSampleSource);
+        functionMap.insert(TOperation::GetLabInfoList, &Cache::handleGetLabInfoList);
         functionMap.insert(TOperation::GetSelfInfo, &Cache::handleGetSelfInfo);
         functionMap.insert(TOperation::GetUserInfo, &Cache::handleGetUserInfo);
         functionMap.insert(TOperation::GetUserInfoAdmin, &Cache::handleGetUserInfoAdmin);
@@ -240,22 +215,6 @@ TUserInfoList Cache::userInfoList() const
 
 /*============================== Private methods ===========================*/
 
-QVariant Cache::getSamplePreview(const QVariant &id)
-{
-    BSqlResult result = mdb->select("sample_previews", "data", BSqlWhere("id = :id", ":id", id.toULongLong()));
-    if (!result.success() || result.values().isEmpty())
-        return QVariant();
-    return BeQt::deserialize(result.value("data").toByteArray());
-}
-
-QVariant Cache::getSampleSource(const QVariant &id)
-{
-    BSqlResult result = mdb->select("sample_sources", "data", BSqlWhere("id = :id", ":id", id.toULongLong()));
-    if (!result.success() || result.values().isEmpty())
-        return QVariant();
-    return BeQt::deserialize(result.value("data").toByteArray());
-}
-
 Cache *Cache::getSelf() const
 {
     return const_cast<Cache *>(this);
@@ -270,11 +229,11 @@ bool Cache::handleAddGroup(const QDateTime &, const QVariant &v, const QVariant 
     return true;
 }
 
-bool Cache::handleAddSample(const QDateTime &, const QVariant &v, const QVariant &)
+bool Cache::handleAddLab(const QDateTime &, const QVariant &v, const QVariant &)
 {
-    TAddSampleReplyData data = v.value<TAddSampleReplyData>();
-    TSampleInfo info = data.sampleInfo();
-    if (!mdb->insert("samples", "id", info.id(), "info", BeQt::serialize(info)).success())
+    TAddLabReplyData data = v.value<TAddLabReplyData>();
+    TLabInfo info = data.labInfo();
+    if (!mdb->insert("labs", "id", info.id(), "info", BeQt::serialize(info)).success())
         return false;
     return true;
 }
@@ -305,11 +264,9 @@ bool Cache::handleDeleteInvites(const QVariant &v)
     return true;
 }
 
-bool Cache::handleDeleteSample(const QVariant &v)
+bool Cache::handleDeleteLab(const QVariant &v)
 {
-    return mdb->deleteFrom("samples", BSqlWhere("id = :id", ":id", v.toULongLong()))
-            && mdb->deleteFrom("sample_previews", BSqlWhere("id = :id", ":id", v.toULongLong()))
-            && mdb->deleteFrom("sample_sources", BSqlWhere("id = :id", ":id", v.toULongLong()));
+    return mdb->deleteFrom("labs", BSqlWhere("id = :id", ":id", v.toULongLong()));
 }
 
 bool Cache::handleDeleteUser(const QVariant &v)
@@ -326,26 +283,12 @@ bool Cache::handleEditGroup(const QDateTime &, const QVariant &v, const QVariant
     return true;
 }
 
-bool Cache::handleEditSample(const QDateTime &, const QVariant &v, const QVariant &)
+bool Cache::handleEditLab(const QDateTime &, const QVariant &v, const QVariant &)
 {
-    TEditSampleReplyData data = v.value<TEditSampleReplyData>();
-    TSampleInfo info = data.sampleInfo();
+    TEditLabReplyData data = v.value<TEditLabReplyData>();
+    TLabInfo info = data.labInfo();
     BSqlWhere where("id = :id", ":id", info.id());
-    if (!mdb->update("samples", "info", BeQt::serialize(info), where).success())
-        return false;
-    if (!mdb->deleteFrom("sample_previews", where) || !mdb->deleteFrom("sample_sources", where))
-        return false;
-    return true;
-}
-
-bool Cache::handleEditSampleAdmin(const QDateTime &, const QVariant &v, const QVariant &)
-{
-    TEditSampleAdminReplyData data = v.value<TEditSampleAdminReplyData>();
-    TSampleInfo info = data.sampleInfo();
-    BSqlWhere where("id = :id", ":id", info.id());
-    if (!mdb->update("samples", "info", BeQt::serialize(info), where).success())
-        return false;
-    if (!mdb->deleteFrom("sample_previews", where) || !mdb->deleteFrom("sample_sources", where))
+    if (!mdb->update("labs", "info", BeQt::serialize(info), where).success())
         return false;
     return true;
 }
@@ -416,44 +359,22 @@ bool Cache::handleGetInviteInfoList(const QDateTime &dt, const QVariant &v, cons
     return true;
 }
 
-bool Cache::handleGetSampleInfoList(const QDateTime &dt, const QVariant &v, const QVariant &)
+bool Cache::handleGetLabInfoList(const QDateTime &dt, const QVariant &v, const QVariant &)
 {
-    TGetSampleInfoListReplyData data = v.value<TGetSampleInfoListReplyData>();
+    TGetLabInfoListReplyData data = v.value<TGetLabInfoListReplyData>();
     QVariantMap values;
-    values.insert("request_type", int(SampleListRequest));
+    values.insert("request_type", int(LabListRequest));
     values.insert("date_time", dt.toUTC().toMSecsSinceEpoch());
     if (!mdb->insertOrReplace("last_request_date_times", values).success())
         return false;
-    foreach (quint64 sampleId, data.deletedSamples()) {
-        if (!mdb->deleteFrom("samples", BSqlWhere("id = :id", ":id", sampleId)))
+    foreach (quint64 labId, data.deletedLabs()) {
+        if (!mdb->deleteFrom("labs", BSqlWhere("id = :id", ":id", labId)))
             return false;
     }
-    foreach (const TSampleInfo &info, data.newSamples()) {
-        if (!mdb->insertOrReplace("samples", "id", info.id(), "info", BeQt::serialize(info)))
+    foreach (const TLabInfo &info, data.newLabs()) {
+        if (!mdb->insertOrReplace("labs", "id", info.id(), "info", BeQt::serialize(info)))
             return false;
     }
-    return true;
-}
-
-bool Cache::handleGetSamplePreview(const QDateTime &dt, const QVariant &v, const QVariant &id)
-{
-    QVariantMap values;
-    values.insert("id", id.toULongLong());
-    values.insert("data", BeQt::serialize(v));
-    values.insert("last_request_date_time", dt.toUTC().toMSecsSinceEpoch());
-    if (!mdb->insertOrReplace("sample_previews", values))
-        return false;
-    return true;
-}
-
-bool Cache::handleGetSampleSource(const QDateTime &dt, const QVariant &v, const QVariant &id)
-{
-    QVariantMap values;
-    values.insert("id", id.toULongLong());
-    values.insert("data", BeQt::serialize(v));
-    values.insert("last_request_date_time", dt.toUTC().toMSecsSinceEpoch());
-    if (!mdb->insertOrReplace("sample_sources", values))
-        return false;
     return true;
 }
 
