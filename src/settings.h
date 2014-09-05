@@ -25,10 +25,10 @@
 class BPassword;
 
 class QByteArray;
-class QString;
 class QStringList;
 
 #include <QList>
+#include <QString>
 
 /*============================================================================
 ================================ Settings ====================================

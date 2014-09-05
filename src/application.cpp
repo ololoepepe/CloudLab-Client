@@ -26,6 +26,7 @@
 #include "settingstab/generalsettingstab.h"
 #include "settingstab/networksettingstab.h"
 #include "settingstab/texsamplesettingstab.h"
+#include "texsample/texsamplecore.h"
 
 #include <TApplication>
 
@@ -183,14 +184,8 @@ TexsampleCore *Application::texsampleCore() const
 
 void Application::messageReceived(const QStringList &args)
 {
-    if (Settings::General::multipleWindowsEnabled()) {
+    if (Settings::General::multipleWindowsEnabled())
         addMainWindow(args);
-    } else {
-        MainWindow *mw = !mmainWindows.isEmpty() ? mmainWindows.values().first() : 0;
-        if (!mw)
-            return;
-        mw->codeEditor()->openDocuments(args);
-    }
 }
 
 void Application::showStatusBarMessage(const QString &message)
@@ -222,7 +217,7 @@ bool Application::testAppInit()
 
 /*============================== Private methods ===========================*/
 
-void Application::addMainWindow(const QStringList &fileNames)
+void Application::addMainWindow(const QStringList &)
 {
     MainWindow *mw = new MainWindow;
     mw->setAttribute(Qt::WA_DeleteOnClose, true);

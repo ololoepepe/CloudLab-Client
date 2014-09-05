@@ -22,21 +22,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-class ClabWidget;
+class TexsampleWidget;
 
-class QString;
 class QAction;
-class QMenu;
-class QSignalMapper;
 class QCloseEvent;
-class QToolBar;
-class QByteArray;
-class QLabel;
-
-#include <BApplication>
+class QMenu;
+class QString;
 
 #include <QMainWindow>
-#include <QTextCodec>
 
 /*============================================================================
 ================================ MainWindow ==================================
@@ -45,33 +38,28 @@ class QLabel;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+private:
+    TexsampleWidget *mwgt;
+    //
+    QMenu *mmnuFile;
+    QAction *mactQuit;
+    QMenu *mmnuEdit;
+    QMenu *mmnuAutotext;
+    QMenu *mmnuClab;
+    QMenu *mmnuHelp;
 public:
     explicit MainWindow();
     ~MainWindow();
-public:
-    static QByteArray getWindowGeometry();
-    static QByteArray getWindowState();
-    static void setWindowGeometry(const QByteArray &geometry);
-    static void setWindowState(const QByteArray &state);
+public slots:
+    void showStatusBarMessage(const QString &message);
 protected:
     void closeEvent(QCloseEvent *e);
 private:
     void initCentralWidget();
     void initMenus();
 private slots:
+    void restoreStateWorkaround();
     void retranslateUi();
-private:
-    QSignalMapper *mmprAutotext;
-    QSignalMapper *mmprOpenFile;
-    //
-    ClabWidget *mwgt;
-    //
-    QMenu *mmnuFile;
-      QAction *mactQuit;
-    QMenu *mmnuEdit;
-      QMenu *mmnuAutotext;
-    QMenu *mmnuClab;
-    QMenu *mmnuHelp;
 private:
     Q_DISABLE_COPY(MainWindow)
 };

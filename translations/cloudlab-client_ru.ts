@@ -4,622 +4,518 @@
 <context>
     <name>AddLabDialog</name>
     <message>
-        <location filename="../src/clabwidget.cpp" line="97"/>
         <source>Sending lab...</source>
-        <translation>Отправка лаб. работы...</translation>
+        <translation type="obsolete">Отправка лаб. работы...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="102"/>
         <source>Clear</source>
         <comment>btn text</comment>
-        <translation>Очистить</translation>
+        <translation type="obsolete">Очистить</translation>
     </message>
 </context>
 <context>
     <name>Application</name>
     <message>
-        <location filename="../src/application.cpp" line="186"/>
         <source>TeXSample configuration</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Настройка TeXSample</translation>
+        <translation type="obsolete">Настройка TeXSample</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="188"/>
         <source>It seems that you have not configured TeXSample service yet.
 Would you like to do it now?</source>
         <comment>msgbox text</comment>
-        <translation>Похоже, что вы ещё не настроили сервис TeXSample. Хотите сделать это сейчас?</translation>
+        <translation type="obsolete">Похоже, что вы ещё не настроили сервис TeXSample. Хотите сделать это сейчас?</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="190"/>
         <source>To remove this notification, you have to configure the service</source>
         <comment>msgbox informativeText</comment>
-        <translation>Чтобы убрать это уведомление, вам необходимо настроить сервис</translation>
+        <translation type="obsolete">Чтобы убрать это уведомление, вам необходимо настроить сервис</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="192"/>
         <source>Register</source>
         <comment>btn text</comment>
-        <translation>Зарегистрироваться</translation>
+        <translation type="obsolete">Зарегистрироваться</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="193"/>
         <source>I have an account</source>
         <comment>btn text</comment>
-        <translation>У меня есть аккаунт</translation>
+        <translation type="obsolete">У меня есть аккаунт</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="258"/>
         <source>Auto select</source>
-        <translation>Автоматический выбор</translation>
+        <translation type="obsolete">Автоматический выбор</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="260"/>
         <source>Logging in</source>
         <comment>windowTitle</comment>
-        <translation>Вход в систему</translation>
+        <translation type="obsolete">Вход в систему</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="302"/>
         <source>Updating account</source>
         <comment>dlg windowTitle</comment>
-        <translation>Обновление аккаунта</translation>
+        <translation type="obsolete">Обновление аккаунта</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="333"/>
         <source>Changing account failed</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Изменение аккаунта не удалось</translation>
+        <translation type="obsolete">Изменение аккаунта не удалось</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="335"/>
         <source>The following error occured:</source>
         <comment>msgbox text</comment>
-        <translation>Произошла следующая ошибка:</translation>
+        <translation type="obsolete">Произошла следующая ошибка:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="348"/>
         <source>Registration</source>
         <comment>dlg windowTitle</comment>
-        <translation>Регистрация</translation>
+        <translation type="obsolete">Регистрация</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="380"/>
         <source>Registration error</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Ошибка регистрации</translation>
+        <translation type="obsolete">Ошибка регистрации</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="382"/>
         <source>Failed to register due to the following error:</source>
         <comment>msgbox text</comment>
-        <translation>Не удалось зарегистрироваться из-за следующей ошибки:</translation>
+        <translation type="obsolete">Не удалось зарегистрироваться из-за следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="486"/>
         <source>New version</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Новая версия</translation>
+        <translation type="obsolete">Новая версия</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="492"/>
         <source>A new version of the application is available</source>
         <comment>msgbox text</comment>
-        <translation>Доступна новая версия приложения</translation>
+        <translation type="obsolete">Доступна новая версия приложения</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="494"/>
         <source>Click the following link to go to the download page:</source>
         <comment>msgbox text</comment>
-        <translation>Кликните по следующей ссылке чтобы перейти на страницу загрузки:</translation>
+        <translation type="obsolete">Кликните по следующей ссылке чтобы перейти на страницу загрузки:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="495"/>
         <source>download</source>
         <comment>msgbox text</comment>
-        <translation>скачать</translation>
+        <translation type="obsolete">скачать</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="496"/>
         <source>You should always use the latest application version. Bugs are fixed and new features are implemented in new versions.</source>
         <comment>msgbox informativeText</comment>
-        <translation>Вам следует всегда использовать самую новую версию приложения. В новых версиях исправляются ошибки и добавляются новые возможности.</translation>
+        <translation type="obsolete">Вам следует всегда использовать самую новую версию приложения. В новых версиях исправляются ошибки и добавляются новые возможности.</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="503"/>
         <source>You are using the latest version.</source>
         <comment>msgbox text</comment>
-        <translation>Вы используете самую новую версию.</translation>
+        <translation type="obsolete">Вы используете самую новую версию.</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="194"/>
         <source>Not right now</source>
         <comment>btn text</comment>
-        <translation>Не сейчас</translation>
+        <translation type="obsolete">Не сейчас</translation>
     </message>
 </context>
 <context>
     <name>ClabWidget</name>
     <message>
-        <location filename="../src/clabwidget.cpp" line="504"/>
         <source>Connection</source>
         <comment>act text</comment>
-        <translation>Соединение</translation>
+        <translation type="obsolete">Соединение</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="505"/>
         <source>This action shows current connection state. Use it to connect or disconnect from the server</source>
         <comment>act whatsThis</comment>
-        <translation>Это действие показывает текущее состояние соединения. Используйте его чтобы подключиться или отключиться от сервера</translation>
+        <translation type="obsolete">Это действие показывает текущее состояние соединения. Используйте его чтобы подключиться или отключиться от сервера</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="508"/>
         <source>Connect</source>
         <comment>act text</comment>
-        <translation>Подключиться</translation>
+        <translation type="obsolete">Подключиться</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="509"/>
         <source>Disconnect</source>
         <comment>act text</comment>
-        <translation>Отключиться</translation>
+        <translation type="obsolete">Отключиться</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="510"/>
         <source>Update</source>
         <comment>act text</comment>
-        <translation>Обновить</translation>
+        <translation type="obsolete">Обновить</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="511"/>
         <source>Update labs list</source>
         <comment>act toolTip</comment>
-        <translation>Обновить список лаб. работ</translation>
+        <translation type="obsolete">Обновить список лаб. работ</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="512"/>
         <source>Send lab...</source>
         <comment>act text</comment>
-        <translation>Отправить лаб. работу...</translation>
+        <translation type="obsolete">Отправить лаб. работу...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="513"/>
         <source>Tools</source>
         <comment>act text</comment>
-        <translation>Инструменты</translation>
+        <translation type="obsolete">Инструменты</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="514"/>
         <source>Tools</source>
         <comment>act toolTip</comment>
-        <translation>Инструменты</translation>
+        <translation type="obsolete">Инструменты</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="518"/>
         <source>Account management...</source>
         <comment>act text</comment>
-        <translation>Управление аккаунтом...</translation>
+        <translation type="obsolete">Управление аккаунтом...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="520"/>
         <source>Add user...</source>
         <comment>act text</comment>
-        <translation>Добавить пользователя...</translation>
+        <translation type="obsolete">Добавить пользователя...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="521"/>
         <source>Edit user...</source>
         <comment>act text</comment>
-        <translation>Изменить данные пользователя...</translation>
+        <translation type="obsolete">Изменить данные пользователя...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="555"/>
         <source>Adding user</source>
         <comment>dlg windowTitle</comment>
-        <translation>Добавление пользователя</translation>
+        <translation type="obsolete">Добавление пользователя</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="574"/>
         <source>User was successfully added</source>
         <comment>message</comment>
-        <translation>Пользователь был успешно добавлен</translation>
+        <translation type="obsolete">Пользователь был успешно добавлен</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="580"/>
         <source>Adding user error</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Ошибка добавления пользователя</translation>
+        <translation type="obsolete">Ошибка добавления пользователя</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="582"/>
         <source>Failed to add user due to the following error:</source>
         <comment>msgbox text</comment>
-        <translation>Не удалось добавить пользователя по следующей причине:</translation>
+        <translation type="obsolete">Не удалось добавить пользователя по следующей причине:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="622"/>
         <source>Editing user</source>
         <comment>dlg windowTitle</comment>
-        <translation>Изменение данных пользователя</translation>
+        <translation type="obsolete">Изменение данных пользователя</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="649"/>
         <source>Editing user error</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Ошибка изменения данных пользователя</translation>
+        <translation type="obsolete">Ошибка изменения данных пользователя</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="651"/>
         <source>Failed to edit user due to the following error:</source>
         <comment>msgbox text</comment>
-        <translation>Не удалось измененить данные пользователя по причине следующей ошибки:</translation>
+        <translation type="obsolete">Не удалось измененить данные пользователя по причине следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="493"/>
         <source>Failed to edit lab due to the following error:</source>
         <comment>msgbox text</comment>
-        <translation>Не удалось отредактировать лаб. работу из-за следующей ошибки:</translation>
+        <translation type="obsolete">Не удалось отредактировать лаб. работу из-за следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="748"/>
         <source>Deleting lab</source>
         <comment>idlg title</comment>
-        <translation>Удаление лаб. работы</translation>
+        <translation type="obsolete">Удаление лаб. работы</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="749"/>
         <source>You are going to delete a lab. Please, enter the reason:</source>
         <comment>idlg lblText</comment>
-        <translation>Вы собираетесь удалить лаб. работу. Пожалуйста, укажите причину:</translation>
+        <translation type="obsolete">Вы собираетесь удалить лаб. работу. Пожалуйста, укажите причину:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="796"/>
         <source>Lab:</source>
         <comment>windowTitle</comment>
-        <translation>Лаб. работа:</translation>
+        <translation type="obsolete">Лаб. работа:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="821"/>
         <source>Getting lab failed</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Получение лаб. работы не удалось</translation>
+        <translation type="obsolete">Получение лаб. работы не удалось</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="479"/>
         <source>Sending lab error</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Ошибка отправки лаб. работы</translation>
+        <translation type="obsolete">Ошибка отправки лаб. работы</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="481"/>
         <source>Failed to send lab due to the following error:</source>
         <comment>msgbox text</comment>
-        <translation>Не удалось отправить лаб. работу из-за следующей ошибки:</translation>
+        <translation type="obsolete">Не удалось отправить лаб. работу из-за следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="491"/>
         <source>Editing lab error</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Ошибка редактирования лаб. работы</translation>
+        <translation type="obsolete">Ошибка редактирования лаб. работы</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="515"/>
         <source>Register...</source>
         <comment>act tooTip</comment>
-        <translation>Зарегистрироваться...</translation>
+        <translation type="obsolete">Зарегистрироваться...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="516"/>
         <source>Recover account...</source>
         <comment>act text</comment>
-        <translation>Восстановить аккаунт...</translation>
+        <translation type="obsolete">Восстановить аккаунт...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="517"/>
         <source>CloudLab settings...</source>
         <comment>act text</comment>
-        <translation>Настройки CloudLab...</translation>
+        <translation type="obsolete">Настройки CloudLab...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="519"/>
         <source>Administration</source>
         <comment>act text</comment>
-        <translation>Администрирование</translation>
+        <translation type="obsolete">Администрирование</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="522"/>
         <source>Manage invites...</source>
         <comment>act text</comment>
-        <translation>Управление инвайтами...</translation>
+        <translation type="obsolete">Управление инвайтами...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="523"/>
         <source>Manage groups...</source>
         <comment>act text</comment>
-        <translation>Управление группами...</translation>
+        <translation type="obsolete">Управление группами...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="525"/>
         <source>Selection</source>
         <comment>gbox title</comment>
-        <translation>Выбор</translation>
+        <translation type="obsolete">Выбор</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="527"/>
         <source>Search:</source>
         <comment>lbl text</comment>
-        <translation>Поиск:</translation>
+        <translation type="obsolete">Поиск:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="534"/>
         <source>You have successfully registered</source>
         <comment>message</comment>
-        <translation>Вы успешно зарегистрировались</translation>
+        <translation type="obsolete">Вы успешно зарегистрировались</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="600"/>
         <source>Editing own account</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Редактирование собственного аккаунта</translation>
+        <translation type="obsolete">Редактирование собственного аккаунта</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="602"/>
         <source>You are not allowed to edit your own account. Use &quot;Account management&quot; instead</source>
         <comment>msgbox text</comment>
-        <translation>Вы не можете редактировать свой собственный аккаунт. Вместо этого воспользуйтесь &quot;Управлением аккаунтом&quot;</translation>
+        <translation type="obsolete">Вы не можете редактировать свой собственный аккаунт. Вместо этого воспользуйтесь &quot;Управлением аккаунтом&quot;</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="643"/>
         <source>User info was successfully edited</source>
         <comment>message</comment>
-        <translation>Информация пользователя была успешно отредактирована</translation>
+        <translation type="obsolete">Информация пользователя была успешно отредактирована</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="705"/>
         <source>Groups have been successfully edited</source>
         <comment>message</comment>
-        <translation>Группы были успешно отредактированы</translation>
+        <translation type="obsolete">Группы были успешно отредактированы</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="758"/>
         <source>Deleting lab error</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Ошибка удаления лаб. работы</translation>
+        <translation type="obsolete">Ошибка удаления лаб. работы</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="760"/>
         <source>Failed to delete lab due to the following error:</source>
         <comment>msgbox text</comment>
-        <translation>Не удалось удалить лаб. работу из-за следующей ошибки:</translation>
+        <translation type="obsolete">Не удалось удалить лаб. работу из-за следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="767"/>
         <source>Lab was successfully deleted</source>
         <comment>message</comment>
-        <translation>Лаб. работа была успешно удалена</translation>
+        <translation type="obsolete">Лаб. работа была успешно удалена</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="823"/>
         <source>Failed to get lad due to the following error:</source>
         <comment>msgbox text</comment>
-        <translation>Не удалось получить лаб. работу из-за следующей ошибки:</translation>
+        <translation type="obsolete">Не удалось получить лаб. работу из-за следующей ошибки:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="830"/>
         <source>Lab was successfully downloaded</source>
         <comment>message</comment>
-        <translation>Лаб. работа была успешно загружена</translation>
+        <translation type="obsolete">Лаб. работа была успешно загружена</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="847"/>
         <source>CloudLab state:</source>
         <comment>act toolTip</comment>
-        <translation>Состояние CloudLab:</translation>
+        <translation type="obsolete">Состояние CloudLab:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="851"/>
         <source>disconnected</source>
         <comment>act toolTip</comment>
-        <translation>отключен</translation>
+        <translation type="obsolete">отключен</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="854"/>
         <source>connecting</source>
         <comment>act toolTip</comment>
-        <translation>подключение</translation>
+        <translation type="obsolete">подключение</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="857"/>
         <source>connected</source>
         <comment>act toolTip</comment>
-        <translation>соединен</translation>
+        <translation type="obsolete">соединен</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="860"/>
         <source>authorized</source>
         <comment>act toolTip</comment>
-        <translation>авторизован</translation>
+        <translation type="obsolete">авторизован</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="863"/>
         <source>disconnecting</source>
         <comment>act toolTip</comment>
-        <translation>отключение</translation>
+        <translation type="obsolete">отключение</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="892"/>
         <source>Get</source>
         <comment>act text</comment>
-        <translation>Получить</translation>
+        <translation type="obsolete">Получить</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="897"/>
         <source>Information...</source>
         <comment>act text</comment>
-        <translation>Информация...</translation>
+        <translation type="obsolete">Информация...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="901"/>
         <source>Edit...</source>
         <comment>act text</comment>
-        <translation>Редактировать...</translation>
+        <translation type="obsolete">Редактировать...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="905"/>
         <source>Delete...</source>
         <comment>act text</comment>
-        <translation>Удалить...</translation>
+        <translation type="obsolete">Удалить...</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="935"/>
-        <location filename="../src/clabwidget.cpp" line="987"/>
         <source>Failed to load file:</source>
-        <translation>Не удалось загрузить файл:</translation>
+        <translation type="obsolete">Не удалось загрузить файл:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="955"/>
         <source>Lab was successfully sent</source>
         <comment>message</comment>
-        <translation>Лаб. работа была успешно отправлена</translation>
+        <translation type="obsolete">Лаб. работа была успешно отправлена</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="1008"/>
         <source>Lab was successfully edited</source>
         <comment>message</comment>
-        <translation>Лаб. работа была успешно отредактирована</translation>
+        <translation type="obsolete">Лаб. работа была успешно отредактирована</translation>
     </message>
 </context>
 <context>
     <name>Client</name>
     <message>
-        <location filename="../src/client.cpp" line="72"/>
         <source>Replying to connection test...</source>
         <comment>log</comment>
-        <translation>Ответ на проверку соединения...</translation>
+        <translation type="obsolete">Ответ на проверку соединения...</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="75"/>
         <source>Operation error</source>
         <comment>log</comment>
-        <translation>Ошибка операции</translation>
+        <translation type="obsolete">Ошибка операции</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="106"/>
-        <location filename="../src/client.cpp" line="144"/>
-        <location filename="../src/client.cpp" line="184"/>
-        <location filename="../src/client.cpp" line="224"/>
-        <location filename="../src/client.cpp" line="265"/>
         <source>Connecting to server</source>
         <comment>pdlg windowTitle</comment>
-        <translation>Подключение к серверу</translation>
+        <translation type="obsolete">Подключение к серверу</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="107"/>
-        <location filename="../src/client.cpp" line="145"/>
-        <location filename="../src/client.cpp" line="185"/>
-        <location filename="../src/client.cpp" line="225"/>
-        <location filename="../src/client.cpp" line="266"/>
         <source>Connecting to server, please, wait...</source>
         <comment>pdlg labelText</comment>
-        <translation>Подключаемся к серверу, пожалуйста, ждите...</translation>
+        <translation type="obsolete">Подключаемся к серверу, пожалуйста, ждите...</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="839"/>
         <source>Lab</source>
         <comment>wgt windowTitle</comment>
-        <translation>Лаб. работа</translation>
+        <translation type="obsolete">Лаб. работа</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="847"/>
         <source>To the previous page</source>
         <comment>tbtn toolTip</comment>
-        <translation>На предыдущую страницу</translation>
+        <translation type="obsolete">На предыдущую страницу</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="851"/>
         <source>To the next page</source>
         <comment>tbtn toolTip</comment>
-        <translation>На следующую страницу</translation>
+        <translation type="obsolete">На следующую страницу</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="902"/>
         <source>No password</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Отсутствует пароль</translation>
+        <translation type="obsolete">Отсутствует пароль</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="904"/>
         <source>You have not specified your password</source>
         <comment>msgbox text</comment>
-        <translation>Вы не указали пароль</translation>
+        <translation type="obsolete">Вы не указали пароль</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="905"/>
         <source>You can&apos;t connect without password</source>
         <comment>msgbox informativeText</comment>
-        <translation>Вы не можете подключиться без пароля</translation>
+        <translation type="obsolete">Вы не можете подключиться без пароля</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="949"/>
         <source>Executing request...</source>
         <comment>opdlg windowTitle</comment>
-        <translation>Выполняется запрос...</translation>
+        <translation type="obsolete">Выполняется запрос...</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="962"/>
         <source>TeXSample connection error</source>
         <comment>msgbox windowTitle</comment>
-        <translation>Ошибка соединения TeXSample</translation>
+        <translation type="obsolete">Ошибка соединения TeXSample</translation>
     </message>
     <message>
-        <location filename="../src/client.cpp" line="964"/>
         <source>The following connection error occured:</source>
         <comment>msgbox text</comment>
-        <translation>Произошла следующая ошибка соединения:</translation>
+        <translation type="obsolete">Произошла следующая ошибка соединения:</translation>
     </message>
 </context>
 <context>
     <name>EditLabDialog</name>
     <message>
-        <location filename="../src/clabwidget.cpp" line="143"/>
         <source>Editing lab:</source>
-        <translation>Редактирование лаб. работы:</translation>
+        <translation type="obsolete">Редактирование лаб. работы:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="148"/>
         <source>Clear</source>
         <comment>btn text</comment>
-        <translation>Очистить</translation>
+        <translation type="obsolete">Очистить</translation>
     </message>
 </context>
 <context>
     <name>FilesWidget</name>
     <message>
-        <location filename="../src/labwidget.cpp" line="84"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="105"/>
         <source>Add file</source>
         <comment>tbtn toolTip</comment>
         <translation>Добавить файл</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="136"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="157"/>
         <source>Remove file</source>
         <comment>tbtn toolTip</comment>
         <translation>Удалить файл</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="137"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="158"/>
         <source>Cancel removal</source>
         <comment>tbtn toolTip</comment>
         <translation>Отменить удаление</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="186"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="207"/>
         <source>deleted</source>
         <comment>lbl text</comment>
         <translation>удален</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="194"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="215"/>
         <source>Select files</source>
         <comment>fdlg caption</comment>
         <translation>Выберите файлы</translation>
@@ -628,214 +524,340 @@ Would you like to do it now?</source>
 <context>
     <name>GeneralSettingsTab</name>
     <message>
-        <location filename="../src/application.cpp" line="90"/>
+        <location filename="../src/settingstab/generalsettingstab.cpp" line="52"/>
         <source>language</source>
         <comment>lbl text</comment>
         <translation>язык</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="93"/>
+        <location filename="../src/settingstab/generalsettingstab.cpp" line="55"/>
         <source>Enable multiple windows:</source>
         <comment>lbl text</comment>
         <translation>Разрешить несколько окон:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="98"/>
+        <location filename="../src/settingstab/generalsettingstab.cpp" line="60"/>
         <source>Check now</source>
         <comment>btn text</comment>
         <translation>Проверить сейчас</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="101"/>
+        <location filename="../src/settingstab/generalsettingstab.cpp" line="63"/>
         <source>Check for new versions:</source>
         <comment>lbl text</comment>
         <translation>Поверять наличие новых версий:</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="108"/>
+        <location filename="../src/settingstab/generalsettingstab.cpp" line="95"/>
+        <source>Can&apos;t disable multiple windows: documents merging failed</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/settingstab/generalsettingstab.cpp" line="96"/>
+        <source>Please, close all duplicate documents and try again</source>
+        <comment>msgbox informativeText</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/settingstab/generalsettingstab.cpp" line="110"/>
         <source>General</source>
         <comment>title</comment>
         <translation>Основное</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="132"/>
+        <location filename="../src/settingstab/generalsettingstab.cpp" line="93"/>
         <source>Failed to change settings</source>
         <comment>msgbox windowTitle</comment>
         <translation>Не удалось изменить настройки</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="134"/>
         <source>Can&apos;t disable multiple windows: some error occured</source>
         <comment>msgbox text</comment>
-        <translation>Невозможно запретить использование нескольких окон: произошла какая-то ошибка</translation>
+        <translation type="obsolete">Невозможно запретить использование нескольких окон: произошла какая-то ошибка</translation>
+    </message>
+</context>
+<context>
+    <name>LabInfoWidget</name>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="249"/>
+        <source>Title:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Название:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="252"/>
+        <source>Tags:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Теги:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="259"/>
+        <source>Type:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Тип:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="267"/>
+        <source>Sender:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Отправитель:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="270"/>
+        <source>Created:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Создана:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="273"/>
+        <source>Updated:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Обновлена:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="275"/>
+        <source>Authors</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished">Авторы</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="284"/>
+        <source>Comment</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished">Комментарий</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="290"/>
+        <source>Groups</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished">Группы</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="304"/>
+        <source>Source</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished">Источник</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="315"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="321"/>
+        <source>Search...</source>
+        <translation type="unfinished">Обзор...</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="328"/>
+        <source>Attached files</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished">Прикрепленные файлы</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="362"/>
+        <source>Click the link to see info about the sender</source>
+        <comment>lbl toolTip</comment>
+        <translation type="unfinished">Щелкните по ссылке чтобы посмотреть информацию об отправителе</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="565"/>
+        <source>User:</source>
+        <comment>windowTitle</comment>
+        <translation type="unfinished">Пользовтатель:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="584"/>
+        <source>Main file (Linux):</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Главный файл (Linux):</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="586"/>
+        <source>Main file (Mac OS):</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Главный файл (Mac OS):</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="587"/>
+        <source>Main file (Windows):</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Главный файл (Windows):</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="595"/>
+        <source>Main file:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Главный файл:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="602"/>
+        <source>URL:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Ссылка:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="619"/>
+        <source>Select file</source>
+        <comment>getOpenFileName</comment>
+        <translation type="unfinished">Выберите файл</translation>
+    </message>
+</context>
+<context>
+    <name>LabModel</name>
+    <message>
+        <location filename="../src/texsample/labmodel.cpp" line="99"/>
+        <source>Title</source>
+        <comment>headerData</comment>
+        <translation type="unfinished">Название</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labmodel.cpp" line="101"/>
+        <source>Sender</source>
+        <comment>headerData</comment>
+        <translation type="unfinished">Отправитель</translation>
     </message>
 </context>
 <context>
     <name>LabWidget</name>
     <message>
-        <location filename="../src/labwidget.cpp" line="228"/>
         <source>Title:</source>
         <comment>lbl text</comment>
-        <translation>Название:</translation>
+        <translation type="obsolete">Название:</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="246"/>
         <source>Sender:</source>
         <comment>lbl text</comment>
-        <translation>Отправитель:</translation>
+        <translation type="obsolete">Отправитель:</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="238"/>
         <source>Type:</source>
         <comment>lbl text</comment>
-        <translation>Тип:</translation>
+        <translation type="obsolete">Тип:</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="231"/>
         <source>Tags:</source>
         <comment>lbl text</comment>
-        <translation>Теги:</translation>
+        <translation type="obsolete">Теги:</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="249"/>
         <source>Created:</source>
         <comment>lbl text</comment>
-        <translation>Создана:</translation>
+        <translation type="obsolete">Создана:</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="252"/>
         <source>Updated:</source>
         <comment>lbl text</comment>
-        <translation>Обновлена:</translation>
+        <translation type="obsolete">Обновлена:</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="254"/>
         <source>Authors</source>
         <comment>gbox title</comment>
-        <translation>Авторы</translation>
+        <translation type="obsolete">Авторы</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="263"/>
         <source>Comment</source>
         <comment>gbox title</comment>
-        <translation>Комментарий</translation>
+        <translation type="obsolete">Комментарий</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="269"/>
         <source>Groups</source>
         <comment>gbox title</comment>
-        <translation>Группы</translation>
+        <translation type="obsolete">Группы</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="283"/>
         <source>Source</source>
         <comment>gbox title</comment>
-        <translation>Источник</translation>
+        <translation type="obsolete">Источник</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="294"/>
-        <location filename="../src/labwidget.cpp" line="300"/>
         <source>Search...</source>
-        <translation>Обзор...</translation>
+        <translation type="obsolete">Обзор...</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="307"/>
         <source>Attached files</source>
         <comment>gbox title</comment>
-        <translation>Прикрепленные файлы</translation>
+        <translation type="obsolete">Прикрепленные файлы</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="341"/>
         <source>Click the link to see info about the sender</source>
         <comment>lbl toolTip</comment>
-        <translation>Щелкните по ссылке чтобы посмотреть информацию об отправителе</translation>
+        <translation type="obsolete">Щелкните по ссылке чтобы посмотреть информацию об отправителе</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="544"/>
         <source>User:</source>
         <comment>windowTitle</comment>
-        <translation>Пользовтатель:</translation>
+        <translation type="obsolete">Пользовтатель:</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="563"/>
         <source>Main file (Linux):</source>
         <comment>lbl text</comment>
-        <translation>Главный файл (Linux):</translation>
+        <translation type="obsolete">Главный файл (Linux):</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="565"/>
         <source>Main file (Mac OS):</source>
         <comment>lbl text</comment>
-        <translation>Главный файл (Mac OS):</translation>
+        <translation type="obsolete">Главный файл (Mac OS):</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="566"/>
         <source>Main file (Windows):</source>
         <comment>lbl text</comment>
-        <translation>Главный файл (Windows):</translation>
+        <translation type="obsolete">Главный файл (Windows):</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="581"/>
         <source>URL:</source>
         <comment>lbl text</comment>
-        <translation>Ссылка:</translation>
+        <translation type="obsolete">Ссылка:</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="574"/>
         <source>Main file:</source>
         <comment>lbl text</comment>
-        <translation>Главный файл:</translation>
+        <translation type="obsolete">Главный файл:</translation>
     </message>
     <message>
-        <location filename="../src/labwidget.cpp" line="598"/>
         <source>Select file</source>
         <comment>getOpenFileName</comment>
-        <translation>Выберите файл</translation>
+        <translation type="obsolete">Выберите файл</translation>
     </message>
 </context>
 <context>
     <name>LabsModel</name>
     <message>
-        <location filename="../src/labsmodel.cpp" line="78"/>
         <source>Title</source>
         <comment>headerData</comment>
-        <translation>Название</translation>
+        <translation type="obsolete">Название</translation>
     </message>
     <message>
-        <location filename="../src/labsmodel.cpp" line="80"/>
         <source>Sender</source>
         <comment>headerData</comment>
-        <translation>Отправитель</translation>
+        <translation type="obsolete">Отправитель</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="166"/>
+        <location filename="../src/mainwindow.cpp" line="141"/>
         <source>Quit</source>
         <comment>act text</comment>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="165"/>
+        <location filename="../src/mainwindow.cpp" line="140"/>
         <source>File</source>
         <comment>mnu title</comment>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="167"/>
+        <location filename="../src/mainwindow.cpp" line="142"/>
         <source>Edit</source>
         <comment>mnu title</comment>
         <translation>Правка</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="168"/>
+        <location filename="../src/mainwindow.cpp" line="143"/>
         <source>CloudLab</source>
         <comment>mnuTitle</comment>
         <translation>CloudLab</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="169"/>
+        <location filename="../src/mainwindow.cpp" line="144"/>
         <source>Help</source>
         <comment>mnuTitle</comment>
         <translation>Справка</translation>
@@ -844,31 +866,31 @@ Would you like to do it now?</source>
 <context>
     <name>NetworkSettingsTab</name>
     <message>
-        <location filename="../src/networksettingstab.cpp" line="28"/>
+        <location filename="../src/settingstab/networksettingstab.cpp" line="50"/>
         <source>Proxy mode</source>
         <comment>gbox title</comment>
         <translation>Режим прокси</translation>
     </message>
     <message>
-        <location filename="../src/networksettingstab.cpp" line="30"/>
+        <location filename="../src/settingstab/networksettingstab.cpp" line="52"/>
         <source>No proxy</source>
         <comment>rbtn text</comment>
         <translation>Без прокси</translation>
     </message>
     <message>
-        <location filename="../src/networksettingstab.cpp" line="33"/>
+        <location filename="../src/settingstab/networksettingstab.cpp" line="55"/>
         <source>System proxy</source>
         <comment>rbtn text</comment>
         <translation>Системный прокси</translation>
     </message>
     <message>
-        <location filename="../src/networksettingstab.cpp" line="36"/>
+        <location filename="../src/settingstab/networksettingstab.cpp" line="58"/>
         <source>User proxy</source>
         <comment>rbtn text</comment>
         <translation>Пользовательский прокси</translation>
     </message>
     <message>
-        <location filename="../src/networksettingstab.cpp" line="62"/>
+        <location filename="../src/settingstab/networksettingstab.cpp" line="120"/>
         <source>Network</source>
         <comment>title</comment>
         <translation>Сеть</translation>
@@ -877,78 +899,810 @@ Would you like to do it now?</source>
 <context>
     <name>SelectUserDialog</name>
     <message>
-        <location filename="../src/clabwidget.cpp" line="191"/>
         <source>ID</source>
         <comment>rbtn text</comment>
-        <translation>Код</translation>
+        <translation type="obsolete">Код</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="194"/>
         <source>Login</source>
         <comment>rbtn text</comment>
-        <translation>Логин</translation>
+        <translation type="obsolete">Логин</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="198"/>
         <source>Identifier:</source>
         <comment>lbl text</comment>
-        <translation>Идентификатор:</translation>
+        <translation type="obsolete">Идентификатор:</translation>
     </message>
     <message>
-        <location filename="../src/clabwidget.cpp" line="203"/>
         <source>Value:</source>
         <comment>lbl text</comment>
-        <translation>Значение:</translation>
+        <translation type="obsolete">Значение:</translation>
+    </message>
+</context>
+<context>
+    <name>TexsampleCore</name>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="294"/>
+        <source>Deleting sample</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="296"/>
+        <source>You are going to delete a sample. Do you want to continue?</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="306"/>
+        <source>Deleting sample error</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="308"/>
+        <source>Failed to delete sample due to the following error:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="317"/>
+        <source>Sample was successfully deleted</source>
+        <comment>message</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="362"/>
+        <source>Editing sample: %1</source>
+        <comment>wgt windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="399"/>
+        <source>Existing sample</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="401"/>
+        <source>It seems like there is some sample in the selected directory</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="402"/>
+        <source>Do you want to update it, or use the existing one?</source>
+        <comment>magbox informativeText</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="403"/>
+        <source>Update</source>
+        <comment>btn text</comment>
+        <translation type="unfinished">Обновить</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="404"/>
+        <source>Use existing</source>
+        <comment>btn text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="455"/>
+        <source>Sample was successfully inserted</source>
+        <comment>message</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="465"/>
+        <source>Select directory</source>
+        <comment>fdlg caption</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="477"/>
+        <source>Failed to save sample</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="479"/>
+        <source>File system error occured</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="485"/>
+        <source>Sample was successfully saved</source>
+        <comment>message</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="496"/>
+        <source>Sending sample</source>
+        <comment>wgt windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="529"/>
+        <source>Account management</source>
+        <comment>dlg windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="543"/>
+        <source>Editing account error</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="545"/>
+        <source>Failed to edit account due to the following error:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="569"/>
+        <source>Registration confirmation</source>
+        <comment>dlg windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="582"/>
+        <source>You have successfully confirmed your account registration</source>
+        <comment>message</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="586"/>
+        <source>Registration confirmation error</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="588"/>
+        <source>Failed to confirm rgistration due to the following error:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="602"/>
+        <source>Group management</source>
+        <comment>wgt windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="621"/>
+        <source>Invite management</source>
+        <comment>wgt windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="643"/>
+        <source>Account recovery</source>
+        <comment>dlg windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="660"/>
+        <source>Registration</source>
+        <comment>dlg windowTitle</comment>
+        <translation type="unfinished">Регистрация</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="673"/>
+        <source>You have successfully registered</source>
+        <comment>message</comment>
+        <translation type="unfinished">Вы успешно зарегистрировались</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="675"/>
+        <source>Registration</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished">Регистрация</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="677"/>
+        <source>You have successfully registered. Confirmation code was sent to your e-mail. Please, click OK and enter that code to finish registration</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="694"/>
+        <source>Registration error</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished">Ошибка регистрации</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="696"/>
+        <source>Failed to register due to the following error:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished">Не удалось зарегистрироваться из-за следующей ошибки:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="730"/>
+        <source>Sample: %1</source>
+        <comment>wgt windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="757"/>
+        <source>Getting sample preview error</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="759"/>
+        <source>Failed to get sample preview due to the following error:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="799"/>
+        <source>User: %1</source>
+        <comment>wgt windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="816"/>
+        <source>User management</source>
+        <comment>wgt windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="840"/>
+        <source>Updating sample list error</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="842"/>
+        <source>Failed to update sample list due to the following error:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="900"/>
+        <source>TeXSample error</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="903"/>
+        <source>TeXSample message</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="917"/>
+        <source>Null connection pointer</source>
+        <comment>error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="929"/>
+        <source>Connecting to server</source>
+        <comment>pdlg windowTitle</comment>
+        <translation type="unfinished">Подключение к серверу</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="930"/>
+        <source>Connecting to server, please, wait...</source>
+        <comment>pdlg labelText</comment>
+        <translation type="unfinished">Подключаемся к серверу, пожалуйста, ждите...</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="935"/>
+        <source>Connection cancelled by user</source>
+        <comment>error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="941"/>
+        <source>An error occured, or connection timed out</source>
+        <comment>error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="947"/>
+        <source>Null operation pointer</source>
+        <comment>error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="949"/>
+        <location filename="../src/texsample/texsamplecore.cpp" line="971"/>
+        <source>An error occured during operation</source>
+        <comment>error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="960"/>
+        <location filename="../src/texsample/texsamplecore.cpp" line="975"/>
+        <source>Operation timed out</source>
+        <comment>error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="963"/>
+        <source>Executing request...</source>
+        <comment>opdlg windowTitle</comment>
+        <translation type="unfinished">Выполняется запрос...</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="969"/>
+        <source>Operation cancelled by user</source>
+        <comment>error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="995"/>
+        <source>Getting sample source error</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="997"/>
+        <source>Failed to get sample source due to the following error:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1026"/>
+        <source>Disable version checking</source>
+        <comment>btn text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1029"/>
+        <source>Checking for new version failed</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1031"/>
+        <source>Failed to check for new version. The following error occured:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1042"/>
+        <source>New version</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished">Новая версия</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1048"/>
+        <source>A new version of the application is available</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished">Доступна новая версия приложения</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1051"/>
+        <source>Click the following link to go to the download page:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished">Кликните по следующей ссылке чтобы перейти на страницу загрузки:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1052"/>
+        <source>download</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished">скачать</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1055"/>
+        <source>You should always use the latest application version. Bugs are fixed and new features are implemented in new versions.</source>
+        <comment>msgbox informativeText</comment>
+        <translation type="unfinished">Вам следует всегда использовать самую новую версию приложения. В новых версиях исправляются ошибки и добавляются новые возможности.</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1060"/>
+        <source>You are using the latest version.</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished">Вы используете самую новую версию.</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1072"/>
+        <source>TeXSample configuration</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished">Настройка TeXSample</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1074"/>
+        <source>It seems that you have not configured TeXSample service yet.
+Would you like to do it now?</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished">Похоже, что вы ещё не настроили сервис TeXSample. Хотите сделать это сейчас?</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1076"/>
+        <source>To remove this notification, you have to configure or disable TeXSample service</source>
+        <comment>msgbox informativeText</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1078"/>
+        <source>Register</source>
+        <comment>btn text</comment>
+        <translation type="unfinished">Зарегистрироваться</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1079"/>
+        <source>I have an account</source>
+        <comment>btn text</comment>
+        <translation type="unfinished">У меня есть аккаунт</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1080"/>
+        <source>Disable TeXSample</source>
+        <comment>btn text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1081"/>
+        <source>Not right now</source>
+        <comment>btn text</comment>
+        <translation type="unfinished">Не сейчас</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1135"/>
+        <source>Editing sample error</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1137"/>
+        <source>Failed to edit sample due to the following error:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1150"/>
+        <source>Sample was successfully edited</source>
+        <comment>message</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1172"/>
+        <source>Sending sample error</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1174"/>
+        <source>Failed to send sample due to the following error:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplecore.cpp" line="1185"/>
+        <source>Sample was successfully sent</source>
+        <comment>message</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TexsampleSettingsTab</name>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="40"/>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="66"/>
         <source>Connection</source>
         <comment>gbox title</comment>
         <translation>Соединение</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="53"/>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="80"/>
+        <source>Login/E-mail:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="83"/>
+        <source>Other</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="87"/>
+        <source>Connect on startup:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="92"/>
+        <source>Clear cache</source>
+        <comment>btn text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="95"/>
+        <source>Enable caching:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="123"/>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="155"/>
+        <source>Confirmation</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="125"/>
+        <source>You are going to change server address. All cached files will be removed. Are you absolutely sure?</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="127"/>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="158"/>
+        <source>This action is irreversible!</source>
+        <comment>msgbox informativeText</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="147"/>
+        <source>TeXSample</source>
+        <comment>title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/settingstab/texsamplesettingstab.cpp" line="157"/>
+        <source>You are going to delete all cached files. Are you absolutely sure?</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Remove current host from history</source>
         <comment>tbtn toolTip</comment>
-        <translation>Удалить текущий адрес из истории</translation>
+        <translation type="obsolete">Удалить текущий адрес из истории</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="57"/>
         <source>Host:</source>
         <comment>lbl text</comment>
-        <translation>Адрес сервера:</translation>
+        <translation type="obsolete">Адрес сервера:</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="60"/>
         <source>Login:</source>
         <comment>lbl text</comment>
-        <translation>Логин:</translation>
+        <translation type="obsolete">Логин:</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="64"/>
         <source>Password:</source>
         <comment>lbl text</comment>
-        <translation>Пароль:</translation>
+        <translation type="obsolete">Пароль:</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="67"/>
         <source>Autoconnection:</source>
         <comment>lbl text</comment>
-        <translation>Автосоединение:</translation>
+        <translation type="obsolete">Автосоединение:</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="76"/>
         <source>CloudLab</source>
         <comment>title</comment>
-        <translation>CloudLab</translation>
+        <translation type="obsolete">CloudLab</translation>
     </message>
     <message>
-        <location filename="../src/texsamplesettingstab.cpp" line="38"/>
         <source>Auto select</source>
-        <translation>Автоматический выбор</translation>
+        <translation type="obsolete">Автоматический выбор</translation>
+    </message>
+</context>
+<context>
+    <name>TexsampleWidget</name>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="219"/>
+        <source>My</source>
+        <comment>cmbox item text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="228"/>
+        <source>TeXSample state:</source>
+        <comment>act toolTip</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="232"/>
+        <source>disconnected</source>
+        <comment>act toolTip</comment>
+        <translation type="unfinished">отключен</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="235"/>
+        <source>connecting</source>
+        <comment>act toolTip</comment>
+        <translation type="unfinished">подключение</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="238"/>
+        <source>connected</source>
+        <comment>act toolTip</comment>
+        <translation type="unfinished">соединен</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="241"/>
+        <source>authorized</source>
+        <comment>act toolTip</comment>
+        <translation type="unfinished">авторизован</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="244"/>
+        <source>disconnecting</source>
+        <comment>act toolTip</comment>
+        <translation type="unfinished">отключение</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="294"/>
+        <source>Connection</source>
+        <comment>act text</comment>
+        <translation type="unfinished">Соединение</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="295"/>
+        <source>This action shows current connection state. Use it to connect or disconnect from the server</source>
+        <comment>act whatsThis</comment>
+        <translation type="unfinished">Это действие показывает текущее состояние соединения. Используйте его чтобы подключиться или отключиться от сервера</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="298"/>
+        <source>Connect</source>
+        <comment>act text</comment>
+        <translation type="unfinished">Подключиться</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="299"/>
+        <source>Disconnect</source>
+        <comment>act text</comment>
+        <translation type="unfinished">Отключиться</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="300"/>
+        <source>Update</source>
+        <comment>act text</comment>
+        <translation type="unfinished">Обновить</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="301"/>
+        <source>Update samples list</source>
+        <comment>act toolTip</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="302"/>
+        <source>Send sample...</source>
+        <comment>act text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="303"/>
+        <source>Send sample...</source>
+        <comment>act toolTip</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="304"/>
+        <source>Tools</source>
+        <comment>act text</comment>
+        <translation type="unfinished">Инструменты</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="305"/>
+        <source>Tools</source>
+        <comment>act toolTip</comment>
+        <translation type="unfinished">Инструменты</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="306"/>
+        <source>Register...</source>
+        <comment>act tooTip</comment>
+        <translation type="unfinished">Зарегистрироваться...</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="307"/>
+        <source>Confirm registration...</source>
+        <comment>act text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="308"/>
+        <source>Confirm e-mail change...</source>
+        <comment>act text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="309"/>
+        <source>Recover account...</source>
+        <comment>act text</comment>
+        <translation type="unfinished">Восстановить аккаунт...</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="310"/>
+        <source>TeXSample settings...</source>
+        <comment>act text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="311"/>
+        <source>Account management...</source>
+        <comment>act text</comment>
+        <translation type="unfinished">Управление аккаунтом...</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="312"/>
+        <source>Administration</source>
+        <comment>act text</comment>
+        <translation type="unfinished">Администрирование</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="313"/>
+        <source>User management...</source>
+        <comment>act text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="314"/>
+        <source>Group management...</source>
+        <comment>act text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="315"/>
+        <source>Invite management...</source>
+        <comment>act text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="317"/>
+        <source>Selection</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished">Выбор</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="319"/>
+        <source>Type:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Тип:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="320"/>
+        <source>Search:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">Поиск:</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="358"/>
+        <source>Insert...</source>
+        <comment>act text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="361"/>
+        <source>Save...</source>
+        <comment>act text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="365"/>
+        <source>Information...</source>
+        <comment>act text</comment>
+        <translation type="unfinished">Информация...</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="368"/>
+        <source>Preview</source>
+        <comment>act text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="372"/>
+        <source>Edit...</source>
+        <comment>act text</comment>
+        <translation type="unfinished">Редактировать...</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/texsamplewidget.cpp" line="378"/>
+        <source>Delete...</source>
+        <comment>act text</comment>
+        <translation type="unfinished">Удалить...</translation>
     </message>
 </context>
 </TS>
