@@ -30,7 +30,10 @@
 #include "texsamplecore.h"
 
 #include <TAccessLevel>
+#include <TLabDataInfo>
+#include <TLabDataInfoList>
 #include <TLabInfo>
+#include <TLabType>
 #include <TNetworkClient>
 #include <TUserInfo>
 
@@ -96,6 +99,19 @@ TexsampleWidget::TexsampleWidget(MainWindow *window, QWidget *parent) :
           mactSend->setIcon(Application::icon("mail_send"));
           connect(mactSend, SIGNAL(triggered()), this, SLOT(sendLab()));
         mtbar->addAction(mactSend);
+        mactAdministration = new QAction(this);
+          mactAdministration->setIcon(Application::icon("gear"));
+          mnu = new QMenu;
+            mactUserManagement = mnu->addAction(Application::icon("users"), "", tSmp,
+                                                SLOT(showUserManagementWidget()));
+            mactGroupManagement = mnu->addAction(Application::icon("group"), "", tSmp,
+                                                 SLOT(showGroupManagementWidget()));
+            mactInviteManagement = mnu->addAction(Application::icon("mail_send"), "", tSmp,
+                                                  SLOT(showInviteManagementWidget()));
+        mactAdministration->setMenu(mnu);
+        mtbar->addAction(mactAdministration);
+        static_cast<QToolButton *>(
+                    mtbar->widgetForAction(mactAdministration))->setPopupMode(QToolButton::InstantPopup);
         mactTools = new QAction(this);
           mactTools->setIcon(Application::icon("configure"));
           mnu = new QMenu;
@@ -127,17 +143,6 @@ TexsampleWidget::TexsampleWidget(MainWindow *window, QWidget *parent) :
               mactSettings->setIcon(Application::icon("configure"));
               connect(mactSettings, SIGNAL(triggered()), tSmp, SLOT(showTexsampleSettings()));
             mnu->addAction(mactSettings);
-            mactAdministration = new QAction(this);
-              mactAdministration->setIcon(Application::icon("gear"));
-              QMenu *submnu = new QMenu;
-                mactUserManagement = submnu->addAction(Application::icon("users"), "", tSmp,
-                                                       SLOT(showUserManagementWidget()));
-                mactGroupManagement = submnu->addAction(Application::icon("group"), "", tSmp,
-                                                        SLOT(showGroupManagementWidget()));
-                mactInviteManagement = submnu->addAction(Application::icon("mail_send"), "", tSmp,
-                                                         SLOT(showInviteManagementWidget()));
-            mactAdministration->setMenu(submnu);
-            mnu->addAction(mactAdministration);
           mactTools->setMenu(mnu);
         mtbar->addAction(mactTools);
         static_cast<QToolButton *>(mtbar->widgetForAction(mactTools))->setPopupMode(QToolButton::InstantPopup);
@@ -306,9 +311,16 @@ void TexsampleWidget::tblvwCustomContextMenuRequested(const QPoint &pos)
         return;
     TNetworkClient *client = tSmp->client();
     QMenu mnu;
-    //TODO: size
-    //QString s = BeQt::fileSizeToString(tSmp->labModel()->labInfo(mlastId),BeQt::KilobytesFormat);
-    QAction *act = mnu.addAction(tr("Get...", "act text"), this, SLOT(getLab()));
+    QString s;
+    //FIXME: Improve with the net TeXSample release
+    foreach (const TLabDataInfo &ldi, tSmp->labModel()->labInfo(mlastId).dataInfos()) {
+        if (int(ldi.type()) != TLabType::DesktopApplication || ldi.os() == BeQt::osType()) {
+            s = " (" + BeQt::fileSizeToString(ldi.size(), BeQt::MegabytesFormat) + ")";
+            break;
+        }
+    }
+    //End of fixme
+    QAction *act = mnu.addAction(tr("Get...", "act text") + (!s.isEmpty() ? s : QString()), this, SLOT(getLab()));
       act->setEnabled(client->isAuthorized());
       act->setIcon(Application::icon("editpaste"));
     mnu.addSeparator();

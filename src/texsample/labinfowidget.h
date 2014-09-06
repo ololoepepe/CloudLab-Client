@@ -22,82 +22,33 @@
 #ifndef LABINFOWIDGET_H
 #define LABINFOWIDGET_H
 
-class FilesWidget;
+class ExtraFileListWidget;
+class LabDataListWidget;
+class LabModel;
 
-class TLabInfo;
-class TLabProject;
-class TTagsWidget;
-class TListWidget;
+class TAbstractCache;
+class TAuthorListWidget;
+class TGroupListWidget;
+class TNetworkClient;
+class TTagWidget;
 
 class BInputField;
 
-class QLineEdit;
+class QByteArray;
+class QCheckBox;
 class QComboBox;
-class QSpinBox;
-class QPlainTextEdit;
+class QFormLayout;
 class QHBoxLayout;
-class QPushButton;
-class QButtonGroup;
-class QVBoxLayout;
 class QLabel;
-class QToolButton;
-class QSignalMapper;
+class QLineEdit;
+class QPlainTextEdit;
+class QVariant;
+class QVBoxLayout;
 
-#include <BTranslation>
+#include <TLabDataList>
 
-#include <QDialog>
-#include <QVariantMap>
-#include <QMap>
 #include <QString>
-
-/*============================================================================
-================================ FilesWidget =================================
-============================================================================*/
-
-class FilesWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit FilesWidget(bool readOnly, QWidget *parent = 0);
-public:
-    void addFile(const QString &fn);
-    void addFiles(const QStringList &list);
-    QStringList files() const;
-    bool isReadOnly() const;
-signals:
-    void getFile(const QString &fileName);
-private:
-    void deleteLastDeleted();
-private slots:
-    void mapped(const QString &fn);
-    void addFile();
-private:
-    struct Line
-    {
-        QHBoxLayout *hlt;
-        QLabel *lbl;
-        QToolButton *tbtn;
-        bool deleted;
-    public:
-        Line();
-    };
-private:
-    static const BTranslation deleteToolTip;
-    static const BTranslation undeleteToolTip;
-private:
-    static QString labelText(const QString &fileName);
-private:
-    const bool ReadOnly;
-private:
-    QSignalMapper *mapper;
-    bool hasDeleted;
-    QVBoxLayout *vlt;
-    QMap<QString, Line> lines;
-    QToolButton *tbtn;
-    QString lastDir;
-private:
-    Q_DISABLE_COPY(FilesWidget)
-};
+#include <QWidget>
 
 /*============================================================================
 ================================ LabInfoWidget ===============================
@@ -113,61 +64,67 @@ public:
         EditMode,
         ShowMode
     };
-public:
-    explicit LabInfoWidget(Mode m, QWidget *parent = 0);
-public:
-    void setInfo(const TLabInfo &info);
-    void setCheckSourceValidity(bool b);
-    void setClabGroups(const QStringList &list);
-    void restoreState(const QByteArray &state);
-    Mode mode() const;
-    TLabInfo info() const;
-    bool checkSourceValidity() const;
-    TLabProject webProject() const;
-    TLabProject linuxProject() const;
-    TLabProject macProject() const;
-    TLabProject winProject() const;
-    QString url() const;
-    QStringList extraAttachedFiles() const;
-    QStringList clabGroups() const;
-    QByteArray saveState() const;
-    bool isValid() const;
-public slots:
-    void clear();
-    void setFocus();
-private slots:
-    void checkInputs();
-    void showSenderInfo();
-    void cmboxTypeCurrentIndexChanged(int index);
-    void selectFile(int id);
-    void getFile(const QString &fileName);
-signals:
-    void validityChanged(bool valid);
 private:
     static const QString DateTimeFormat;
+    static const Qt::TextInteractionFlags TextInteractionFlags;
 private:
     const Mode mmode;
 private:
-    bool mvalid;
-    bool mcheckSource;
+    TAbstractCache *mcache;
+    TNetworkClient *mclient;
     quint64 mid;
+    LabModel *mmodel;
     quint64 msenderId;
-    QString msenderLogin;
-    QString msenderRealName;
+    TLabDataList mdataList;
+    bool mvalid;
+    //
     QLineEdit *mledtTitle;
     BInputField *minputTitle;
-    TTagsWidget *mtgswgt;
-    QComboBox *mcmboxType;
+    TTagWidget *mtgwgt;
     QLabel *mlblSender;
+    QComboBox *mcmboxType;
+    QLabel *mlblSize;
     QLabel *mlblCreationDT;
     QLabel *mlblUpdateDT;
-    TListWidget *mlstwgtAuthors;
-    QPlainTextEdit *mptedtComment;
-    TListWidget *mlstwgtGroups;
-    QMap<int, QHBoxLayout *> mhltFile;
-    QMap<int, QLineEdit *> mledtFile;
-    QPushButton *mbtnSearch;
-    FilesWidget *flswgt;
+    TAuthorListWidget *mlstwgtAuthors;
+    QPlainTextEdit *mptedtDescription;
+    TGroupListWidget *mlstwgtGroups;
+    QCheckBox *mcboxEditData;
+    LabDataListWidget *ldlwgt;
+    ExtraFileListWidget *eflwgt;
+public:
+    explicit LabInfoWidget(Mode m, QWidget *parent = 0);
+public:
+    TAbstractCache *cache() const;
+    TNetworkClient *client() const;
+    QVariant createRequestData() const;
+    bool hasValidInput() const;
+    Mode mode() const;
+    LabModel *model() const;
+    void restoreState(const QByteArray &state);
+    QByteArray saveState() const;
+    void setCache(TAbstractCache *cache);
+    void setClient(TNetworkClient *client);
+    bool setLab(quint64 labId);
+    void setModel(LabModel *model);
+    QString title() const;
+private:
+    void createAuthorsGroup(QHBoxLayout *hlt, bool readOnly = false);
+    void createDescriptionGroup(QHBoxLayout *hlt, bool readOnly = false);
+    void createExtraFileListGroup(QHBoxLayout *hlt, bool readOnly = false);
+    void createExtraGroup(QHBoxLayout *hlt, bool readOnly = false);
+    void createGroupsGroup(QHBoxLayout *hlt, bool readOnly = false);
+    void createLabDataListGroup(QHBoxLayout *hlt, bool readOnly = false);
+    void createMainGroup(QVBoxLayout *vlt, bool readOnly = false);
+    void createTagsField(QFormLayout *flt, bool readOnly = false);
+    void createTitleField(QFormLayout *flt, bool readOnly = false);
+private slots:
+    void checkInputs();
+    void cmboxTypeCurrentIndexChanged(int index);
+    void showExtraFile(const QString &fileName);
+    void showSenderInfo();
+signals:
+    void inputValidityChanged(bool valid);
 };
 
 #endif // LABINFOWIDGET_H

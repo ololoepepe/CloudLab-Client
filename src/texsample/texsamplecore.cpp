@@ -110,8 +110,10 @@ TexsampleCore::TexsampleCore(QObject *parent) :
     BLocationProvider *provider = new BLocationProvider;
     provider->addLocation("texsample");
     provider->addLocation("texsample/labs");
+    provider->addLocation("texsample/files");
     provider->createLocationPath("texsample", Application::UserResource);
     provider->createLocationPath("texsample/labs", Application::UserResource);
+    provider->createLocationPath("texsample/files", Application::UserResource);
     Application::installLocationProvider(provider);
     QString texsampleLocation = BDirTools::findResource("texsample", BDirTools::UserOnly);
     mcache = new Cache(texsampleLocation);
@@ -157,6 +159,7 @@ TexsampleCore::~TexsampleCore()
         w->waitForFinished();
     }
     BDirTools::rmdir(Application::location("texsample/labs", Application::UserResource));
+    BDirTools::rmdir(Application::location("texsample/files", Application::UserResource));
 }
 
 /*============================== Public methods ============================*/
@@ -314,7 +317,6 @@ void TexsampleCore::editLab(quint64 labId)
     swgt->setModel(mlabModel);
     swgt->setClient(mclient);
     swgt->setCache(mcache);
-    swgt->setEditor(editor);
     if (!swgt->setLab(labId))
         return dlg->deleteLater();
     BTranslation t = BTranslation::translate("TexsampleCore", "Editing lab: %1", "wgt windowTitle");
@@ -332,6 +334,37 @@ void TexsampleCore::editLab(quint64 labId)
     dlg->show();
 }
 
+bool TexsampleCore::getExtraFile(quint64 labId, const QString &fileName, QWidget *parent)
+{
+    if (!labId || fileName.isEmpty())
+        return false;
+    if (!mclient->isAuthorized())
+        return false;
+    if (!parent)
+        parent = bApp->mostSuitableWindow();
+    TGetLabExtraFileRequestData requestData;
+    requestData.setLabId(labId);
+    requestData.setFileName(fileName);
+    TReply reply = mclient->performOperation(TOperation::GetLabExtraFile, requestData, 5 * BeQt::Minute, parent);
+    if (!reply.success()) {
+        QMessageBox msg(bApp->mostSuitableWindow());
+        msg.setWindowTitle(tr("Getting lab extra file error", "msgbox windowTitle"));
+        msg.setIcon(QMessageBox::Critical);
+        msg.setText(tr("Failed to get lab extra file due to the following error:", "msgbox text"));
+        msg.setInformativeText(reply.message());
+        msg.setStandardButtons(QMessageBox::Ok);
+        msg.setDefaultButton(QMessageBox::Ok);
+        msg.exec();
+        return false;
+    }
+    const TBinaryFile &file = reply.data().value<TGetLabExtraFileReplyData>().file();
+    QString path = Application::location("texsample/files", Application::UserResource) + "/files/"
+            + BUuid::createUuid().toString(true);
+    if (!file.save(path))
+        return false;
+    return bApp->openLocalFile(path + "/" + file.fileName());
+}
+
 bool TexsampleCore::getLab(quint64 labId, QWidget *parent)
 {
     if (!labId)
@@ -343,7 +376,7 @@ bool TexsampleCore::getLab(quint64 labId, QWidget *parent)
     TGetLabDataRequestData requestData;
     requestData.setLabId(labId);
     requestData.setOs(BeQt::osType());
-    TReply reply = mclient->performOperation(TOperation::GetLabData, requestData, parent);
+    TReply reply = mclient->performOperation(TOperation::GetLabData, requestData, 5 * BeQt::Minute, parent);
     if (!reply.success()) {
         QMessageBox msg(bApp->mostSuitableWindow());
         msg.setWindowTitle(tr("Getting lab error", "msgbox windowTitle"));
@@ -355,9 +388,9 @@ bool TexsampleCore::getLab(quint64 labId, QWidget *parent)
         msg.exec();
         return false;
     }
-    TLabData data = reply.data().value<TGetLabDataReplyData>().data();
+    const TLabData &data = reply.data().value<TGetLabDataReplyData>().data();
     bApp->showStatusBarMessage(tr("Lab was successfully downloaded", "message"));
-    QString path = Application::location("texsample/labs", Application::SharedResource) + "/labs/"
+    QString path = Application::location("texsample/labs", Application::UserResource) + "/labs/"
             + BUuid::createUuid().toString(true);
     int type = data.type();
     const TLabApplication &app = data.application();
@@ -425,7 +458,6 @@ void TexsampleCore::sendLab()
     LabInfoWidget *swgt = new LabInfoWidget(LabInfoWidget::AddMode);
     swgt->setClient(mclient);
     swgt->setCache(mcache);
-    swgt->setEditor(editor);
     swgt->restoreState(Settings::TexsampleCore::sendLabWidgetState());
     dlg->setWidget(swgt);
     dlg->addButton(QDialogButtonBox::Cancel, SLOT(reject()));
@@ -982,7 +1014,6 @@ void TexsampleCore::editLabDialogFinished(int result)
     if (!labId)
         return dlg->deleteLater();
     QWidget *parent = bApp->mostSuitableWindow();
-    bool admin = (int(mclient->userInfo().accessLevel()) >= TAccessLevel::ModeratorLevel);
     TReply reply = mclient->performOperation(TOperation::EditLab, swgt->createRequestData(), 5 * BeQt::Minute, parent);
     if (!reply.success()) {
         QMessageBox msg(parent);
@@ -997,7 +1028,7 @@ void TexsampleCore::editLabDialogFinished(int result)
         return;
     }
     mlabModel->updateLab(labId, reply.data().value<TEditLabReplyData>().labInfo());
-    mcache->setData(op, reply.requestDateTime(), reply.data());
+    mcache->setData(TOperation::EditLab, reply.requestDateTime(), reply.data());
     bApp->showStatusBarMessage(tr("Lab was successfully edited", "message"));
     dlg->deleteLater();
 }

@@ -20,215 +20,150 @@
 ****************************************************************************/
 
 #include "labinfowidget.h"
-#include "client.h"
+
 #include "application.h"
+#include "labmodel.h"
+#include "settings.h"
+#include "texsamplecore.h"
 
-#include <TUserInfo>
-#include <TOperationResult>
+#include <TAddLabRequestData>
+#include <TAuthorInfo>
+#include <TAuthorInfoList>
+#include <TAuthorListWidget>
+#include <TEditLabRequestData>
+#include <TeXSample>
+#include <TFileInfo>
+#include <TGroupInfoList>
+#include <TGroupListWidget>
 #include <TLabInfo>
-#include <TLabProject>
-#include <TTagsWidget>
-#include <TListWidget>
-#include <TUserWidget>
+#include <TLabType>
+#include <TNetworkClient>
+#include <TTagWidget>
 
+#include <BeQt>
 #include <BInputField>
-#include <BDialog>
-#include <BInputField>
-#include <BTranslation>
 
-#include <QWidget>
+#include <QByteArray>
+#include <QChar>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QDateTime>
+#include <QDebug>
+#include <QFileInfo>
 #include <QFormLayout>
-#include <QVBoxLayout>
+#include <QGroupBox>
 #include <QHBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
 #include <QList>
+#include <QPlainTextEdit>
+#include <QRegExp>
+#include <QRegExpValidator>
+#include <QSpinBox>
 #include <QString>
 #include <QStringList>
 #include <QTextCodec>
-#include <QLineEdit>
-#include <QLabel>
-#include <QList>
-#include <QComboBox>
+#include <QToolButton>
+#include <QValidator>
 #include <QVariant>
-#include <QToolButton>
-#include <QPlainTextEdit>
-#include <QMessageBox>
-#include <QDialog>
-#include <QDialogButtonBox>
-#include <QPushButton>
-#include <QSpinBox>
-#include <QRegExp>
-#include <QFileInfo>
+#include <QVariantList>
 #include <QVariantMap>
-#include <QFileDialog>
-#include <QButtonGroup>
-#include <QGroupBox>
-#include <QRadioButton>
-#include <QSignalMapper>
-#include <QDir>
-#include <QToolButton>
-#include <QPair>
-#include <QDesktopServices>
-#include <QUrl>
-
-#include <QDebug>
-
-/*============================================================================
-================================ FilesWidget =================================
-============================================================================*/
-
-FilesWidget::Line::Line()
-{
-    hlt = new QHBoxLayout;
-    lbl = new QLabel;
-    hlt->addWidget(lbl);
-    hlt->addStretch();
-    tbtn = 0;
-    deleted = false;
-}
-
-/*============================== Public constructors =======================*/
-
-FilesWidget::FilesWidget(bool readOnly, QWidget *parent) :
-    QWidget(parent), ReadOnly(readOnly)
-{
-    hasDeleted = false;
-    lastDir = QDir::homePath();
-    vlt = new QVBoxLayout(this);
-    mapper = new QSignalMapper(this);
-    connect(mapper, SIGNAL(mapped(QString)), this, SLOT(mapped(QString)));
-    if (!ReadOnly)
-    {
-        QHBoxLayout *hlt = new QHBoxLayout;
-          hlt->addStretch();
-          tbtn = new QToolButton;
-            tbtn->setIcon(Application::icon("edit_add"));
-            tbtn->setToolTip(tr("Add file", "tbtn toolTip"));
-            connect(tbtn, SIGNAL(clicked()), this, SLOT(addFile()));
-          hlt->addWidget(tbtn);
-        vlt->addLayout(hlt);
-    }
-}
-
-/*============================== Public methods ============================*/
-
-void FilesWidget::addFile(const QString &fn)
-{
-    if (fn.isEmpty() || lines.contains(fn))
-        return;
-    deleteLastDeleted();
-    Line l;
-    l.lbl->setText(labelText(fn));
-    l.lbl->setToolTip(fn);
-    connect(l.lbl, SIGNAL(linkActivated(QString)), this, SIGNAL(getFile(QString)));
-    if (!ReadOnly)
-    {
-        l.tbtn = new QToolButton;
-        l.tbtn->setIcon(Application::icon("editdelete"));
-        l.tbtn->setToolTip(deleteToolTip);
-        l.hlt->addWidget(l.tbtn);
-        bSetMapping(mapper, l.tbtn, SIGNAL(clicked()), fn);
-    }
-    lines.insert(fn, l);
-    vlt->insertLayout(vlt->count() - 1, l.hlt);
-}
-
-void FilesWidget::addFiles(const QStringList &list)
-{
-    foreach (const QString &fn, list)
-        addFile(fn);
-}
-
-QStringList FilesWidget::files() const
-{
-    QStringList list;
-    foreach (const QString &fn, lines.keys())
-        if (!lines.value(fn).deleted)
-            list << fn;
-    return list;
-}
-
-bool FilesWidget::isReadOnly() const
-{
-    return ReadOnly;
-}
-
-/*============================== Static private constants ==================*/
-
-const BTranslation FilesWidget::deleteToolTip = BTranslation::translate("FilesWidget", "Remove file", "tbtn toolTip");
-const BTranslation FilesWidget::undeleteToolTip = BTranslation::translate("FilesWidget", "Cancel removal",
-                                                                          "tbtn toolTip");
-
-/*============================== Static private methods ====================*/
-
-QString FilesWidget::labelText(const QString &fileName)
-{
-    if (fileName.isEmpty())
-        return "";
-    return "<a href=\"" + fileName + "\">" + QFileInfo(fileName).fileName() + "</a>";
-}
-
-/*============================== Private methods ===========================*/
-
-void FilesWidget::deleteLastDeleted()
-{
-    if (!hasDeleted)
-        return;
-    foreach (const QString &ffn, lines.keys())
-    {
-        if (lines.value(ffn).deleted)
-        {
-            Line l = lines.take(ffn);
-            delete l.lbl;
-            delete l.tbtn;
-            delete l.hlt;
-            break;
-        }
-    }
-    hasDeleted = false;
-}
-
-/*============================== Private slots =============================*/
-
-void FilesWidget::mapped(const QString &fn)
-{
-    Line &l = lines[fn];
-    if (l.deleted)
-    {
-        l.tbtn->setIcon(Application::icon("editdelete"));
-        l.tbtn->setToolTip(deleteToolTip);
-        l.lbl->setText(labelText(fn));
-        hasDeleted = false;
-    }
-    else
-    {
-        deleteLastDeleted();
-        l.tbtn->setIcon(Application::icon("reload"));
-        l.tbtn->setToolTip(undeleteToolTip);
-        l.lbl->setText(labelText(fn) + " [" + tr("deleted", "lbl text") + "]");
-        hasDeleted = true;
-    }
-    l.deleted = !l.deleted;
-}
-
-void FilesWidget::addFile()
-{
-    QStringList files = QFileDialog::getOpenFileNames(this, tr("Select files", "fdlg caption"), lastDir);
-    if (files.isEmpty())
-        return;
-    lastDir = QFileInfo(files.first()).path();
-    addFiles(files);
-}
+#include <QVBoxLayout>
+#include <QWidget>
 
 /*============================================================================
 ================================ LabInfoWidget ===============================
 ============================================================================*/
+
+/*============================== Static private constants ==================*/
+
+const QString LabInfoWidget::DateTimeFormat = "dd MMMM yyyy hh:mm";
+const Qt::TextInteractionFlags LabInfoWidget::TextInteractionFlags = Qt::TextSelectableByKeyboard
+        | Qt::TextSelectableByMouse | Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard;
 
 /*============================== Public constructors =======================*/
 
 LabInfoWidget::LabInfoWidget(Mode m, QWidget *parent) :
     QWidget(parent), mmode(m)
 {
+    mcache = 0;
+    mclient = 0;
+    mid = 0;
+    mmodel = 0;
+    msenderId = 0;
     mvalid = false;
+    //
+    mledtTitle = 0;
+    minputTitle = 0;
+    mtgwgt = 0;
+    mlblSender = 0;
+    mcmboxType = 0;
+    mlblSize = 0;
+    mlblCreationDT = 0;
+    mlblUpdateDT = 0;
+    mlstwgtAuthors = 0;
+    mptedtDescription = 0;
+    mlstwgtGroups = 0;
+    mcboxEditData = 0;
+    ldlwgt = 0;
+    eflwgt = 0;
+    //
+    QVBoxLayout *vlt = new QVBoxLayout(this);
+    switch (mmode) {
+    case AddMode: {
+        createMainGroup(vlt);
+        QHBoxLayout *hlt = new QHBoxLayout;
+        createExtraGroup(hlt);
+        createAuthorsGroup(hlt);
+        vlt->addLayout(hlt);
+        hlt = new QHBoxLayout;
+        createDescriptionGroup(hlt);
+        createGroupsGroup(hlt);
+        vlt->addLayout(hlt);
+        hlt = new QHBoxLayout;
+        createLabDataListGroup(hlt);
+        createExtraFileListGroup(hlt);
+        vlt->addLayout(hlt);
+        break;
+    }
+    case EditMode: {
+        createMainGroup(vlt);
+        QHBoxLayout *hlt = new QHBoxLayout;
+        createExtraGroup(hlt);
+        createAuthorsGroup(hlt);
+        vlt->addLayout(hlt);
+        hlt = new QHBoxLayout;
+        createDescriptionGroup(hlt);
+        createGroupsGroup(hlt);
+        vlt->addLayout(hlt);
+        hlt = new QHBoxLayout;
+        createLabDataListGroup(hlt);
+        createExtraFileListGroup(hlt);
+        vlt->addLayout(hlt);
+        break;
+    }
+    case ShowMode: {
+        createMainGroup(vlt, true);
+        QHBoxLayout *hlt = new QHBoxLayout;
+        createExtraGroup(hlt, true);
+        createAuthorsGroup(hlt, true);
+        vlt->addLayout(hlt);
+        hlt = new QHBoxLayout;
+        createDescriptionGroup(hlt, true);
+        createGroupsGroup(hlt, true);
+        vlt->addLayout(hlt);
+        hlt = new QHBoxLayout;
+        createExtraFileListGroup(hlt, true);
+        vlt->addLayout(hlt);
+        break;
+    }
+    default: {
+        break;
+    }
+    }
+    //
+    //
+    /*mvalid = false;
     mcheckSource = false;
     mid = 0;
     msenderId = 0;
@@ -237,7 +172,7 @@ LabInfoWidget::LabInfoWidget(Mode m, QWidget *parent) :
     QSignalMapper *mpr = new QSignalMapper(this);
     connect(mpr, SIGNAL(mapped(int)), this, SLOT(selectFile(int)));
     //
-    QVBoxLayout *vlt = new QVBoxLayout(this);
+    //QVBoxLayout *vlt = new QVBoxLayout(this);
       QFormLayout *flt = new QFormLayout;
         mledtTitle = new QLineEdit;
           mledtTitle->setReadOnly(ShowMode == mmode);
@@ -336,13 +271,147 @@ LabInfoWidget::LabInfoWidget(Mode m, QWidget *parent) :
     Application::setRowVisible(mlblSender, AddMode != mmode);
     Application::setRowVisible(mlblCreationDT, AddMode != mmode);
     Application::setRowVisible(mlblUpdateDT, AddMode != mmode);
-    checkInputs();
+    checkInputs();*/
 }
 
 /*============================== Public methods ============================*/
 
-void LabInfoWidget::setInfo(const TLabInfo &info)
+TAbstractCache *LabInfoWidget::cache() const
 {
+    return mcache;
+}
+
+TNetworkClient *LabInfoWidget::client() const
+{
+    return mclient;
+}
+
+QVariant LabInfoWidget::createRequestData() const
+{
+    if (!hasValidInput())
+        return QVariant();
+    switch (mmode) {
+    case AddMode: {
+        TAddLabRequestData data;
+        /*data.setAuthors(authors());
+        data.setDescritpion(mptedtDescription->toPlainText().replace(QChar::ParagraphSeparator, '\n'));
+        data.setProject(msource);
+        data.setTags(mtgwgt->tags());
+        data.setTitle(mledtTitle->text());*/
+        return data;
+    }
+    case EditMode: {
+        TEditLabRequestData data;
+        /*data.setAdminRemark(mptedtRemark->toPlainText().replace(QChar::ParagraphSeparator, '\n'));
+        data.setAuthors(authors());
+        data.setDescritpion(mptedtDescription->toPlainText().replace(QChar::ParagraphSeparator, '\n'));
+        data.setEditProject(mcboxEditSource->isChecked());
+        data.setId(mid);
+        if (mcboxEditSource->isChecked())
+            data.setProject(msource);
+        data.setRating(quint8(msboxRating->value()));
+        data.setTags(mtgwgt->tags());
+        data.setTitle(mledtTitle->text());
+        data.setType(mcmboxType->itemData(mcmboxType->currentIndex()).toInt());*/
+        return data;
+    }
+    case ShowMode:
+    default: {
+        break;
+    }
+    }
+    return QVariant();
+    //
+    /*
+    info.setId(mid);
+    TUserInfo u(msenderId, TUserInfo::BriefInfoContext);
+    u.setLogin(msenderLogin);
+    u.setRealName(msenderRealName);
+    info.setSender(u);
+    info.setTitle(mledtTitle->text());
+    info.setTags(mtgswgt->tags());
+    info.setType(mcmboxType->itemData(mcmboxType->currentIndex()).toInt());
+    //TODO: size
+    info.setCreationDateTime(QDateTime::fromString(mlblCreationDT->text(), DateTimeFormat));
+    info.setUpdateDateTime(QDateTime::fromString(mlblUpdateDT->text(), DateTimeFormat));
+    info.setAuthors(mlstwgtAuthors->items());
+    info.setGroups(mlstwgtGroups->items());
+    info.setComment(mptedtComment->toPlainText().replace(QChar::ParagraphSeparator, '\n'));
+    info.setExtraAttachedFileNames(flswgt->files());
+      */
+}
+
+bool LabInfoWidget::hasValidInput() const
+{
+    return mvalid;
+}
+
+LabInfoWidget::Mode LabInfoWidget::mode() const
+{
+    return mmode;
+}
+
+LabModel *LabInfoWidget::model() const
+{
+    return mmodel;
+}
+
+void LabInfoWidget::restoreState(const QByteArray &state)
+{
+    QVariantMap m = BeQt::deserialize(state).toMap();
+    mlstwgtAuthors->setAvailableAuthors(m.value("authors").value<TAuthorInfoList>());
+    mtgwgt->setAvailableTags(m.value("tags").toStringList());
+    mledtTitle->setText(m.value("title").toString());
+}
+
+QByteArray LabInfoWidget::saveState() const
+{
+    QVariantMap m;
+    TAuthorInfoList list = mlstwgtAuthors->availableAuthors();
+    list << mlstwgtAuthors->authors();
+    bRemoveDuplicates(list);
+    m.insert("authors", list);
+    m.insert("tags", mtgwgt->availableTags());
+    m.insert("title", mledtTitle->text());
+    return BeQt::serialize(m);
+}
+
+void LabInfoWidget::setCache(TAbstractCache *cache)
+{
+    mcache = cache;
+}
+
+void LabInfoWidget::setClient(TNetworkClient *client)
+{
+    mclient = client;
+}
+
+bool LabInfoWidget::setLab(quint64 labId)
+{
+    if (AddMode == mmode || !mmodel)
+        return false;
+    TLabInfo info = mmodel->labInfo(labId);
+    mid = info.id();
+    msenderId = info.senderId();
+    /*resetFile(info.mainSourceFile().fileName(), info.sourceSize());
+    mtgwgt->setTags(info.tags());
+    mledtTitle->setText(info.title());
+    mlblSender->setText("<a href=dummy>" + info.senderLogin() + "</a>");
+    mlblSender->setToolTip(tr("Click the link to see info about the sender", "lbl toolTip"));
+    msboxRating->setValue(info.rating());
+    mcmboxType->setCurrentIndex(mcmboxType->findData(int(info.type())));
+    mlblCreationDT->setText(info.creationDateTime().toTimeSpec(Qt::LocalTime).toString(DateTimeFormat));
+    mlblUpdateDT->setText(info.lastModificationDateTime().toTimeSpec(Qt::LocalTime).toString(DateTimeFormat));
+    mlstwgtAuthors->setAuthors(info.authors());
+    mptedtDescription->setPlainText(info.description());
+    mptedtRemark->setPlainText(info.adminRemark());
+    QString s = BeQt::fileSizeToString(info.previewSize(), BeQt::KilobytesFormat);
+    if(mtbtnShowPreview)
+        mtbtnShowPreview->setToolTip(tr("Show sample preview", "tbtn toolTip") + " (" + s + ")");
+    checkInputs();*/
+    return info.isValid();
+    //
+    /*
     mid = info.id();
     msenderId = info.sender().id();
     msenderLogin = info.sender().login();
@@ -380,152 +449,71 @@ void LabInfoWidget::setInfo(const TLabInfo &info)
     flswgt->addFiles(info.extraAttachedFileNames());
     setFocus();
     checkInputs();
+      */
 }
 
-void LabInfoWidget::setCheckSourceValidity(bool b)
+void LabInfoWidget::setModel(LabModel *model)
 {
-    if (b == mcheckSource)
-        return;
-    mcheckSource = b;
-    checkInputs();
+    mmodel = model;
 }
 
-void LabInfoWidget::setClabGroups(const QStringList &list)
+QString LabInfoWidget::title() const
 {
-    mlstwgtGroups->setItems(list);
+    return mledtTitle->text();
 }
 
-void LabInfoWidget::restoreState(const QByteArray &state)
+/*============================== Private methods ===========================*/
+
+void LabInfoWidget::createAuthorsGroup(QHBoxLayout *hlt, bool readOnly)
 {
-    QVariantMap m = BeQt::deserialize(state).toMap();
-    mtgswgt->setAvailableTags(m.value("tags").toStringList());
-    mlstwgtAuthors->setAvailableItems(m.value("authors").toStringList());
+    //
 }
 
-LabInfoWidget::Mode LabInfoWidget::mode() const
+void LabInfoWidget::createDescriptionGroup(QHBoxLayout *hlt, bool readOnly)
 {
-    return mmode;
+    //
 }
 
-TLabInfo LabInfoWidget::info() const
+void LabInfoWidget::createExtraFileListGroup(QHBoxLayout *hlt, bool readOnly)
 {
-    TLabInfo info;
-    switch (mmode)
-    {
-    case AddMode:
-        info.setContext(TLabInfo::AddContext);
-        break;
-    case EditMode:
-        info.setContext(TLabInfo::EditContext);
-        break;
-    case ShowMode:
-        info.setContext(TLabInfo::GeneralContext);
-        break;
-    default:
-        break;
-    }
-    info.setId(mid);
-    TUserInfo u(msenderId, TUserInfo::BriefInfoContext);
-    u.setLogin(msenderLogin);
-    u.setRealName(msenderRealName);
-    info.setSender(u);
-    info.setTitle(mledtTitle->text());
-    info.setTags(mtgswgt->tags());
-    info.setType(mcmboxType->itemData(mcmboxType->currentIndex()).toInt());
-    //TODO: size
-    info.setCreationDateTime(QDateTime::fromString(mlblCreationDT->text(), DateTimeFormat));
-    info.setUpdateDateTime(QDateTime::fromString(mlblUpdateDT->text(), DateTimeFormat));
-    info.setAuthors(mlstwgtAuthors->items());
-    info.setGroups(mlstwgtGroups->items());
-    info.setComment(mptedtComment->toPlainText().replace(QChar::ParagraphSeparator, '\n'));
-    info.setExtraAttachedFileNames(flswgt->files());
-    return info;
+    //
 }
 
-bool LabInfoWidget::checkSourceValidity() const
+void LabInfoWidget::createExtraGroup(QHBoxLayout *hlt, bool readOnly)
 {
-    return mcheckSource;
+    //
 }
 
-TLabProject LabInfoWidget::webProject() const
+void LabInfoWidget::createGroupsGroup(QHBoxLayout *hlt, bool readOnly)
 {
-    TLabProject p((mcmboxType->currentIndex() == 1) ? mledtFile.value(BeQt::LinuxOS)->text() : QString());
-    if (p.isExecutable())
-        p.clear();
-    return p;
+    //
 }
 
-TLabProject LabInfoWidget::linuxProject() const
+void LabInfoWidget::createLabDataListGroup(QHBoxLayout *hlt, bool readOnly)
 {
-    TLabProject p((mcmboxType->currentIndex() == 0) ? mledtFile.value(BeQt::LinuxOS)->text() : QString());
-    if (!p.isExecutable())
-        p.clear();
-    return p;
+    //
 }
 
-TLabProject LabInfoWidget::macProject() const
+void LabInfoWidget::createMainGroup(QVBoxLayout *vlt, bool readOnly)
 {
-    TLabProject p((mcmboxType->currentIndex() == 0) ? mledtFile.value(BeQt::MacOS)->text() : QString());
-    if (!p.isExecutable())
-        p.clear();
-    return p;
+    //
 }
 
-TLabProject LabInfoWidget::winProject() const
+void LabInfoWidget::createTagsField(QFormLayout *flt, bool readOnly)
 {
-    TLabProject p((mcmboxType->currentIndex() == 0) ? mledtFile.value(BeQt::WindowsOS)->text() : QString());
-    if (!p.isExecutable())
-        p.clear();
-    return p;
+    //
 }
 
-QString LabInfoWidget::url() const
+void LabInfoWidget::createTitleField(QFormLayout *flt, bool readOnly)
 {
-    return (mcmboxType->currentIndex() == 2) ? mledtFile.value(BeQt::LinuxOS)->text() : QString();
-}
-
-QStringList LabInfoWidget::extraAttachedFiles() const
-{
-    return flswgt->files();
-}
-
-QStringList LabInfoWidget::clabGroups() const
-{
-    return mlstwgtGroups->items();
-}
-
-QByteArray LabInfoWidget::saveState() const
-{
-    QVariantMap m;
-    m.insert("tags", mtgswgt->availableTags());
-    m.insert("authors", mlstwgtAuthors->availableItems());
-    return BeQt::serialize(m);
-}
-
-bool LabInfoWidget::isValid() const
-{
-    return mvalid;
-}
-
-/*============================== Public slots ==============================*/
-
-void LabInfoWidget::clear()
-{
-    setInfo(TLabInfo());
-}
-
-void LabInfoWidget::setFocus()
-{
-    mledtTitle->setFocus();
-    if (!mledtTitle->isReadOnly())
-        mledtTitle->selectAll();
+    //
 }
 
 /*============================== Private slots =============================*/
 
 void LabInfoWidget::checkInputs()
 {
-    minputTitle->setValid(!mledtTitle->text().isEmpty() && mledtTitle->hasAcceptableInput());
+    /*minputTitle->setValid(!mledtTitle->text().isEmpty() && mledtTitle->hasAcceptableInput());
     bool src = true;
     if (mcheckSource)
     {
@@ -548,90 +536,40 @@ void LabInfoWidget::checkInputs()
     if (v == mvalid)
         return;
     mvalid = v;
-    emit validityChanged(v);
+    emit validityChanged(v);*/
+    //
+    //
+    /*
+    bool idValid = (AddMode == mmode) || mid;
+    bool titleValid = mledtTitle->hasAcceptableInput();
+    bool sourceValid = (!mcboxEditSource || !mcboxEditSource->isChecked() || msource.isValid())
+            && mledtFileName->hasAcceptableInput();
+    minputTitle->setValid(titleValid);
+    minputFileName->setValid(sourceValid);
+    mtbtnSetupFromCurrentDocument->setEnabled(meditor && meditor->documentAvailable());
+    bool v = idValid && titleValid && sourceValid;
+    if (v == mvalid)
+        return;
+    mvalid = v;
+    emit inputValidityChanged(mvalid);
+      */
+}
+
+void LabInfoWidget::cmboxTypeCurrentIndexChanged(int index)
+{
+    //
+}
+
+void LabInfoWidget::showExtraFile(const QString &fileName)
+{
+    if (!mid || fileName.isEmpty())
+        return;
+    tSmp->getExtraFile(mid, fileName, this);
 }
 
 void LabInfoWidget::showSenderInfo()
 {
     if (!msenderId)
         return;
-    if (!sClient->isAuthorized())
-        return;
-    TUserInfo info;
-    QStringList groups;
-    if (!sClient->getUserInfo(msenderId, info, groups, this))
-        return;
-    BDialog dlg(this);
-    dlg.setWindowTitle(tr("User:", "windowTitle") + " " + info.login());
-    TUserWidget *uwgt = new TUserWidget(TUserWidget::ShowMode);
-    uwgt->setInfo(info);
-    uwgt->setClabGroups(groups);
-    uwgt->setClabGroupsVisible(true);
-    dlg.setWidget(uwgt);
-    dlg.addButton(QDialogButtonBox::Close, SLOT(close()));
-    dlg.setMinimumSize(600, dlg.sizeHint().height());
-    dlg.exec();
+    tSmp->showUserInfo(msenderId);
 }
-
-void LabInfoWidget::cmboxTypeCurrentIndexChanged(int index)
-{
-    switch (index)
-    {
-    case 0:
-        Application::setRowVisible(mhltFile.value(BeQt::LinuxOS), true);
-        Application::setRowVisible(mhltFile.value(BeQt::MacOS), true);
-        Application::setRowVisible(mhltFile.value(BeQt::WindowsOS), true);
-        Application::labelForField<QLabel>(mhltFile.value(BeQt::LinuxOS))->setText(tr("Main file (Linux):",
-                                                                                      "lbl text"));
-        Application::labelForField<QLabel>(mhltFile.value(BeQt::MacOS))->setText(tr("Main file (Mac OS):", "lbl text"));
-        Application::labelForField<QLabel>(mhltFile.value(BeQt::WindowsOS))->setText(tr("Main file (Windows):",
-                                                                                        "lbl text"));
-        mbtnSearch->setVisible(true);
-        break;
-    case 1:
-        Application::setRowVisible(mhltFile.value(BeQt::LinuxOS), true);
-        Application::setRowVisible(mhltFile.value(BeQt::MacOS), false);
-        Application::setRowVisible(mhltFile.value(BeQt::WindowsOS), false);
-        Application::labelForField<QLabel>(mhltFile.value(BeQt::LinuxOS))->setText(tr("Main file:", "lbl text"));
-        mbtnSearch->setVisible(true);
-        break;
-    case 2:
-        Application::setRowVisible(mhltFile.value(BeQt::LinuxOS), true);
-        Application::setRowVisible(mhltFile.value(BeQt::MacOS), false);
-        Application::setRowVisible(mhltFile.value(BeQt::WindowsOS), false);
-        Application::labelForField<QLabel>(mhltFile.value(BeQt::LinuxOS))->setText(tr("URL:", "lbl text"));
-        mbtnSearch->setVisible(false);
-        break;
-    default:
-        break;
-    }
-    checkInputs();
-}
-
-void LabInfoWidget::selectFile(int id)
-{
-    QLineEdit *ledt = mledtFile.value(id);
-    if (!ledt)
-        return;
-    QString dir = ledt->text();
-    if (dir.isEmpty())
-        dir = QDir::homePath();
-    QString fn = QFileDialog::getOpenFileName(this, tr("Select file", "getOpenFileName"), dir);
-    if (fn.isEmpty())
-        return;
-    ledt->setText(fn);
-}
-
-void LabInfoWidget::getFile(const QString &fileName)
-{
-    if (fileName.isEmpty())
-        return;
-    if (QFileInfo(fileName).isAbsolute())
-        QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
-    else
-        sClient->getExtraAttachedFile(mid, fileName, this);
-}
-
-/*============================== Static private constants ==================*/
-
-const QString LabInfoWidget::DateTimeFormat = "dd MMMM yyyy hh:mm";

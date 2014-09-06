@@ -101,7 +101,7 @@ TexsampleSettingsTab::TexsampleSettingsTab() :
 
 QIcon TexsampleSettingsTab::icon() const
 {
-    return Application::icon("tex");
+    return Application::icon("cloudlab-client");
 }
 
 QString TexsampleSettingsTab::id() const

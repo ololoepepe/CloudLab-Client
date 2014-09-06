@@ -2,6 +2,8 @@ HEADERS += \
     $${PWD}/cache.h \
     $${PWD}/connectionaction.h \
     $${PWD}/dialog.h \
+    $${PWD}/extrafilelistwidget.h \
+    $${PWD}/labdatalistwidget.h \
     $${PWD}/labinfowidget.h \
     $${PWD}/labmodel.h \
     $${PWD}/labproxymodel.h \
@@ -13,6 +15,8 @@ SOURCES += \
     $${PWD}/cache.cpp \
     $${PWD}/connectionaction.cpp \
     $${PWD}/dialog.cpp \
+    $${PWD}/extrafilelistwidget.cpp \
+    $${PWD}/labdatalistwidget.cpp \
     $${PWD}/labinfowidget.cpp \
     $${PWD}/labmodel.cpp \
     $${PWD}/labproxymodel.cpp \

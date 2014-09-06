@@ -99,6 +99,7 @@ public slots:
     bool deleteLab(quint64 labId, QWidget *parent = 0);
     void disconnectFromServer();
     void editLab(quint64 labId);
+    bool getExtraFile(quint64 labId, const QString &fileName, QWidget *parent = 0);
     bool getLab(quint64 labId, QWidget *parent = 0);
     void sendLab();
     bool showAccountManagementDialog(QWidget *parent = 0);
