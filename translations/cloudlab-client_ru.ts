@@ -489,6 +489,60 @@ Would you like to do it now?</source>
     </message>
 </context>
 <context>
+    <name>ExtraFileListWidget</name>
+    <message>
+        <location filename="../src/texsample/extrafilelistwidget.cpp" line="160"/>
+        <source>Duplicate file</source>
+        <comment>msgbox windowTitle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/extrafilelistwidget.cpp" line="162"/>
+        <source>This file is already in list:</source>
+        <comment>msgbox text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/extrafilelistwidget.cpp" line="186"/>
+        <source>Add files...</source>
+        <comment>tbtn toolTip</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/extrafilelistwidget.cpp" line="197"/>
+        <source>Select files</source>
+        <comment>fdlg caption</comment>
+        <translation type="unfinished">Выберите файлы</translation>
+    </message>
+</context>
+<context>
+    <name>ExtraFileWidget</name>
+    <message>
+        <location filename="../src/texsample/extrafilewidget.cpp" line="126"/>
+        <source>Delete permanently</source>
+        <comment>tbtn toolTip</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/extrafilewidget.cpp" line="153"/>
+        <source>Cancel removal</source>
+        <comment>tbtn toolTip</comment>
+        <translation type="unfinished">Отменить удаление</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/extrafilewidget.cpp" line="154"/>
+        <source>deleted</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished">удален</translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/extrafilewidget.cpp" line="158"/>
+        <source>Remove file</source>
+        <comment>tbtn toolTip</comment>
+        <translation type="unfinished">Удалить файл</translation>
+    </message>
+</context>
+<context>
     <name>FilesWidget</name>
     <message>
         <source>Add file</source>
@@ -564,79 +618,79 @@ Would you like to do it now?</source>
 <context>
     <name>LabInfoWidget</name>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="430"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="432"/>
         <source>Title:</source>
         <comment>lbl text</comment>
         <translation type="unfinished">Название:</translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="418"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="420"/>
         <source>Tags:</source>
         <comment>lbl text</comment>
         <translation type="unfinished">Теги:</translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="299"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="301"/>
         <source>Unknown</source>
         <comment>lbl text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="324"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="326"/>
         <source>Authors:</source>
         <comment>gbox title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="335"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="337"/>
         <source>Description:</source>
         <comment>gbox title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="347"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="349"/>
         <source>Edit data:</source>
         <comment>lbl text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="352"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="354"/>
         <source>Extra files:</source>
         <comment>gbox title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="372"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="374"/>
         <source>Type:</source>
         <comment>lbl text</comment>
         <translation type="unfinished">Тип:</translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="375"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="377"/>
         <source>Creation date:</source>
         <comment>lbl text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="378"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="380"/>
         <source>Modified:</source>
         <comment>lbl text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="384"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="386"/>
         <source>Groups:</source>
         <comment>gbox title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="395"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="397"/>
         <source>Data:</source>
         <comment>gbox title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="365"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="367"/>
         <source>Sender:</source>
         <comment>lbl text</comment>
         <translation type="unfinished">Отправитель:</translation>
@@ -681,7 +735,7 @@ Would you like to do it now?</source>
         <translation type="obsolete">Прикрепленные файлы</translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="288"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="290"/>
         <source>Click the link to see info about the sender</source>
         <comment>lbl toolTip</comment>
         <translation type="unfinished">Щелкните по ссылке чтобы посмотреть информацию об отправителе</translation>

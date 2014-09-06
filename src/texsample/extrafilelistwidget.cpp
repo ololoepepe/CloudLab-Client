@@ -21,37 +21,59 @@
 
 #include "extrafilelistwidget.h"
 
+#include "application.h"
+#include "extrafilewidget.h"
+
+#include <TBinaryFile>
 #include <TBinaryFileList>
+#include <TFileInfo>
 #include <TFileInfoList>
 
+#include <BeQt>
+#include <BGuiTools>
+
+#include <QByteArray>
+#include <QDebug>
+#include <QDir>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QFormLayout>
+#include <QLayoutItem>
+#include <QList>
+#include <QMap>
+#include <QMessageBox>
+#include <QSignalMapper>
+#include <QString>
 #include <QStringList>
+#include <QToolButton>
+#include <QVariant>
+#include <QVariantMap>
 #include <QWidget>
 
 /*============================================================================
 ================================ ExtraFileListWidget =========================
 ============================================================================*/
 
-/*FilesWidget::Line::Line()
-{
-    hlt = new QHBoxLayout;
-    lbl = new QLabel;
-    hlt->addWidget(lbl);
-    hlt->addStretch();
-    tbtn = 0;
-    deleted = false;
-}*/
-
 /*============================== Public constructors =======================*/
 
 ExtraFileListWidget::ExtraFileListWidget(QWidget *parent) :
     QWidget(parent)
 {
+    mlabId = 0;
     init();
 }
 
-ExtraFileListWidget::ExtraFileListWidget(bool readOnly, QWidget *parent) :
+ExtraFileListWidget::ExtraFileListWidget(quint64 labId, QWidget *parent) :
     QWidget(parent)
 {
+    mlabId = labId;
+    init();
+}
+
+ExtraFileListWidget::ExtraFileListWidget(quint64 labId, bool readOnly, QWidget *parent) :
+    QWidget(parent)
+{
+    mlabId = labId;
     init();
     setReadOnly(readOnly);
 }
@@ -60,174 +82,129 @@ ExtraFileListWidget::ExtraFileListWidget(bool readOnly, QWidget *parent) :
 
 QStringList ExtraFileListWidget::deletedFileList() const
 {
-    //
+    QStringList list;
+    list << mdeletedFileNames;
+    foreach (ExtraFileWidget *efw, mwidgets.values()) {
+        if (!efw->isDeleted() || !mfileNames.contains(efw->fileName()))
+            continue;
+        list << efw->fileName();
+    }
+    return list;
 }
 
 bool ExtraFileListWidget::isReadOnly() const
 {
-    //
+    return mreadOnly;
 }
 
 TBinaryFileList ExtraFileListWidget::newFileList() const
 {
-    //
+    TBinaryFileList list;
+    foreach (ExtraFileWidget *efw, mwidgets.values()) {
+        if (efw->isDeleted() || mfileNames.contains(efw->fileName()))
+            continue;
+        TBinaryFile file(efw->fileName());
+        if (!file.isValid())
+            continue;
+        list << file;
+    }
+    return list;
+}
+
+void ExtraFileListWidget::restoreState(const QByteArray &state)
+{
+    QVariantMap m = BeQt::deserialize(state).toMap();
+    QString dir = m.value("last_dir").toString();
+    if (!dir.isEmpty())
+        mlastDir = dir;
+}
+
+QByteArray ExtraFileListWidget::saveState() const
+{
+    QVariantMap m;
+    m.insert("last_dir", mlastDir);
+    return BeQt::serialize(m);
 }
 
 void ExtraFileListWidget::setFileInfos(const TFileInfoList &list)
 {
-    //
+    foreach (ExtraFileWidget *efw, mwidgets.values())
+        delete efw;
+    mwidgets.clear();
+    mdeletedFileNames.clear();
+    mfileNames.clear();
+    foreach (const TFileInfo &fi, list) {
+        mfileNames << fi.fileName();
+        addFile(fi.fileName(), fi.fileSize());
+    }
 }
 
 void ExtraFileListWidget::setReadOnly(bool ro)
 {
-    //
+    mreadOnly = ro;
+    mtbtnAdd->setVisible(!ro);
+    foreach (ExtraFileWidget *efw, mwidgets.values())
+        efw->setReadOnly(ro);
 }
-
-/*void FilesWidget::addFile(const QString &fn)
-{
-    if (fn.isEmpty() || lines.contains(fn))
-        return;
-    deleteLastDeleted();
-    Line l;
-    l.lbl->setText(labelText(fn));
-    l.lbl->setToolTip(fn);
-    connect(l.lbl, SIGNAL(linkActivated(QString)), this, SIGNAL(getFile(QString)));
-    if (!ReadOnly)
-    {
-        l.tbtn = new QToolButton;
-        l.tbtn->setIcon(Application::icon("editdelete"));
-        l.tbtn->setToolTip(deleteToolTip);
-        l.hlt->addWidget(l.tbtn);
-        bSetMapping(mapper, l.tbtn, SIGNAL(clicked()), fn);
-    }
-    lines.insert(fn, l);
-    vlt->insertLayout(vlt->count() - 1, l.hlt);
-}
-
-void FilesWidget::addFiles(const QStringList &list)
-{
-    foreach (const QString &fn, list)
-        addFile(fn);
-}
-
-QStringList FilesWidget::files() const
-{
-    QStringList list;
-    foreach (const QString &fn, lines.keys())
-        if (!lines.value(fn).deleted)
-            list << fn;
-    return list;
-}
-
-bool FilesWidget::isReadOnly() const
-{
-    return ReadOnly;
-}*/
-
-/*============================== Static private constants ==================*/
-
-/*const BTranslation FilesWidget::deleteToolTip = BTranslation::translate("FilesWidget", "Remove file", "tbtn toolTip");
-const BTranslation FilesWidget::undeleteToolTip = BTranslation::translate("FilesWidget", "Cancel removal",
-                                                                          "tbtn toolTip");*/
-
-/*============================== Static private methods ====================*/
-
-/*QString FilesWidget::labelText(const QString &fileName)
-{
-    if (fileName.isEmpty())
-        return "";
-    return "<a href=\"" + fileName + "\">" + QFileInfo(fileName).fileName() + "</a>";
-}*/
 
 /*============================== Private methods ===========================*/
 
-void ExtraFileListWidget::init()
-{
-    /*hasDeleted = false;
-    lastDir = QDir::homePath();
-    vlt = new QVBoxLayout(this);
-    mapper = new QSignalMapper(this);
-    connect(mapper, SIGNAL(mapped(QString)), this, SLOT(mapped(QString)));
-    if (!ReadOnly)
-    {
-        QHBoxLayout *hlt = new QHBoxLayout;
-          hlt->addStretch();
-          tbtn = new QToolButton;
-            tbtn->setIcon(Application::icon("edit_add"));
-            tbtn->setToolTip(tr("Add file", "tbtn toolTip"));
-            connect(tbtn, SIGNAL(clicked()), this, SLOT(addFile()));
-          hlt->addWidget(tbtn);
-        vlt->addLayout(hlt);
-    }*/
-}
-
-/*(void FilesWidget::deleteLastDeleted()
-{
-    if (!hasDeleted)
-        return;
-    foreach (const QString &ffn, lines.keys())
-    {
-        if (lines.value(ffn).deleted)
-        {
-            Line l = lines.take(ffn);
-            delete l.lbl;
-            delete l.tbtn;
-            delete l.hlt;
-            break;
-        }
-    }
-    hasDeleted = false;
-}*/
-
-/*============================== Private slots =============================*/
-
-/*void FilesWidget::mapped(const QString &fn)
-{
-    Line &l = lines[fn];
-    if (l.deleted)
-    {
-        l.tbtn->setIcon(Application::icon("editdelete"));
-        l.tbtn->setToolTip(deleteToolTip);
-        l.lbl->setText(labelText(fn));
-        hasDeleted = false;
-    }
-    else
-    {
-        deleteLastDeleted();
-        l.tbtn->setIcon(Application::icon("reload"));
-        l.tbtn->setToolTip(undeleteToolTip);
-        l.lbl->setText(labelText(fn) + " [" + tr("deleted", "lbl text") + "]");
-        hasDeleted = true;
-    }
-    l.deleted = !l.deleted;
-}
-
-void FilesWidget::addFile()
-{
-    QStringList files = QFileDialog::getOpenFileNames(this, tr("Select files", "fdlg caption"), lastDir);
-    if (files.isEmpty())
-        return;
-    lastDir = QFileInfo(files.first()).path();
-    addFiles(files);
-}*/
-
-/*
-void LabInfoWidget::getFile(const QString &fileName)
+void ExtraFileListWidget::addFile(const QString &fileName, int size)
 {
     if (fileName.isEmpty())
         return;
-    if (QFileInfo(fileName).isAbsolute())
-        QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
-    else
-        sClient->getExtraAttachedFile(mid, fileName, this);
+    QString fn = QFileInfo(fileName).fileName();
+    foreach (ExtraFileWidget *efw, mwidgets.values()) {
+        if (fn == QFileInfo(efw->fileName()).fileName()) {
+            QMessageBox msg(this);
+            msg.setWindowTitle(tr("Duplicate file", "msgbox windowTitle"));
+            msg.setIcon(QMessageBox::Information);
+            msg.setText(tr("This file is already in list:", "msgbox text"));
+            msg.setInformativeText(fileName);
+            msg.setStandardButtons(QMessageBox::Ok);
+            msg.setDefaultButton(QMessageBox::Ok);
+            msg.exec();
+            return;
+        }
+    }
+    ExtraFileWidget *efw = (size > 0) ? new ExtraFileWidget(mflt, mlabId, fileName, size, mreadOnly) :
+                                        new ExtraFileWidget(mflt, fileName);
+    bSetMapping(mdeleteMapper, efw, SIGNAL(deletePermanently()), (QWidget *) efw);
+    mwidgets.insert(efw, efw);
 }
-  */
 
+void ExtraFileListWidget::init()
+{
+    mreadOnly = false;
+    mlastDir = QDir::homePath();
+    mdeleteMapper = new QSignalMapper(this);
+    connect(mdeleteMapper, SIGNAL(mapped(QWidget*)), this, SLOT(deletePermanently(QWidget*)));
+    //
+    mflt = new QFormLayout(this);
+    mtbtnAdd = new QToolButton;
+    mtbtnAdd->setIcon(Application::icon("edit_add"));
+    mtbtnAdd->setToolTip(tr("Add files...", "tbtn toolTip"));
+    connect(mtbtnAdd, SIGNAL(clicked()), this, SLOT(addFiles()));
+    QWidget *placeholder = new QWidget;
+    placeholder->setMinimumWidth(250);
+    mflt->addRow(placeholder, mtbtnAdd);
+}
 
-/*
-  gbox = new QGroupBox(tr("Attached files", "gbox title"));
-    hltw = new QHBoxLayout(gbox);
-      flswgt = new FilesWidget(ShowMode == mmode);
-        connect(flswgt, SIGNAL(getFile(QString)), this, SLOT(getFile(QString)));
-      hltw->addWidget(flswgt);
-  vlt->addWidget(gbox);*/
+/*============================== Private slots =============================*/
+
+void ExtraFileListWidget::addFiles()
+{
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Select files", "fdlg caption"), mlastDir);
+    mlastDir = QFileInfo(fileNames.first()).path();
+    if (fileNames.isEmpty())
+        return;
+    foreach (const QString &fn, fileNames)
+        addFile(fn);
+}
+
+void ExtraFileListWidget::deletePermanently(QWidget *widget)
+{
+    mdeletedFileNames << qobject_cast<ExtraFileWidget *>(widget)->fileName();
+    mwidgets.remove(widget);
+    delete widget;
+}

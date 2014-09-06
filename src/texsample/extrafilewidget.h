@@ -19,62 +19,55 @@
 **
 ****************************************************************************/
 
-#ifndef EXTRAFILELISTWIDGET_H
-#define EXTRAFILELISTWIDGET_H
+#ifndef EXTRAFILEWIDGET_H
+#define EXTRAFILEWIDGET_H
 
-class ExtraFileWidget;
-
-class TBinaryFileList;
-class TFileInfoList;
-
-class QByteArray;
 class QFormLayout;
-class QObject;
-class QSignalMapper;
+class QHBoxLayout;
+class QLabel;
 class QToolButton;
 
-#include <QMap>
 #include <QString>
-#include <QStringList>
 #include <QWidget>
 
 /*============================================================================
-================================ ExtraFileListWidget =========================
+================================ ExtraFileWidget =============================
 ============================================================================*/
 
-class ExtraFileListWidget : public QWidget
+class ExtraFileWidget : public QWidget
 {
     Q_OBJECT
 private:
-    QStringList mdeletedFileNames;
-    QSignalMapper *mdeleteMapper;
-    QMap<QWidget *, ExtraFileWidget *> mwidgets;
-    QStringList mfileNames;
+    bool mdeleted;
+    QString mfileName;
     QFormLayout *mflt;
+    QHBoxLayout *mhlt;
     quint64 mlabId;
-    QString mlastDir;
+    QLabel *mlbl;
     bool mreadOnly;
-    QToolButton *mtbtnAdd;
+    int msize;
+    QToolButton *mtbtnDelete;
+    QToolButton *mtbtnToggle;
 public:
-    explicit ExtraFileListWidget(QWidget *parent = 0);
-    explicit ExtraFileListWidget(quint64 labId, QWidget *parent = 0);
-    explicit ExtraFileListWidget(quint64 labId, bool readOnly, QWidget *parent = 0);
+    explicit ExtraFileWidget(QFormLayout *flt, const QString &fileName, QWidget *parent = 0);
+    explicit ExtraFileWidget(QFormLayout *flt, quint64 labId, const QString &fileName, int size, QWidget *parent = 0);
+    explicit ExtraFileWidget(QFormLayout *flt, quint64 labId, const QString &fileName, int size, bool readOnly,
+                             QWidget *parent = 0);
+    ~ExtraFileWidget();
 public:
-    QStringList deletedFileList() const;
+    QString fileName() const;
+    bool isDeleted() const;
     bool isReadOnly() const;
-    TBinaryFileList newFileList() const;
-    void restoreState(const QByteArray &state);
-    QByteArray saveState() const;
-    void setFileInfos(const TFileInfoList &list);
     void setReadOnly(bool ro);
+signals:
+    void deletePermanently();
 private:
-    void addFile(const QString &fileName, int size = 0);
     void init();
 private slots:
-    void addFiles();
-    void deletePermanently(QWidget *widget);
+    void showFile();
+    void toggleDeleted();
 private:
-    Q_DISABLE_COPY(ExtraFileListWidget)
+    Q_DISABLE_COPY(ExtraFileWidget)
 };
 
-#endif // EXTRAFILELISTWIDGET_H
+#endif // EXTRAFILEWIDGET_H

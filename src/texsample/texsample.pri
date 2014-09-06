@@ -3,6 +3,7 @@ HEADERS += \
     $${PWD}/connectionaction.h \
     $${PWD}/dialog.h \
     $${PWD}/extrafilelistwidget.h \
+    $${PWD}/extrafilewidget.h \
     $${PWD}/labdatalistwidget.h \
     $${PWD}/labinfowidget.h \
     $${PWD}/labmodel.h \
@@ -16,6 +17,7 @@ SOURCES += \
     $${PWD}/connectionaction.cpp \
     $${PWD}/dialog.cpp \
     $${PWD}/extrafilelistwidget.cpp \
+    $${PWD}/extrafilewidget.cpp \
     $${PWD}/labdatalistwidget.cpp \
     $${PWD}/labinfowidget.cpp \
     $${PWD}/labmodel.cpp \

@@ -247,6 +247,7 @@ void LabInfoWidget::restoreState(const QByteArray &state)
     mlstwgtAuthors->setAvailableAuthors(m.value("authors").value<TAuthorInfoList>());
     mtgwgt->setAvailableTags(m.value("tags").toStringList());
     mledtTitle->setText(m.value("title").toString());
+    meflwgt->restoreState(m.value("extra_file_list_widget_state").toByteArray());
 }
 
 QByteArray LabInfoWidget::saveState() const
@@ -258,6 +259,7 @@ QByteArray LabInfoWidget::saveState() const
     m.insert("authors", list);
     m.insert("tags", mtgwgt->availableTags());
     m.insert("title", mledtTitle->text());
+    m.insert("extra_file_list_widget_state", meflwgt->saveState());
     return BeQt::serialize(m);
 }
 

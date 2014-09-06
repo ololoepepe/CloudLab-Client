@@ -113,7 +113,7 @@ bool Cache::isEnabled() const
     return menabled;
 }
 
-QDateTime Cache::lastRequestDateTime(RequestType type, const quint64 id) const
+QDateTime Cache::lastRequestDateTime(RequestType type, const quint64) const
 {
     if (!menabled || !mdb)
         return QDateTime();
