@@ -59,21 +59,12 @@
 ExtraFileListWidget::ExtraFileListWidget(QWidget *parent) :
     QWidget(parent)
 {
-    mlabId = 0;
     init();
 }
 
-ExtraFileListWidget::ExtraFileListWidget(quint64 labId, QWidget *parent) :
+ExtraFileListWidget::ExtraFileListWidget(bool readOnly, QWidget *parent) :
     QWidget(parent)
 {
-    mlabId = labId;
-    init();
-}
-
-ExtraFileListWidget::ExtraFileListWidget(quint64 labId, bool readOnly, QWidget *parent) :
-    QWidget(parent)
-{
-    mlabId = labId;
     init();
     setReadOnly(readOnly);
 }
@@ -139,6 +130,11 @@ void ExtraFileListWidget::setFileInfos(const TFileInfoList &list)
     }
 }
 
+void ExtraFileListWidget::setLabId(quint64 id)
+{
+    mlabId = id;
+}
+
 void ExtraFileListWidget::setReadOnly(bool ro)
 {
     mreadOnly = ro;
@@ -175,6 +171,7 @@ void ExtraFileListWidget::addFile(const QString &fileName, int size)
 
 void ExtraFileListWidget::init()
 {
+    mlabId = 0;
     mreadOnly = false;
     mlastDir = QDir::homePath();
     mdeleteMapper = new QSignalMapper(this);

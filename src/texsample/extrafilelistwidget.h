@@ -57,8 +57,7 @@ private:
     QToolButton *mtbtnAdd;
 public:
     explicit ExtraFileListWidget(QWidget *parent = 0);
-    explicit ExtraFileListWidget(quint64 labId, QWidget *parent = 0);
-    explicit ExtraFileListWidget(quint64 labId, bool readOnly, QWidget *parent = 0);
+    explicit ExtraFileListWidget(bool readOnly, QWidget *parent = 0);
 public:
     QStringList deletedFileList() const;
     bool isReadOnly() const;
@@ -66,6 +65,7 @@ public:
     void restoreState(const QByteArray &state);
     QByteArray saveState() const;
     void setFileInfos(const TFileInfoList &list);
+    void setLabId(quint64 id);
     void setReadOnly(bool ro);
 private:
     void addFile(const QString &fileName, int size = 0);

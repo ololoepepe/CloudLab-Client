@@ -8,11 +8,11 @@
 
 === MAJOR ===
 
-* Change copyright owner
-* Use BeQt 4.0.0
-* Use TeXSample 2.0.0
-* Use Qt coding style, sort includes, class members, etc.
-* Change user interface of lab widget
-* Consider processor architecture when checking application version
-* Add GPL headers to files
+[done] Change copyright owner
+[done] Use BeQt 4.0.0
+[done] Use TeXSample 2.0.0
+[done] Use Qt coding style, sort includes, class members, etc.
+[done] Change user interface of lab widget
+[done] Consider processor architecture when checking application version
+[done] Add GPL headers to files
 * Update docs

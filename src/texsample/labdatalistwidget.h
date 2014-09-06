@@ -22,8 +22,18 @@
 #ifndef LABDATALISTWIDGET_H
 #define LABDATALISTWIDGET_H
 
-class TLabDataList;
+class TLabApplication;
 
+class QByteArray;
+class QComboBox;
+class QHBoxLayout;
+class QLineEdit;
+class QStringList;
+
+#include <TLabDataList>
+
+#include <QMap>
+#include <QString>
 #include <QWidget>
 
 /*============================================================================
@@ -33,15 +43,41 @@ class TLabDataList;
 class LabDataListWidget : public QWidget
 {
     Q_OBJECT
+private:
+    enum FieldType
+    {
+        WindowsField = 1,
+        LinuxField,
+        MacosField,
+        WebField,
+        UrlField
+    };
+private:
+    QComboBox *mcmboxType;
+    TLabDataList mdataList;
+    QMap<int, QHBoxLayout *> mhltFields;
+    QString mlastDir;
+    QMap<int, QLineEdit *> mledtFields;
+    int mtype;
+    bool mvalid;
 public:
     explicit LabDataListWidget(QWidget *parent = 0);
 public:
     const TLabDataList &dataList() const;
     bool hasValidInput() const;
+    void restoreState(const QByteArray &state);
+    QByteArray saveState() const;
 signals:
     void inputValidityChanged(bool valid);
+private:
+    QString selectMainFile(const QStringList &fileNames, bool *ok = 0);
+    bool setLabApplication(TLabApplication *app, int type);
+private slots:
+    void checkInputs();
+    void cmboxTypeCurrentIndexChanged(int index);
+    void ledtUrlTextChanged(const QString &text);
+    void selectDir(int type);
+    void selectFiles(int type);
 };
-
-//void cmboxTypeCurrentIndexChanged(int index);
 
 #endif // LABDATALISTWIDGET_H

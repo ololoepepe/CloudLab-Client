@@ -357,8 +357,8 @@ bool TexsampleCore::getExtraFile(quint64 labId, const QString &fileName, QWidget
         msg.exec();
         return false;
     }
-    const TBinaryFile &file = reply.data().value<TGetLabExtraFileReplyData>().file();
-    QString path = Application::location("texsample/files", Application::UserResource) + "/files/"
+    TBinaryFile file = reply.data().value<TGetLabExtraFileReplyData>().file();
+    QString path = Application::location("texsample/files", Application::UserResource)
             + BUuid::createUuid().toString(true);
     if (!file.save(path))
         return false;
@@ -388,9 +388,9 @@ bool TexsampleCore::getLab(quint64 labId, QWidget *parent)
         msg.exec();
         return false;
     }
-    const TLabData &data = reply.data().value<TGetLabDataReplyData>().data();
+    TLabData data = reply.data().value<TGetLabDataReplyData>().data();
     bApp->showStatusBarMessage(tr("Lab was successfully downloaded", "message"));
-    QString path = Application::location("texsample/labs", Application::UserResource) + "/labs/"
+    QString path = Application::location("texsample/labs", Application::UserResource)
             + BUuid::createUuid().toString(true);
     int type = data.type();
     const TLabApplication &app = data.application();

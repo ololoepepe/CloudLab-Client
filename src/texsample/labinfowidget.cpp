@@ -247,6 +247,7 @@ void LabInfoWidget::restoreState(const QByteArray &state)
     mlstwgtAuthors->setAvailableAuthors(m.value("authors").value<TAuthorInfoList>());
     mtgwgt->setAvailableTags(m.value("tags").toStringList());
     mledtTitle->setText(m.value("title").toString());
+    mldlwgt->restoreState(m.value("lab_data_list_widget_state").toByteArray());
     meflwgt->restoreState(m.value("extra_file_list_widget_state").toByteArray());
 }
 
@@ -259,6 +260,7 @@ QByteArray LabInfoWidget::saveState() const
     m.insert("authors", list);
     m.insert("tags", mtgwgt->availableTags());
     m.insert("title", mledtTitle->text());
+    m.insert("lab_data_list_widget_state", mldlwgt->saveState());
     m.insert("extra_file_list_widget_state", meflwgt->saveState());
     return BeQt::serialize(m);
 }
@@ -304,6 +306,7 @@ bool LabInfoWidget::setLab(quint64 labId)
     mlstwgtAuthors->setAuthors(info.authors());
     mptedtDescription->setPlainText(info.description());
     mlstwgtGroups->setGroups(info.groups());
+    meflwgt->setLabId(info.id());
     meflwgt->setFileInfos(info.extraFiles());
     checkInputs();
     return info.isValid();
@@ -372,6 +375,8 @@ void LabInfoWidget::createExtraGroup(QHBoxLayout *hlt)
             mcmboxType->addItem(t.toString(), int(t));
         mcmboxType->setEnabled(false);
       flt->addRow(tr("Type:", "lbl text"), mcmboxType);
+      mlblSize = new QLabel;
+      flt->addRow(tr("Size:", "lbl text"), mlblSize);
       mlblCreationDT = new QLabel;
         mlblCreationDT->setTextInteractionFlags(TextInteractionFlags);
       flt->addRow(tr("Creation date:", "lbl text"), mlblCreationDT);

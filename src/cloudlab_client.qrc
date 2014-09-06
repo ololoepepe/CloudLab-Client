@@ -55,5 +55,11 @@
         <file>icons/macos_logo.svgz</file>
         <file>icons/windows_logo.png</file>
         <file>icons/windows_logo.svgz</file>
+        <file>icons/network.svgz</file>
+        <file>icons/network.png</file>
+        <file>icons/link.svgz</file>
+        <file>icons/link.png</file>
+        <file>texsample/db/temporary.schema</file>
+        <file>texsample/db/cache.schema</file>
     </qresource>
 </RCC>

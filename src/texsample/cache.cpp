@@ -193,6 +193,7 @@ void Cache::setData(const QString &operation, const QDateTime &requestDateTime, 
         return;
     if (!(this->*f)(requestDateTime, data, id))
         return bRet(mdb->rollback());
+    mdb->commit();
 }
 
 void Cache::setEnabled(bool enabled)
