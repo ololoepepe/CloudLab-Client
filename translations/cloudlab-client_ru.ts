@@ -564,24 +564,82 @@ Would you like to do it now?</source>
 <context>
     <name>LabInfoWidget</name>
     <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="430"/>
         <source>Title:</source>
         <comment>lbl text</comment>
-        <translation type="obsolete">Название:</translation>
+        <translation type="unfinished">Название:</translation>
     </message>
     <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="418"/>
         <source>Tags:</source>
         <comment>lbl text</comment>
-        <translation type="obsolete">Теги:</translation>
+        <translation type="unfinished">Теги:</translation>
     </message>
     <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="299"/>
+        <source>Unknown</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="324"/>
+        <source>Authors:</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="335"/>
+        <source>Description:</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="347"/>
+        <source>Edit data:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="352"/>
+        <source>Extra files:</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="372"/>
         <source>Type:</source>
         <comment>lbl text</comment>
-        <translation type="obsolete">Тип:</translation>
+        <translation type="unfinished">Тип:</translation>
     </message>
     <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="375"/>
+        <source>Creation date:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="378"/>
+        <source>Modified:</source>
+        <comment>lbl text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="384"/>
+        <source>Groups:</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="395"/>
+        <source>Data:</source>
+        <comment>gbox title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="365"/>
         <source>Sender:</source>
         <comment>lbl text</comment>
-        <translation type="obsolete">Отправитель:</translation>
+        <translation type="unfinished">Отправитель:</translation>
     </message>
     <message>
         <source>Created:</source>
@@ -623,9 +681,10 @@ Would you like to do it now?</source>
         <translation type="obsolete">Прикрепленные файлы</translation>
     </message>
     <message>
+        <location filename="../src/texsample/labinfowidget.cpp" line="288"/>
         <source>Click the link to see info about the sender</source>
         <comment>lbl toolTip</comment>
-        <translation type="obsolete">Щелкните по ссылке чтобы посмотреть информацию об отправителе</translation>
+        <translation type="unfinished">Щелкните по ссылке чтобы посмотреть информацию об отправителе</translation>
     </message>
     <message>
         <source>User:</source>

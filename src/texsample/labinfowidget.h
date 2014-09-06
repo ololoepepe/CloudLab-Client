@@ -45,8 +45,6 @@ class QPlainTextEdit;
 class QVariant;
 class QVBoxLayout;
 
-#include <TLabDataList>
-
 #include <QString>
 #include <QWidget>
 
@@ -75,7 +73,6 @@ private:
     quint64 mid;
     LabModel *mmodel;
     quint64 msenderId;
-    TLabDataList mdataList;
     bool mvalid;
     //
     QLineEdit *mledtTitle;
@@ -90,8 +87,8 @@ private:
     QPlainTextEdit *mptedtDescription;
     TGroupListWidget *mlstwgtGroups;
     QCheckBox *mcboxEditData;
-    LabDataListWidget *ldlwgt;
-    ExtraFileListWidget *eflwgt;
+    LabDataListWidget *mldlwgt;
+    ExtraFileListWidget *meflwgt;
 public:
     explicit LabInfoWidget(Mode m, QWidget *parent = 0);
 public:
@@ -111,16 +108,17 @@ public:
 private:
     void createAuthorsGroup(QHBoxLayout *hlt, bool readOnly = false);
     void createDescriptionGroup(QHBoxLayout *hlt, bool readOnly = false);
+    void createEditDataField(QFormLayout *flt);
     void createExtraFileListGroup(QHBoxLayout *hlt, bool readOnly = false);
-    void createExtraGroup(QHBoxLayout *hlt, bool readOnly = false);
+    void createExtraGroup(QHBoxLayout *hlt);
     void createGroupsGroup(QHBoxLayout *hlt, bool readOnly = false);
-    void createLabDataListGroup(QHBoxLayout *hlt, bool readOnly = false);
+    void createLabDataListGroup(QHBoxLayout *hlt);
     void createMainGroup(QVBoxLayout *vlt, bool readOnly = false);
     void createTagsField(QFormLayout *flt, bool readOnly = false);
     void createTitleField(QFormLayout *flt, bool readOnly = false);
 private slots:
     void checkInputs();
-    void cmboxTypeCurrentIndexChanged(int index);
+    void clientAuthorizedChanged(bool authorized);
     void showExtraFile(const QString &fileName);
     void showSenderInfo();
 signals:

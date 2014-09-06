@@ -22,10 +22,26 @@
 #ifndef LABDATALISTWIDGET_H
 #define LABDATALISTWIDGET_H
 
+class TLabDataList;
+
+#include <QWidget>
+
 /*============================================================================
 ================================ LabDataListWidget ===========================
 ============================================================================*/
 
+class LabDataListWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit LabDataListWidget(QWidget *parent = 0);
+public:
+    const TLabDataList &dataList() const;
+    bool hasValidInput() const;
+signals:
+    void inputValidityChanged(bool valid);
+};
 
+//void cmboxTypeCurrentIndexChanged(int index);
 
 #endif // LABDATALISTWIDGET_H

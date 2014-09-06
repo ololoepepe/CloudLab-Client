@@ -22,28 +22,42 @@
 #ifndef EXTRAFILELISTWIDGET_H
 #define EXTRAFILELISTWIDGET_H
 
+class TBinaryFileList;
+class TFileInfoList;
+
+class QStringList;
+
+#include <QWidget>
+
 /*============================================================================
 ================================ ExtraFileListWidget =========================
 ============================================================================*/
 
-/*class FilesWidget : public QWidget
+class ExtraFileListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FilesWidget(bool readOnly, QWidget *parent = 0);
+    explicit ExtraFileListWidget(QWidget *parent = 0);
+    explicit ExtraFileListWidget(bool readOnly, QWidget *parent = 0);
 public:
-    void addFile(const QString &fn);
-    void addFiles(const QStringList &list);
-    QStringList files() const;
+    //void addFile(const QString &fn);
+    //void addFiles(const QStringList &list);
+    //QStringList files() const;
+    QStringList deletedFileList() const;
     bool isReadOnly() const;
-signals:
-    void getFile(const QString &fileName);
+    TBinaryFileList newFileList() const;
+    void setFileInfos(const TFileInfoList &list);
+    void setReadOnly(bool ro);
 private:
-    void deleteLastDeleted();
-private slots:
-    void mapped(const QString &fn);
-    void addFile();
-private:
+    void init();
+//signals:
+//    void getFile(const QString &fileName);
+//private:
+//    void deleteLastDeleted();
+//private slots:
+//    void mapped(const QString &fn);
+//    void addFile();
+/*private:
     struct Line
     {
         QHBoxLayout *hlt;
@@ -66,9 +80,9 @@ private:
     QVBoxLayout *vlt;
     QMap<QString, Line> lines;
     QToolButton *tbtn;
-    QString lastDir;
+    QString lastDir;*/
 private:
-    Q_DISABLE_COPY(FilesWidget)
-};*/
+    Q_DISABLE_COPY(ExtraFileListWidget)
+};
 
 #endif // EXTRAFILELISTWIDGET_H

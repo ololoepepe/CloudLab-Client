@@ -21,6 +21,35 @@
 
 #include "labdatalistwidget.h"
 
+#include <TLabDataList>
+
+#include <QWidget>
+
+/*============================================================================
+================================ LabDataListWidget ===========================
+============================================================================*/
+
+/*============================== Public constructors =======================*/
+
+LabDataListWidget::LabDataListWidget(QWidget *parent) :
+    QWidget(parent)
+{
+    //
+}
+
+/*============================== Public methods ============================*/
+
+const TLabDataList &LabDataListWidget::dataList() const
+{
+    static const TLabDataList Default; //TODO: it's a dummy
+    return Default;
+}
+
+bool LabDataListWidget::hasValidInput() const
+{
+    //
+}
+
 /*
 TLabProject LabInfoWidget::webProject() const
 {
@@ -112,4 +141,50 @@ void LabInfoWidget::cmboxTypeCurrentIndexChanged(int index)
     }
     checkInputs();
 }
+  */
+
+/*
+  gbox = new QGroupBox(tr("Source", "gbox title"));
+    gbox->setVisible(ShowMode != mmode);
+    flt = new QFormLayout(gbox);
+    foreach (int t, bRangeD(BeQt::LinuxOS, BeQt::WindowsOS))
+    {
+        mhltFile.insert(t, new QHBoxLayout);
+          mledtFile.insert(t, new QLineEdit);
+            connect(mledtFile.value(t), SIGNAL(textChanged(QString)), this, SLOT(checkInputs()));
+          mhltFile.value(t)->addWidget(mledtFile.value(t));
+          if (BeQt::LinuxOS == t)
+          {
+              mbtnSearch = new QPushButton(tr("Search..."));
+                bSetMapping(mpr, mbtnSearch, SIGNAL(clicked()), t);
+              mhltFile.value(t)->addWidget(mbtnSearch);
+          }
+          else
+          {
+              QPushButton *btn = new QPushButton(tr("Search..."));
+                bSetMapping(mpr, btn, SIGNAL(clicked()), t);
+              mhltFile.value(t)->addWidget(btn);
+          }
+        flt->addRow(" ", mhltFile.value(t));
+    }
+  vlt->addWidget(gbox);*/
+
+/*
+    if (mcheckSource)
+    {
+        switch (mcmboxType->currentIndex())
+        {
+        case 0:
+            src = linuxProject().isValid() || macProject().isValid() || winProject().isValid();
+            break;
+        case 1:
+            src = webProject().isValid();
+            break;
+        case 2:
+            src = !url().isEmpty();
+            break;
+        default:
+            break;
+        }
+    }
   */

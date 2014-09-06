@@ -22,6 +22,8 @@
 #include "labinfowidget.h"
 
 #include "application.h"
+#include "extrafilelistwidget.h"
+#include "labdatalistwidget.h"
 #include "labmodel.h"
 #include "settings.h"
 #include "texsamplecore.h"
@@ -32,13 +34,18 @@
 #include <TAuthorListWidget>
 #include <TEditLabRequestData>
 #include <TeXSample>
-#include <TFileInfo>
+#include <TFileInfoList>
 #include <TGroupInfoList>
 #include <TGroupListWidget>
+#include <TIdList>
+#include <TLabDataInfo>
+#include <TLabDataInfoList>
+#include <TLabDataList>
 #include <TLabInfo>
 #include <TLabType>
 #include <TNetworkClient>
 #include <TTagWidget>
+#include <TUserInfo>
 
 #include <BeQt>
 #include <BInputField>
@@ -47,26 +54,23 @@
 #include <QChar>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QDataStream>
 #include <QDateTime>
 #include <QDebug>
-#include <QFileInfo>
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QHBoxLayout>
+#include <QIODevice>
 #include <QLabel>
 #include <QLineEdit>
 #include <QList>
 #include <QPlainTextEdit>
 #include <QRegExp>
 #include <QRegExpValidator>
-#include <QSpinBox>
 #include <QString>
 #include <QStringList>
-#include <QTextCodec>
-#include <QToolButton>
 #include <QValidator>
 #include <QVariant>
-#include <QVariantList>
 #include <QVariantMap>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -105,15 +109,14 @@ LabInfoWidget::LabInfoWidget(Mode m, QWidget *parent) :
     mptedtDescription = 0;
     mlstwgtGroups = 0;
     mcboxEditData = 0;
-    ldlwgt = 0;
-    eflwgt = 0;
+    mldlwgt = 0;
+    meflwgt = 0;
     //
     QVBoxLayout *vlt = new QVBoxLayout(this);
     switch (mmode) {
     case AddMode: {
         createMainGroup(vlt);
         QHBoxLayout *hlt = new QHBoxLayout;
-        createExtraGroup(hlt);
         createAuthorsGroup(hlt);
         vlt->addLayout(hlt);
         hlt = new QHBoxLayout;
@@ -145,7 +148,7 @@ LabInfoWidget::LabInfoWidget(Mode m, QWidget *parent) :
     case ShowMode: {
         createMainGroup(vlt, true);
         QHBoxLayout *hlt = new QHBoxLayout;
-        createExtraGroup(hlt, true);
+        createExtraGroup(hlt);
         createAuthorsGroup(hlt, true);
         vlt->addLayout(hlt);
         hlt = new QHBoxLayout;
@@ -161,117 +164,6 @@ LabInfoWidget::LabInfoWidget(Mode m, QWidget *parent) :
         break;
     }
     }
-    //
-    //
-    /*mvalid = false;
-    mcheckSource = false;
-    mid = 0;
-    msenderId = 0;
-    Qt::TextInteractionFlags tiflags = Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse
-            | Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard;
-    QSignalMapper *mpr = new QSignalMapper(this);
-    connect(mpr, SIGNAL(mapped(int)), this, SLOT(selectFile(int)));
-    //
-    //QVBoxLayout *vlt = new QVBoxLayout(this);
-      QFormLayout *flt = new QFormLayout;
-        mledtTitle = new QLineEdit;
-          mledtTitle->setReadOnly(ShowMode == mmode);
-          mledtTitle->setMaxLength(120);
-          connect(mledtTitle, SIGNAL(textChanged(QString)), this, SLOT(checkInputs()));
-          minputTitle = new BInputField;
-          minputTitle->addWidget(mledtTitle);
-          minputTitle->setShowStyle(ShowMode == mmode ? BInputField::ShowNever : BInputField::ShowAlways);
-        flt->addRow(tr("Title:", "lbl text"), minputTitle);
-        mtgswgt = new TTagsWidget;
-          mtgswgt->setReadOnly(ShowMode == mmode);
-        flt->addRow(tr("Tags:", "lbl text"), mtgswgt);
-        mcmboxType = new QComboBox;
-          foreach (const TLabInfo::Type &t, TLabInfo::allTypes())
-              mcmboxType->addItem(TLabInfo::typeToString(t, true), t);
-          mcmboxType->setEnabled(ShowMode != mmode);
-          mcmboxType->setCurrentIndex(mcmboxType->findData(TLabInfo::DesktopType));
-          connect(mcmboxType, SIGNAL(currentIndexChanged(int)), this, SLOT(cmboxTypeCurrentIndexChanged(int)));
-        flt->addRow(tr("Type:", "lbl text"), mcmboxType);
-      vlt->addLayout(flt);
-      //TODO: files
-      QHBoxLayout *hlt = new QHBoxLayout;
-        flt = new QFormLayout;
-          mlblSender = new QLabel;
-            mlblSender->setTextInteractionFlags(tiflags);
-            connect(mlblSender, SIGNAL(linkActivated(QString)), this, SLOT(showSenderInfo()));
-          flt->addRow(tr("Sender:", "lbl text"), mlblSender);
-          mlblCreationDT = new QLabel;
-            mlblCreationDT->setTextInteractionFlags(tiflags);
-          flt->addRow(tr("Created:", "lbl text"), mlblCreationDT);
-          mlblUpdateDT = new QLabel;
-            mlblUpdateDT->setTextInteractionFlags(tiflags);
-          flt->addRow(tr("Updated:", "lbl text"), mlblUpdateDT);
-        hlt->addLayout(flt);
-        QGroupBox *gbox = new QGroupBox(tr("Authors", "gbox title"));
-          QHBoxLayout *hltw = new QHBoxLayout(gbox);
-            mlstwgtAuthors = new TListWidget;
-              mlstwgtAuthors->setReadOnly(ShowMode == mmode);
-              mlstwgtAuthors->setButtonsVisible(ShowMode != mmode);
-            hltw->addWidget(mlstwgtAuthors);
-        hlt->addWidget(gbox);
-      vlt->addLayout(hlt);
-      hlt = new QHBoxLayout;
-        gbox = new QGroupBox(tr("Comment", "gbox title"));
-          hltw = new QHBoxLayout(gbox);
-            mptedtComment = new QPlainTextEdit;
-              mptedtComment->setReadOnly(ShowMode == mmode);
-            hltw->addWidget(mptedtComment);
-        hlt->addWidget(gbox);
-        gbox = new QGroupBox(tr("Groups", "gbox title"));
-          hltw = new QHBoxLayout(gbox);
-            mlstwgtGroups = new TListWidget;
-              mlstwgtGroups->setReadOnly(ShowMode == mmode);
-              mlstwgtGroups->setButtonsVisible(ShowMode != mmode);
-              if (ShowMode != mmode)
-              {
-                  QStringList groups;
-                  sClient->getClabGroupsList(groups, parent);
-                  mlstwgtGroups->setAvailableItems(groups);
-              }
-            hltw->addWidget(mlstwgtGroups);
-        hlt->addWidget(gbox);
-      vlt->addLayout(hlt);
-      gbox = new QGroupBox(tr("Source", "gbox title"));
-        gbox->setVisible(ShowMode != mmode);
-        flt = new QFormLayout(gbox);
-        foreach (int t, bRangeD(BeQt::LinuxOS, BeQt::WindowsOS))
-        {
-            mhltFile.insert(t, new QHBoxLayout);
-              mledtFile.insert(t, new QLineEdit);
-                connect(mledtFile.value(t), SIGNAL(textChanged(QString)), this, SLOT(checkInputs()));
-              mhltFile.value(t)->addWidget(mledtFile.value(t));
-              if (BeQt::LinuxOS == t)
-              {
-                  mbtnSearch = new QPushButton(tr("Search..."));
-                    bSetMapping(mpr, mbtnSearch, SIGNAL(clicked()), t);
-                  mhltFile.value(t)->addWidget(mbtnSearch);
-              }
-              else
-              {
-                  QPushButton *btn = new QPushButton(tr("Search..."));
-                    bSetMapping(mpr, btn, SIGNAL(clicked()), t);
-                  mhltFile.value(t)->addWidget(btn);
-              }
-            flt->addRow(" ", mhltFile.value(t));
-        }
-      vlt->addWidget(gbox);
-      gbox = new QGroupBox(tr("Attached files", "gbox title"));
-        hltw = new QHBoxLayout(gbox);
-          flswgt = new FilesWidget(ShowMode == mmode);
-            connect(flswgt, SIGNAL(getFile(QString)), this, SLOT(getFile(QString)));
-          hltw->addWidget(flswgt);
-      vlt->addWidget(gbox);
-    //
-    cmboxTypeCurrentIndexChanged(0);
-    Application::setRowVisible(mlblSender, AddMode != mmode);
-    Application::setRowVisible(mlblCreationDT, AddMode != mmode);
-    Application::setRowVisible(mlblUpdateDT, AddMode != mmode);
-    checkInputs();*/
 }
 
 /*============================== Public methods ============================*/
@@ -293,26 +185,37 @@ QVariant LabInfoWidget::createRequestData() const
     switch (mmode) {
     case AddMode: {
         TAddLabRequestData data;
-        /*data.setAuthors(authors());
+        data.setAuthors(mlstwgtAuthors->authors());
+        data.setDataList(mldlwgt->dataList());
         data.setDescritpion(mptedtDescription->toPlainText().replace(QChar::ParagraphSeparator, '\n'));
-        data.setProject(msource);
+        data.setExtraFiles(meflwgt->newFileList());
+        data.setGroups(mlstwgtGroups->groupIds());
         data.setTags(mtgwgt->tags());
-        data.setTitle(mledtTitle->text());*/
+        data.setTitle(mledtTitle->text());
         return data;
     }
     case EditMode: {
         TEditLabRequestData data;
-        /*data.setAdminRemark(mptedtRemark->toPlainText().replace(QChar::ParagraphSeparator, '\n'));
-        data.setAuthors(authors());
+        //FIXME: Improve with the net TeXSample release
+        //It is a hack, because there is no other way to set lab id
+        QVariantMap m;
+        m.insert("id", mid);
+        QByteArray ba;
+        QDataStream out(&ba, QIODevice::WriteOnly);
+        out << m;
+        QDataStream in(ba);
+        in >> data;
+        //End of hack
+        data.setAuthors(mlstwgtAuthors->authors());
+        data.setEditData(mcboxEditData->isChecked());
+        if (mcboxEditData->isChecked())
+            data.setDataList(mldlwgt->dataList());
+        data.setDeletedExtraFiles(meflwgt->deletedFileList());
         data.setDescritpion(mptedtDescription->toPlainText().replace(QChar::ParagraphSeparator, '\n'));
-        data.setEditProject(mcboxEditSource->isChecked());
-        data.setId(mid);
-        if (mcboxEditSource->isChecked())
-            data.setProject(msource);
-        data.setRating(quint8(msboxRating->value()));
+        data.setGroups(mlstwgtGroups->groupIds());
+        data.setNewExtraFiles(meflwgt->newFileList());
         data.setTags(mtgwgt->tags());
         data.setTitle(mledtTitle->text());
-        data.setType(mcmboxType->itemData(mcmboxType->currentIndex()).toInt());*/
         return data;
     }
     case ShowMode:
@@ -321,24 +224,6 @@ QVariant LabInfoWidget::createRequestData() const
     }
     }
     return QVariant();
-    //
-    /*
-    info.setId(mid);
-    TUserInfo u(msenderId, TUserInfo::BriefInfoContext);
-    u.setLogin(msenderLogin);
-    u.setRealName(msenderRealName);
-    info.setSender(u);
-    info.setTitle(mledtTitle->text());
-    info.setTags(mtgswgt->tags());
-    info.setType(mcmboxType->itemData(mcmboxType->currentIndex()).toInt());
-    //TODO: size
-    info.setCreationDateTime(QDateTime::fromString(mlblCreationDT->text(), DateTimeFormat));
-    info.setUpdateDateTime(QDateTime::fromString(mlblUpdateDT->text(), DateTimeFormat));
-    info.setAuthors(mlstwgtAuthors->items());
-    info.setGroups(mlstwgtGroups->items());
-    info.setComment(mptedtComment->toPlainText().replace(QChar::ParagraphSeparator, '\n'));
-    info.setExtraAttachedFileNames(flswgt->files());
-      */
 }
 
 bool LabInfoWidget::hasValidInput() const
@@ -383,7 +268,12 @@ void LabInfoWidget::setCache(TAbstractCache *cache)
 
 void LabInfoWidget::setClient(TNetworkClient *client)
 {
+    if (mclient)
+        disconnect(mclient, SIGNAL(authorizedChanged(bool)), this, SLOT(clientAuthorizedChanged(bool)));
     mclient = client;
+    if (client)
+        connect(client, SIGNAL(authorizedChanged(bool)), this, SLOT(clientAuthorizedChanged(bool)));
+    clientAuthorizedChanged(client && client->isAuthorized());
 }
 
 bool LabInfoWidget::setLab(quint64 labId)
@@ -393,63 +283,28 @@ bool LabInfoWidget::setLab(quint64 labId)
     TLabInfo info = mmodel->labInfo(labId);
     mid = info.id();
     msenderId = info.senderId();
-    /*resetFile(info.mainSourceFile().fileName(), info.sourceSize());
-    mtgwgt->setTags(info.tags());
     mledtTitle->setText(info.title());
     mlblSender->setText("<a href=dummy>" + info.senderLogin() + "</a>");
     mlblSender->setToolTip(tr("Click the link to see info about the sender", "lbl toolTip"));
-    msboxRating->setValue(info.rating());
-    mcmboxType->setCurrentIndex(mcmboxType->findData(int(info.type())));
+    mtgwgt->setTags(info.tags());
+    int type = !info.dataInfos().isEmpty() ? int(info.dataInfos().first().type()) : TLabType::NoType;
+    mcmboxType->setCurrentIndex(mcmboxType->findData(type));
+    int size = 0;
+    foreach (const TLabDataInfo &ldi, info.dataInfos()) {
+        if (TLabType::DesktopApplication != ldi.type() || ldi.os() == BeQt::osType()) {
+            size = ldi.size();
+            break;
+        }
+    }
+    mlblSize->setText(size ? BeQt::fileSizeToString(size, BeQt::MegabytesFormat) : tr("Unknown", "lbl text"));
     mlblCreationDT->setText(info.creationDateTime().toTimeSpec(Qt::LocalTime).toString(DateTimeFormat));
     mlblUpdateDT->setText(info.lastModificationDateTime().toTimeSpec(Qt::LocalTime).toString(DateTimeFormat));
     mlstwgtAuthors->setAuthors(info.authors());
     mptedtDescription->setPlainText(info.description());
-    mptedtRemark->setPlainText(info.adminRemark());
-    QString s = BeQt::fileSizeToString(info.previewSize(), BeQt::KilobytesFormat);
-    if(mtbtnShowPreview)
-        mtbtnShowPreview->setToolTip(tr("Show sample preview", "tbtn toolTip") + " (" + s + ")");
-    checkInputs();*/
-    return info.isValid();
-    //
-    /*
-    mid = info.id();
-    msenderId = info.sender().id();
-    msenderLogin = info.sender().login();
-    msenderRealName = info.sender().realName();
-    mledtTitle->setText(info.title());
-    if (!mledtTitle->hasAcceptableInput())
-        mledtTitle->clear();
-    mtgswgt->setTags(info.tags());
-    mcmboxType->setCurrentIndex(mcmboxType->findData(info.type()));
-    if (mcmboxType->currentIndex() < 0)
-        mcmboxType->setCurrentIndex(0);
-    if (!msenderLogin.isEmpty())
-    {
-        QString s = "<a href=x>" + msenderLogin + "</a>";
-        s += !msenderRealName.isEmpty() ? (" (" + msenderRealName + ")") : QString();
-        mlblSender->setText(s);
-        mlblSender->setToolTip(tr("Click the link to see info about the sender", "lbl toolTip"));
-    }
-    else
-    {
-        mlblSender->clear();
-        mlblSender->setToolTip("");
-    }
-    if (info.creationDateTime().isValid())
-        mlblCreationDT->setText(info.creationDateTime(Qt::LocalTime).toString(DateTimeFormat));
-    else
-        mlblCreationDT->clear();
-    if (info.updateDateTime().isValid())
-        mlblUpdateDT->setText(info.updateDateTime(Qt::LocalTime).toString(DateTimeFormat));
-    else
-        mlblUpdateDT->clear();
-    mlstwgtAuthors->setItems(info.authors());
-    mlstwgtGroups->setItems(info.groups());
-    mptedtComment->setPlainText(info.comment());
-    flswgt->addFiles(info.extraAttachedFileNames());
-    setFocus();
+    mlstwgtGroups->setGroups(info.groups());
+    meflwgt->setFileInfos(info.extraFiles());
     checkInputs();
-      */
+    return info.isValid();
 }
 
 void LabInfoWidget::setModel(LabModel *model)
@@ -466,98 +321,135 @@ QString LabInfoWidget::title() const
 
 void LabInfoWidget::createAuthorsGroup(QHBoxLayout *hlt, bool readOnly)
 {
-    //
+    QGroupBox *gbox = new QGroupBox(tr("Authors:", "gbox title"));
+      QVBoxLayout *vlt = new QVBoxLayout(gbox);
+        mlstwgtAuthors = new TAuthorListWidget;
+          mlstwgtAuthors->setReadOnly(readOnly);
+          mlstwgtAuthors->setButtonsVisible(!readOnly);
+        vlt->addWidget(mlstwgtAuthors);
+    hlt->addWidget(gbox);
 }
 
 void LabInfoWidget::createDescriptionGroup(QHBoxLayout *hlt, bool readOnly)
 {
-    //
+    QGroupBox *gbox = new QGroupBox(tr("Description:", "gbox title"));
+      QVBoxLayout *vlt = new QVBoxLayout(gbox);
+        mptedtDescription = new QPlainTextEdit;
+          mptedtDescription->setReadOnly(readOnly);
+        vlt->addWidget(mptedtDescription);
+    hlt->addWidget(gbox);
+}
+
+void LabInfoWidget::createEditDataField(QFormLayout *flt)
+{
+    mcboxEditData = new QCheckBox;
+      connect(mcboxEditData, SIGNAL(toggled(bool)), this, SLOT(checkInputs()));
+    flt->addRow(tr("Edit data:", "lbl text"), mcboxEditData);
 }
 
 void LabInfoWidget::createExtraFileListGroup(QHBoxLayout *hlt, bool readOnly)
 {
-    //
+    QGroupBox *gbox = new QGroupBox(tr("Extra files:", "gbox title"));
+      QVBoxLayout *vlt = new QVBoxLayout(gbox);
+        meflwgt = new ExtraFileListWidget(readOnly);
+        vlt->addWidget(meflwgt);
+    hlt->addWidget(gbox);
 }
 
-void LabInfoWidget::createExtraGroup(QHBoxLayout *hlt, bool readOnly)
+void LabInfoWidget::createExtraGroup(QHBoxLayout *hlt)
 {
-    //
+    QFormLayout *flt = new QFormLayout;
+      mlblSender = new QLabel;
+        mlblSender->setTextInteractionFlags(TextInteractionFlags);
+        connect(mlblSender, SIGNAL(linkActivated(QString)), this, SLOT(showSenderInfo()));
+      flt->addRow(tr("Sender:", "lbl text"), mlblSender);
+      mcmboxType = new QComboBox;
+        static const QList<TLabType> LabTypes = QList<TLabType>() << TLabType::DesktopApplication
+                                                                  << TLabType::WebApplication << TLabType::Url;
+        foreach (const TLabType &t, LabTypes)
+            mcmboxType->addItem(t.toString(), int(t));
+        mcmboxType->setEnabled(false);
+      flt->addRow(tr("Type:", "lbl text"), mcmboxType);
+      mlblCreationDT = new QLabel;
+        mlblCreationDT->setTextInteractionFlags(TextInteractionFlags);
+      flt->addRow(tr("Creation date:", "lbl text"), mlblCreationDT);
+      mlblUpdateDT = new QLabel;
+        mlblUpdateDT->setTextInteractionFlags(TextInteractionFlags);
+      flt->addRow(tr("Modified:", "lbl text"), mlblUpdateDT);
+    hlt->addLayout(flt);
 }
 
 void LabInfoWidget::createGroupsGroup(QHBoxLayout *hlt, bool readOnly)
 {
-    //
+    QGroupBox *gbox = new QGroupBox(tr("Groups:", "gbox title"));
+      QVBoxLayout *vlt = new QVBoxLayout(gbox);
+        mlstwgtGroups = new TGroupListWidget;
+          mlstwgtGroups->setReadOnly(readOnly);
+          mlstwgtGroups->setButtonsVisible(!readOnly);
+        vlt->addWidget(mlstwgtGroups);
+    hlt->addWidget(gbox);
 }
 
-void LabInfoWidget::createLabDataListGroup(QHBoxLayout *hlt, bool readOnly)
+void LabInfoWidget::createLabDataListGroup(QHBoxLayout *hlt)
 {
-    //
+    QGroupBox *gbox = new QGroupBox(tr("Data:", "gbox title"));
+      QVBoxLayout *vlt = new QVBoxLayout(gbox);
+        mldlwgt = new LabDataListWidget;
+          connect(mldlwgt, SIGNAL(inputValidityChanged(bool)), this, SLOT(checkInputs()));
+        vlt->addWidget(mldlwgt);
+    hlt->addWidget(gbox);
 }
 
 void LabInfoWidget::createMainGroup(QVBoxLayout *vlt, bool readOnly)
 {
-    //
+    QFormLayout *flt = new QFormLayout;
+      createTitleField(flt, readOnly);
+      if (EditMode == mmode)
+          createEditDataField(flt);
+      createTagsField(flt, readOnly);
+    vlt->addLayout(flt);
 }
 
 void LabInfoWidget::createTagsField(QFormLayout *flt, bool readOnly)
 {
-    //
+    mtgwgt = new TTagWidget;
+      mtgwgt->setReadOnly(readOnly);
+      mtgwgt->setButtonsVisible(!readOnly);
+    flt->addRow(tr("Tags:", "lbl text"), mtgwgt);
 }
 
 void LabInfoWidget::createTitleField(QFormLayout *flt, bool readOnly)
 {
-    //
+    mledtTitle = new QLineEdit;
+      mledtTitle->setReadOnly(readOnly);
+      QRegExp rx(".{1," + QString::number(Texsample::MaximumLabTitleLength) + "}");
+      mledtTitle->setValidator(new QRegExpValidator(rx, this));
+      connect(mledtTitle, SIGNAL(textChanged(QString)), this, SLOT(checkInputs()));
+      minputTitle = new BInputField(readOnly ? BInputField::ShowNever : BInputField::ShowAlways);
+      minputTitle->addWidget(mledtTitle);
+    flt->addRow(tr("Title:", "lbl text"), minputTitle);
 }
 
 /*============================== Private slots =============================*/
 
 void LabInfoWidget::checkInputs()
 {
-    /*minputTitle->setValid(!mledtTitle->text().isEmpty() && mledtTitle->hasAcceptableInput());
-    bool src = true;
-    if (mcheckSource)
-    {
-        switch (mcmboxType->currentIndex())
-        {
-        case 0:
-            src = linuxProject().isValid() || macProject().isValid() || winProject().isValid();
-            break;
-        case 1:
-            src = webProject().isValid();
-            break;
-        case 2:
-            src = !url().isEmpty();
-            break;
-        default:
-            break;
-        }
-    }
-    bool v = info().isValid() && (!mcheckSource || src);
-    if (v == mvalid)
-        return;
-    mvalid = v;
-    emit validityChanged(v);*/
-    //
-    //
-    /*
     bool idValid = (AddMode == mmode) || mid;
     bool titleValid = mledtTitle->hasAcceptableInput();
-    bool sourceValid = (!mcboxEditSource || !mcboxEditSource->isChecked() || msource.isValid())
-            && mledtFileName->hasAcceptableInput();
+    bool dataValid = (ShowMode == mmode)
+            || ((mcboxEditData && !mcboxEditData->isChecked()) || !mldlwgt->dataList().isEmpty());
     minputTitle->setValid(titleValid);
-    minputFileName->setValid(sourceValid);
-    mtbtnSetupFromCurrentDocument->setEnabled(meditor && meditor->documentAvailable());
-    bool v = idValid && titleValid && sourceValid;
+    bool v = idValid && titleValid && dataValid;
     if (v == mvalid)
         return;
     mvalid = v;
     emit inputValidityChanged(mvalid);
-      */
 }
 
-void LabInfoWidget::cmboxTypeCurrentIndexChanged(int index)
+void LabInfoWidget::clientAuthorizedChanged(bool)
 {
-    //
+    if (mlstwgtGroups)
+        mlstwgtGroups->setAvailableGroups(mclient->userInfo().availableGroups());
 }
 
 void LabInfoWidget::showExtraFile(const QString &fileName)

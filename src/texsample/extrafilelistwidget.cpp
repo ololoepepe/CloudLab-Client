@@ -21,6 +21,12 @@
 
 #include "extrafilelistwidget.h"
 
+#include <TBinaryFileList>
+#include <TFileInfoList>
+
+#include <QStringList>
+#include <QWidget>
+
 /*============================================================================
 ================================ ExtraFileListWidget =========================
 ============================================================================*/
@@ -37,28 +43,45 @@
 
 /*============================== Public constructors =======================*/
 
-/*FilesWidget::FilesWidget(bool readOnly, QWidget *parent) :
-    QWidget(parent), ReadOnly(readOnly)
+ExtraFileListWidget::ExtraFileListWidget(QWidget *parent) :
+    QWidget(parent)
 {
-    hasDeleted = false;
-    lastDir = QDir::homePath();
-    vlt = new QVBoxLayout(this);
-    mapper = new QSignalMapper(this);
-    connect(mapper, SIGNAL(mapped(QString)), this, SLOT(mapped(QString)));
-    if (!ReadOnly)
-    {
-        QHBoxLayout *hlt = new QHBoxLayout;
-          hlt->addStretch();
-          tbtn = new QToolButton;
-            tbtn->setIcon(Application::icon("edit_add"));
-            tbtn->setToolTip(tr("Add file", "tbtn toolTip"));
-            connect(tbtn, SIGNAL(clicked()), this, SLOT(addFile()));
-          hlt->addWidget(tbtn);
-        vlt->addLayout(hlt);
-    }
-}*/
+    init();
+}
+
+ExtraFileListWidget::ExtraFileListWidget(bool readOnly, QWidget *parent) :
+    QWidget(parent)
+{
+    init();
+    setReadOnly(readOnly);
+}
 
 /*============================== Public methods ============================*/
+
+QStringList ExtraFileListWidget::deletedFileList() const
+{
+    //
+}
+
+bool ExtraFileListWidget::isReadOnly() const
+{
+    //
+}
+
+TBinaryFileList ExtraFileListWidget::newFileList() const
+{
+    //
+}
+
+void ExtraFileListWidget::setFileInfos(const TFileInfoList &list)
+{
+    //
+}
+
+void ExtraFileListWidget::setReadOnly(bool ro)
+{
+    //
+}
 
 /*void FilesWidget::addFile(const QString &fn)
 {
@@ -117,6 +140,26 @@ const BTranslation FilesWidget::undeleteToolTip = BTranslation::translate("Files
 }*/
 
 /*============================== Private methods ===========================*/
+
+void ExtraFileListWidget::init()
+{
+    /*hasDeleted = false;
+    lastDir = QDir::homePath();
+    vlt = new QVBoxLayout(this);
+    mapper = new QSignalMapper(this);
+    connect(mapper, SIGNAL(mapped(QString)), this, SLOT(mapped(QString)));
+    if (!ReadOnly)
+    {
+        QHBoxLayout *hlt = new QHBoxLayout;
+          hlt->addStretch();
+          tbtn = new QToolButton;
+            tbtn->setIcon(Application::icon("edit_add"));
+            tbtn->setToolTip(tr("Add file", "tbtn toolTip"));
+            connect(tbtn, SIGNAL(clicked()), this, SLOT(addFile()));
+          hlt->addWidget(tbtn);
+        vlt->addLayout(hlt);
+    }*/
+}
 
 /*(void FilesWidget::deleteLastDeleted()
 {
@@ -179,3 +222,12 @@ void LabInfoWidget::getFile(const QString &fileName)
         sClient->getExtraAttachedFile(mid, fileName, this);
 }
   */
+
+
+/*
+  gbox = new QGroupBox(tr("Attached files", "gbox title"));
+    hltw = new QHBoxLayout(gbox);
+      flswgt = new FilesWidget(ShowMode == mmode);
+        connect(flswgt, SIGNAL(getFile(QString)), this, SLOT(getFile(QString)));
+      hltw->addWidget(flswgt);
+  vlt->addWidget(gbox);*/
