@@ -359,9 +359,9 @@
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="143"/>
-        <source>CloudLab</source>
+        <source>TeXSample</source>
         <comment>mnuTitle</comment>
-        <translation>CloudLab</translation>
+        <translation>TeXSample</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="144"/>

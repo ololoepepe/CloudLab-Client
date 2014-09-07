@@ -2,49 +2,42 @@
     <qresource prefix="/">
         <file>doc/en/index.html</file>
         <file>doc/ru/index.html</file>
-        <file>doc/ru/1.1-registration_and_recovering.html</file>
-        <file>doc/ru/1.2-settings.html</file>
-        <file>doc/ru/1.3-account_management.html</file>
         <file>doc/ru/1-getting_started.html</file>
-        <file>doc/ru/2-administering_and_moderating.html</file>
-        <file>doc/ru/pixmaps/adding-user.png</file>
-        <file>doc/ru/pixmaps/configuring-texsample.png</file>
-        <file>doc/ru/pixmaps/deleting-lab.png</file>
-        <file>doc/ru/pixmaps/editing-lab.png</file>
-        <file>doc/ru/pixmaps/folder-structure-1.png</file>
-        <file>doc/ru/pixmaps/folder-structure-2.png</file>
-        <file>doc/ru/pixmaps/generating-invites.png</file>
         <file>doc/ru/pixmaps/lab-info.png</file>
         <file>doc/ru/pixmaps/main-window.png</file>
-        <file>doc/ru/pixmaps/main-window-administering.png</file>
         <file>doc/ru/pixmaps/main-window-downloading.png</file>
-        <file>doc/ru/pixmaps/main-window-searching.png</file>
         <file>doc/ru/pixmaps/main-window-send-lab.png</file>
-        <file>doc/ru/pixmaps/managing-groups.png</file>
-        <file>doc/ru/pixmaps/managing-invites.png</file>
-        <file>doc/ru/pixmaps/recovering-step-1.png</file>
-        <file>doc/ru/pixmaps/recovering-step-2.png</file>
-        <file>doc/ru/pixmaps/registration-1.png</file>
-        <file>doc/ru/pixmaps/registration-2.png</file>
-        <file>doc/ru/pixmaps/selecting-user.png</file>
         <file>doc/ru/pixmaps/sending-lab-step-1.png</file>
         <file>doc/ru/pixmaps/sending-lab-step-2.png</file>
         <file>doc/ru/pixmaps/sending-lab-step-3.png</file>
-        <file>doc/ru/pixmaps/sending-lab-step-4.png</file>
-        <file>doc/ru/pixmaps/sending-lab-step-5.png</file>
-        <file>doc/ru/pixmaps/sending-lab-step-6.png</file>
         <file>doc/ru/pixmaps/settings-general.png</file>
-        <file>doc/ru/pixmaps/settings-texsample-1.png</file>
-        <file>doc/ru/pixmaps/settings-texsample-2.png</file>
-        <file>doc/ru/pixmaps/main-window-connection.png</file>
-        <file>doc/ru/pixmaps/managing-account.png</file>
         <file>doc/ru/pixmaps/request.png</file>
-        <file>doc/ru/1.4-finding_and_downloading_labs.html</file>
-        <file>doc/ru/2.1-sending_labs.html</file>
-        <file>doc/ru/2.2-editing_and_deleting_labs.html</file>
-        <file>doc/ru/2.3-user_management.html</file>
-        <file>doc/ru/2.4-invite_management.html</file>
-        <file>doc/ru/2.5-group_management.html</file>
-        <file>doc/ru/pixmaps/copying-invite.png</file>
+        <file>doc/ru/1.1-registration.html</file>
+        <file>doc/ru/1.2-account_management_and_recovery.html</file>
+        <file>doc/ru/1.3-settings.html</file>
+        <file>doc/ru/2.1-finding_and_downloading_labs.html</file>
+        <file>doc/ru/2.2-sending_labs.html</file>
+        <file>doc/ru/2.3-administration.html</file>
+        <file>doc/ru/2-labs.html</file>
+        <file>doc/ru/pixmaps/account-management.png</file>
+        <file>doc/ru/pixmaps/account-recovering.png</file>
+        <file>doc/ru/pixmaps/add-user-dialog.png</file>
+        <file>doc/ru/pixmaps/administration-menu.png</file>
+        <file>doc/ru/pixmaps/connected.png</file>
+        <file>doc/ru/pixmaps/connection-button.png</file>
+        <file>doc/ru/pixmaps/edit-user-dialog.png</file>
+        <file>doc/ru/pixmaps/email-change-confirmation-diglog.png</file>
+        <file>doc/ru/pixmaps/first-message.png</file>
+        <file>doc/ru/pixmaps/generate-invites-dialog.png</file>
+        <file>doc/ru/pixmaps/group-management-dialog.png</file>
+        <file>doc/ru/pixmaps/invite-info-dialog.png</file>
+        <file>doc/ru/pixmaps/invite-management-dialog.png</file>
+        <file>doc/ru/pixmaps/registration-confirmation-dialog.png</file>
+        <file>doc/ru/pixmaps/registration-dialog.png</file>
+        <file>doc/ru/pixmaps/settings-network.png</file>
+        <file>doc/ru/pixmaps/settings-plugins.png</file>
+        <file>doc/ru/pixmaps/settings-texsample.png</file>
+        <file>doc/ru/pixmaps/texsample-menu.png</file>
+        <file>doc/ru/pixmaps/user-management-dialog.png</file>
     </qresource>
 </RCC>

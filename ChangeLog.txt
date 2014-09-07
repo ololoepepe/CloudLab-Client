@@ -1,3 +1,11 @@
+=== CloudLab Client 1.0.0-beta (xx Xxxxx 2014) ===
+    * Change copyright owner
+    * Use BeQt 4.0.0
+    * Use TeXSample 2.0.0
+    * Use Qt coding style, sort includes, class members, etc.
+    * Change user interface of lab widget
+    * Implement e-mail change confirmation
+
 === CloudLab Client 0.3.1-beta (26 February 2014) ===
     * Fix host changing
     * Fix version check

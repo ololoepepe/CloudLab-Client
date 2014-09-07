@@ -140,6 +140,6 @@ void MainWindow::retranslateUi()
     mmnuFile->setTitle(tr("File", "mnu title"));
     mactQuit->setText(tr("Quit", "act text"));
     mmnuEdit->setTitle(tr("Edit", "mnu title"));
-    mmnuClab->setTitle(tr("CloudLab", "mnuTitle"));
+    mmnuClab->setTitle(tr("TeXSample", "mnuTitle"));
     mmnuHelp->setTitle(tr("Help", "mnuTitle"));
 }
