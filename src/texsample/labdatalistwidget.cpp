@@ -88,9 +88,9 @@ LabDataListWidget::LabDataListWidget(QWidget *parent) :
       connect(mcmboxType, SIGNAL(currentIndexChanged(int)), this, SLOT(cmboxTypeCurrentIndexChanged(int)));
     flt->addRow(tr("Type:", "lbl text"), mcmboxType);
     QStringList labels;
-    labels << tr("Windows:", "lbl text");
-    labels << tr("Linux:", "lbl text");
-    labels << tr("MacOS:", "lbl text");
+    labels << tr("Windows application:", "lbl text");
+    labels << tr("Linux application:", "lbl text");
+    labels << tr("MacOS application:", "lbl text");
     labels << tr("Web application:", "lbl text");
     QStringList iconNames;
     iconNames << "windows_logo";
