@@ -405,6 +405,10 @@ void LabInfoWidget::createLabDataListGroup(QHBoxLayout *hlt)
           connect(mldlwgt, SIGNAL(inputValidityChanged(bool)), this, SLOT(checkInputs()));
         vlt->addWidget(mldlwgt);
     hlt->addWidget(gbox);
+    if (mcboxEditData) {
+        gbox->setVisible(false);
+        connect(mcboxEditData, SIGNAL(toggled(bool)), gbox, SLOT(setVisible(bool)));
+    }
 }
 
 void LabInfoWidget::createMainGroup(QVBoxLayout *vlt, bool readOnly)

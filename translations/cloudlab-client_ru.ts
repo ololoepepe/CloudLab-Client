@@ -172,13 +172,13 @@
 <context>
     <name>LabInfoWidget</name>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="437"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="441"/>
         <source>Title:</source>
         <comment>lbl text</comment>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../src/texsample/labinfowidget.cpp" line="425"/>
+        <location filename="../src/texsample/labinfowidget.cpp" line="429"/>
         <source>Tags:</source>
         <comment>lbl text</comment>
         <translation>Теги:</translation>

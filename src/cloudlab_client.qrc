@@ -14,8 +14,6 @@
         <file>icons/process.gif</file>
         <file>icons/process.png</file>
         <file>icons/process.svgz</file>
-        <file>icons/user.png</file>
-        <file>icons/user.svgz</file>
         <file>icons/gear.png</file>
         <file>icons/gear.svgz</file>
         <file>infos/authors.beqt-info</file>
@@ -24,11 +22,8 @@
         <file>icons/editdelete.svgz</file>
         <file>icons/add_user.png</file>
         <file>icons/add_user.svgz</file>
-        <file>icons/edit_user.png</file>
-        <file>icons/edit_user.svgz</file>
         <file>changelog/ChangeLog.txt</file>
         <file>changelog/ChangeLog_ru.txt</file>
-        <file>icons/clab-client.svgz</file>
         <file>icons/users.png</file>
         <file>icons/users.svgz</file>
         <file>icons/account_recover.png</file>
@@ -61,5 +56,12 @@
         <file>icons/link.png</file>
         <file>texsample/db/temporary.schema</file>
         <file>texsample/db/cache.schema</file>
+        <file>icons/cloudlab-client.svgz</file>
+        <file>icons/checkmark.png</file>
+        <file>icons/checkmark.svgz</file>
+        <file>icons/group.png</file>
+        <file>icons/group.svgz</file>
+        <file>icons/edit_user.png</file>
+        <file>icons/edit_user.svgz</file>
     </qresource>
 </RCC>
