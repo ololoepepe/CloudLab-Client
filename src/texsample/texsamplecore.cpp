@@ -169,6 +169,16 @@ Cache *TexsampleCore::cache() const
     return mcache;
 }
 
+void TexsampleCore::clearCache()
+{
+    mcache->clear();
+    mgroupModel->clear();
+    minviteModel->clear();
+    mlabModel->clear();
+    muserModel->clear();
+    updateLabList();
+}
+
 TNetworkClient *TexsampleCore::client() const
 {
     return mclient;
