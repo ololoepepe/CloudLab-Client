@@ -369,7 +369,7 @@ bool TexsampleCore::getExtraFile(quint64 labId, const QString &fileName, QWidget
     }
     TBinaryFile file = reply.data().value<TGetLabExtraFileReplyData>().file();
     QString path = Application::location("texsample/files", Application::UserResource)
-            + BUuid::createUuid().toString(true);
+            + "/" + BUuid::createUuid().toString(true);
     if (!file.save(path))
         return false;
     return bApp->openLocalFile(path + "/" + file.fileName());
@@ -408,19 +408,7 @@ bool TexsampleCore::getLab(quint64 labId, QWidget *parent)
     if (TLabType::DesktopApplication == type || TLabType::WebApplication == type) {
         if (!app.save(path))
             return false;
-        //FIXME: Improve with the net TeXSample release
-        //It is a hack, because there is no other way to get main file name
-        QByteArray ba;
-        QDataStream out(&ba, QIODevice::WriteOnly);
-        out << app;
-        QDataStream in(ba);
-        QVariantMap m;
-        in >> m;
-        TBinaryFile mainFile = m.value("main_file").value<TBinaryFile>();
-        if (!mainFile.isValid())
-            return false;
-        url = path + "/" + mainFile.fileName();
-        //End of hack
+        url = path + "/" + app.mainFile().fileName();
     }
     if (TLabType::DesktopApplication == type) {
         QtConcurrent::run(&runExecutable, url, path);

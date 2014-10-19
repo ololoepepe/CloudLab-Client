@@ -3,7 +3,8 @@ TARGET = cloudlab-client
 
 CONFIG += release
 
-QT = core concurrent network gui widgets webkit webkitwidgets
+QT += webkit
+greaterThan(QT_MAJOR_VERSION, 4):QT *= webkitwidgets
 BEQT = core network sql widgets networkwidgets
 TSMP = core network widgets networkwidgets
 

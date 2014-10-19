@@ -311,15 +311,7 @@ void TexsampleWidget::tblvwCustomContextMenuRequested(const QPoint &pos)
         return;
     TNetworkClient *client = tSmp->client();
     QMenu mnu;
-    QString s;
-    //FIXME: Improve with the net TeXSample release
-    foreach (const TLabDataInfo &ldi, tSmp->labModel()->labInfo(mlastId).dataInfos()) {
-        if (int(ldi.type()) != TLabType::DesktopApplication || ldi.os() == BeQt::osType()) {
-            s = " (" + BeQt::fileSizeToString(ldi.size(), BeQt::MegabytesFormat) + ")";
-            break;
-        }
-    }
-    //End of fixme
+    QString s = " (" + BeQt::fileSizeToString(tSmp->labModel()->labInfo(mlastId).size(), BeQt::MegabytesFormat) + ")";
     QAction *act = mnu.addAction(tr("Get...", "act text") + (!s.isEmpty() ? s : QString()), this, SLOT(getLab()));
       act->setEnabled(client->isAuthorized());
       act->setIcon(Application::icon("editpaste"));

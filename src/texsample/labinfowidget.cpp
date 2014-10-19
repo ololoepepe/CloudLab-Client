@@ -196,16 +196,7 @@ QVariant LabInfoWidget::createRequestData() const
     }
     case EditMode: {
         TEditLabRequestData data;
-        //FIXME: Improve with the net TeXSample release
-        //It is a hack, because there is no other way to set lab id
-        QVariantMap m;
-        m.insert("id", mid);
-        QByteArray ba;
-        QDataStream out(&ba, QIODevice::WriteOnly);
-        out << m;
-        QDataStream in(ba);
-        in >> data;
-        //End of hack
+        data.setId(mid);
         data.setAuthors(mlstwgtAuthors->authors());
         data.setEditData(mcboxEditData->isChecked());
         if (mcboxEditData->isChecked())
