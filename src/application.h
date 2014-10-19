@@ -1,27 +1,43 @@
+/****************************************************************************
+**
+** Copyright (C) 2013-2014 Andrey Bogdanov
+**
+** This file is part of CloudLab Client.
+**
+** CloudLab Client is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** CloudLab Client is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with CloudLab Client.  If not, see <http://www.gnu.org/licenses/>.
+**
+****************************************************************************/
+
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-class Client;
 class MainWindow;
+class TexsampleCore;
 
 class BAbstractSettingsTab;
 
 class QWidget;
 
-#include <BApplication>
-#include <BSettingsDialog>
+#include <TApplication>
 
-#include <QObject>
-#include <QMap>
-#include <QFont>
-#include <QTextCodec>
-#include <QStringList>
-#include <QByteArray>
-#include <QLocale>
 #include <QList>
+#include <QMap>
+#include <QObject>
+#include <QStringList>
 
 #if defined(bApp)
-#undef bApp
+#   undef bApp
 #endif
 #define bApp (static_cast<Application *>(BApplication::instance()))
 
@@ -29,37 +45,40 @@ class QWidget;
 ================================ Application =================================
 ============================================================================*/
 
-class Application : public BApplication
+class Application : public TApplication
 {
     Q_OBJECT
 public:
-    explicit Application();
+    enum SettingsType
+    {
+        TexsampleSettings
+    };
+private:
+    QMap<QObject *, MainWindow *> mmainWindows;
+    TexsampleCore *mtexsampleCore;
+public:
+    explicit Application(int &argc, char **argv, const QString &applicationName, const QString &organizationName);
     ~Application();
 public:
-    static void createInitialWindow(const QStringList &args);
-    static QWidget *mostSuitableWindow();
-    static bool mergeWindows();
-    static void handleExternalRequest(const QStringList &args);
-    static bool showLoginDialog(QWidget *parent = 0);
-    static bool showRegisterDialog(QWidget *parent = 0);
-    static bool showSettings(QWidget *parent = 0);
-    static void checkForNewVersions(bool persistent = false);
     static void resetProxy();
+public:
+    bool mergeWindows();
+    MainWindow *mostSuitableWindow() const;
+    bool showSettings(SettingsType type, QWidget *parent = 0);
+    TexsampleCore *texsampleCore() const;
 public slots:
-    void checkForNewVersionsSlot();
+    void messageReceived(const QStringList &args);
+    void showStatusBarMessage(const QString &message);
 protected:
     QList<BAbstractSettingsTab *> createSettingsTabs() const;
 private:
     static bool testAppInit();
 private:
     void addMainWindow(const QStringList &fileNames = QStringList());
+    void compatibility();
+    void createInitialWindow();
 private slots:
     void mainWindowDestroyed(QObject *obj);
-    void checkingForNewVersionsFinished();
-private:
-    bool minitialWindowCreated;
-    QMap<QObject *, MainWindow *> mmainWindows;
-    QList<QObject *> futureWatchers;
 private:
     Q_DISABLE_COPY(Application)
 };

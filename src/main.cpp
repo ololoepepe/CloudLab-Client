@@ -1,100 +1,49 @@
-#include "applicationserver.h"
-#include "mainwindow.h"
+/****************************************************************************
+**
+** Copyright (C) 2013-2014 Andrey Bogdanov
+**
+** This file is part of CloudLab Client.
+**
+** CloudLab Client is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** CloudLab Client is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with CloudLab Client.  If not, see <http://www.gnu.org/licenses/>.
+**
+****************************************************************************/
+
+class QStringList;
+
 #include "application.h"
-#include "global.h"
-#include "client.h"
 
-#include <TeXSampleGlobal>
-#include <TOperationResult>
-
-#include <BVersion>
-#include <BApplication>
-#include <BDirTools>
-#include <BTranslator>
-#include <BLogger>
-#include <BAboutDialog>
-
-#include <QObject>
-#include <QString>
-#include <QStringList>
-#include <QTextCodec>
-#include <QApplication>
-#include <QIcon>
-#include <QDir>
-#include <QFont>
-#include <QPixmap>
-#include <QHash>
-#include <QSettings>
+#include <BApplicationServer>
 
 #include <QDebug>
-
-static QString resource(const QString &subpath)
-{
-    return BDirTools::findResource(subpath, BDirTools::GlobalOnly);
-}
-
-#include <TUserInfo>
+#include <QDir>
+#include <QHash>
+#include <QObject>
+#include <QString>
 
 int main(int argc, char *argv[])
 {
-    tInit();
-    QApplication app(argc, argv);
-    QApplication::setApplicationName("CloudLab Client");
-    QApplication::setApplicationVersion("0.3.1-beta");
-    QApplication::setOrganizationName("TeXSample Team");
-    QApplication::setOrganizationDomain("https://github.com/TeXSample-Team/CloudLab-Client");
-    QFont fnt = QApplication::font();
-    fnt.setPointSize(10);
-    QApplication::setFont(fnt);
-    QStringList args = app.arguments();
-    args.removeFirst();
-    args.removeDuplicates();
+    static const QString AppName = "CloudLab Client";
     QString home = QDir::home().dirName();
-    ApplicationServer s(9960 + qHash(home) % 10, QCoreApplication::applicationName() + "0" + home);
+    BApplicationServer s(9960 + qHash(home) % 10, AppName + "1" + home);
     int ret = 0;
-    if ( !s.testServer() )
-    {
+    if (!s.testServer()) {
+        Application app(argc, argv, AppName, "Andrey Bogdanov");
+        QObject::connect(&s, SIGNAL(messageReceived(QStringList)), &app, SLOT(messageReceived(QStringList)));
         s.listen();
-#if defined(BUILTIN_RESOURCES)
-        Q_INIT_RESOURCE(clab_client);
-        Q_INIT_RESOURCE(clab_client_translations);
-#endif
-        Application bapp;
-        Application::resetProxy();
-        Q_UNUSED(bapp)
-        Application::setThemedIconsEnabled(false);
-        Application::setPreferredIconFormats(QStringList() << "png");
-        QApplication::setWindowIcon(Application::icon("clab-client"));
-        Application::installTranslator(new BTranslator("qt"));
-        Application::installTranslator(new BTranslator("beqt"));
-        Application::installTranslator(new BTranslator("texsample"));
-        Application::installTranslator(new BTranslator("cloudlab-client"));
-        BAboutDialog::setDefaultMinimumSize(800, 400);
-        Application::setApplicationCopyrightPeriod("2013-2014");
-        Application::setApplicationDescriptionFile(resource("description") + "/DESCRIPTION.txt");
-        Application::setApplicationChangeLogFile(resource("changelog") + "/ChangeLog.txt");
-        Application::setApplicationLicenseFile(resource("copying") + "/COPYING.txt");
-        Application::setApplicationAuthorsFile(resource("infos/authors.beqt-info"));
-        Application::setApplicationTranslationsFile(resource("infos/translators.beqt-info"));
-        Application::setApplicationThanksToFile(resource("infos/thanks-to.beqt-info"));
-        Application::aboutDialogInstance()->setupWithApplicationData();
-        Application::createInitialWindow(args);
-        Application::loadSettings();
-        if (Global::checkForNewVersions())
-            Application::checkForNewVersions();
         ret = app.exec();
-        Application::saveSettings();
-#if defined(BUILTIN_RESOURCES)
-        Q_CLEANUP_RESOURCE(clab_client);
-        Q_CLEANUP_RESOURCE(clab_client_translations);
-#endif
+    } else {
+        s.sendMessage(argc, argv);
     }
-    else
-    {
-        if (args.isEmpty())
-            args << "";
-        s.sendMessage(args);
-    }
-    tCleanup();
     return ret;
 }
