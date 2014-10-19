@@ -4,8 +4,7 @@
 
 === MINOR ===
 
-[done] Use TeXSample 2.1.0
-[done] Fix TeXSample 2.0.0 bugs workarounds
+
 
 === MAJOR ===
 

@@ -65,7 +65,7 @@ Application::Application(int &argc, char **argv, const QString &applicationName,
     Q_INIT_RESOURCE(cloudlab_client_doc);
     Q_INIT_RESOURCE(cloudlab_client_translations);
 #endif
-    setApplicationVersion("1.0.0-beta");
+    setApplicationVersion("1.0.0");
     setOrganizationDomain("http://sourceforge.net/projects/cloudlab-client");
     setApplicationCopyrightPeriod("2013-2014");
     compatibility();
