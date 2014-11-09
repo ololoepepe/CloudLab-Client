@@ -34,6 +34,7 @@
 #include <BGuiTools>
 #include <BImageWidget>
 
+#include <QAbstractItemView>
 #include <QByteArray>
 #include <QComboBox>
 #include <QDebug>
@@ -49,6 +50,9 @@
 #include <QList>
 #include <QListWidget>
 #include <QListWidgetItem>
+#include <QModelIndex>
+#include <QModelIndexList>
+#include <QPointer>
 #include <QPushButton>
 #include <QRegExp>
 #include <QRegExpValidator>
@@ -258,6 +262,26 @@ void LabDataListWidget::cmboxTypeCurrentIndexChanged(int index)
     checkInputs();
 }
 
+void LabDataListWidget::fdlgOpenButtonClicked()
+{
+    QFileDialog *fdlg = mfdlg;
+    if (!fdlg)
+        return;
+    bool b = fdlg->viewMode() == QFileDialog::List;
+    QAbstractItemView *view = fdlg->findChild<QAbstractItemView *>(b ? "listView" : "treeView");
+    if (!view)
+        return;
+    QStringList files;
+    foreach (const QModelIndex &ind, view->selectionModel()->selectedIndexes()) {
+        if (ind.column())
+            continue;
+        files << fdlg->directory().absoluteFilePath(ind.data().toString());
+    }
+    fdlg->setProperty("actual_selected_files", files);
+    fdlg->setProperty("actual_accepted", true);
+    fdlg->hide();
+}
+
 void LabDataListWidget::ledtUrlTextChanged(const QString &text)
 {
     if (TLabType::Url != mtype)
@@ -308,12 +332,30 @@ void LabDataListWidget::selectFiles(int type)
     QString dir = ledt->text();
     if (dir.isEmpty())
         dir = mlastDir;
-    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Select files", "fdlg caption"), dir);
+    QFileDialog fdlg(this, tr("Select files", "fdlg caption"), dir);
+    fdlg.setFileMode(QFileDialog::ExistingFiles);
+    QDialogButtonBox *dlgbbox = fdlg.findChild<QDialogButtonBox *>("buttonBox");
+    QPushButton *btn = dlgbbox->button(QDialogButtonBox::Open);
+    btn->disconnect();
+    connect(btn, SIGNAL(clicked()), this, SLOT(fdlgOpenButtonClicked()));
+    mfdlg = &fdlg;
+    fdlg.exec();
+    if (!fdlg.property("actual_accepted").toBool())
+        return;
+    QStringList fileNames = fdlg.property("actual_selected_files").toStringList();
     if (fileNames.isEmpty())
         return;
     mlastDir = QFileInfo(fileNames.first()).path();
+    foreach (int i, bRangeR(fileNames.size() - 1, 0)) {
+        QString dir = fileNames.at(i);
+        if (QFileInfo(dir).isDir()) {
+            fileNames.removeAt(i);
+            foreach (const QString &fn, bReversed(BDirTools::entryListRecursive(dir, QDir::Files)))
+                fileNames.insert(i, fn);
+        }
+    }
     foreach (int i, bRangeD(0, fileNames.size() - 1))
-        fileNames[i].remove(0, mlastDir.length());
+        fileNames[i].remove(0, mlastDir.length() + 1);
     bool b = false;
     QString mainFileName = selectMainFile(fileNames, &b);
     if (!b)

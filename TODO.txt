@@ -1,6 +1,8 @@
 === PATCH ===
 
-
+[done] Fix labs temporary path
+[done] Add ability to select files and dirs when specifying lab source
+* Add ability to drag/drop files/dirs when specifying lab source
 
 === MINOR ===
 

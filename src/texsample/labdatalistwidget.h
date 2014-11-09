@@ -32,7 +32,9 @@ class QStringList;
 
 #include <TLabDataList>
 
+#include <QFileDialog>
 #include <QMap>
+#include <QPointer>
 #include <QString>
 #include <QWidget>
 
@@ -55,6 +57,7 @@ private:
 private:
     QComboBox *mcmboxType;
     TLabDataList mdataList;
+    QPointer<QFileDialog> mfdlg;
     QMap<int, QHBoxLayout *> mhltFields;
     QString mlastDir;
     QMap<int, QLineEdit *> mledtFields;
@@ -75,6 +78,7 @@ private:
 private slots:
     void checkInputs();
     void cmboxTypeCurrentIndexChanged(int index);
+    void fdlgOpenButtonClicked();
     void ledtUrlTextChanged(const QString &text);
     void selectDir(int type);
     void selectFiles(int type);

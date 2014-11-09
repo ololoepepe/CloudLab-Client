@@ -401,7 +401,7 @@ bool TexsampleCore::getLab(quint64 labId, QWidget *parent)
     TLabData data = reply.data().value<TGetLabDataReplyData>().data();
     bApp->showStatusBarMessage(tr("Lab was successfully downloaded", "message"));
     QString path = Application::location("texsample/labs", Application::UserResource)
-            + BUuid::createUuid().toString(true);
+            + "/" + BUuid::createUuid().toString(true);
     int type = data.type();
     const TLabApplication &app = data.application();
     QString url = data.url();
